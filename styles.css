@@ -510,34 +510,61 @@ legend { font-size: 1.15rem; font-weight: 600; line-height: 1.5; margin-bottom: 
 .scene-tabs {
   max-width:1020px;
   margin:0 auto;
-  padding:8px 32px 0;
-  display:grid;
-  grid-template-columns:repeat(8,minmax(0,1fr));
-  gap:8px}
-.scene-tabs button {
-  height:52px;
-  overflow:hidden;
+  overflow-x:auto;
+  padding:12px 32px 10px}
+.scene-tabs[hidden] {
+  display:none!important}
+.scene-tabs .case-track {
   display:flex;
+  flex-wrap:nowrap;
   align-items:center;
-  justify-content:center;
-  gap:6px;
-  text-align:center;
-  padding:6px 8px;
+  justify-content:space-between;
+  gap:0;
+  min-width:max-content;
+  margin:0;
+  padding:0;
+  list-style:none}
+.scene-tabs .case-track li {
+  display:flex;
+  position:relative;
+  flex:1 0 auto;
+  align-items:center;
+  margin:0;
+  padding:0;
+  background:none;
+  color:var(--text2)}
+.scene-tabs .case-track li:not(:last-child)::after {
+  content:"";
+  flex:1 0 10px;
+  height:2px;
+  background:var(--line)}
+.scene-tabs .case-track li[data-completed="true"]::after {
+  background:var(--green)}
+.scene-tabs .case-track .track-label {
+  display:grid;
+  min-height:34px;
+  place-items:center;
+  padding:6px 10px;
   border:1px solid var(--line);
-  border-radius:6px;
-  background:transparent;
-  color:inherit;
-  font:inherit;
+  border-radius:999px;
+  background:var(--surface);
+  color:var(--text2);
   font-size:.82rem;
-  line-height:1.2;
+  white-space:nowrap;
   cursor:pointer}
-.scene-tabs button[aria-current="page"] {
-  background:var(--green);
+.scene-tabs .case-track .track-label:hover {
   border-color:var(--green);
+  background:var(--tint)}
+.scene-tabs .case-track li[data-completed="true"] .track-label {
+  border-color:var(--green);
+  color:var(--link)}
+.scene-tabs .case-track li[aria-current="step"] .track-label {
+  border-color:var(--green);
+  background:var(--green);
   color:var(--on-green);
   font-weight:600}
-.scene-tabs .done[aria-current="page"] .tab-number {
-  color:var(--on-green)}
+.scene-tabs .case-track li:last-child {
+  flex-grow:0}
 main {
   padding-top:32px}
 .visually-hidden {
@@ -547,19 +574,8 @@ main {
   overflow:hidden;
   clip:rect(0 0 0 0);
   white-space:nowrap}
-.scene-tabs .done .tab-number {
-  color:var(--link);
-  font-weight:700}
 @media(max-width:600px){.scene-tabs {
-  padding:8px 22px 0;
-  grid-template-columns:repeat(4,minmax(0,1fr))}
-.scene-tabs button {
-  padding:4px 6px;
-  font-size:.78rem}
-.scene-tabs .tab-number {
-  display:none}
-.scene-tabs .done .tab-number {
-  display:inline}}
+  padding:10px 22px 8px}}
 
 .theme-toggle {
   display:inline-flex;
@@ -622,72 +638,4 @@ main {
 .intro-module-card span {
   font-size: .9rem;
   color: var(--text2);
-}
-
-/* Bubble progression bar adapted from interactive-ophthalmology */
-.module-progress {
-  overflow-x: auto;
-  padding: 12px 2px 24px;
-  margin-top: 12px;
-  border-top: 1px solid var(--line);
-}
-.module-progress .case-track {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0;
-  min-width: max-content;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.module-progress .case-track li {
-  display: flex;
-  position: relative;
-  flex: 1 0 auto;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  background: none;
-  color: var(--text2);
-}
-.module-progress .case-track li:not(:last-child)::after {
-  content: "";
-  flex: 1 0 12px;
-  height: 2px;
-  background: var(--line);
-}
-.module-progress .case-track li[data-completed="true"]::after {
-  background: var(--green);
-}
-.module-progress .case-track .track-label {
-  display: grid;
-  min-height: 36px;
-  place-items: center;
-  padding: 6px 14px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--surface);
-  color: var(--text2);
-  font-size: .82rem;
-  white-space: nowrap;
-  cursor: pointer;
-}
-.module-progress .case-track .track-label:hover {
-  border-color: var(--green);
-  background: var(--tint);
-}
-.module-progress .case-track li[data-completed="true"] .track-label {
-  border-color: var(--green);
-  color: var(--link);
-}
-.module-progress .case-track li[aria-current="step"] .track-label {
-  border-color: var(--green);
-  background: var(--green);
-  color: var(--on-green);
-  font-weight: 600;
-}
-.module-progress .case-track li:last-child {
-  flex-grow: 0;
 }

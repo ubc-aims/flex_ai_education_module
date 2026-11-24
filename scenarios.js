@@ -1,11 +1,9 @@
 /* Adapted scripted scenarios from AI Modules, source revision retained offline. These are not recorded model outputs. */
 window.COURSE = {
   "objectives": [
-    "Use generative AI to organize medical concepts, test active recall, and refine clinical reasoning.",
-    "Evaluate AI outputs against primary clinical guidelines, study data, and institutional rules.",
-    "Apply privacy, consent, and documentation-verification standards when using clinical AI tools.",
-    "Maintain human scientific oversight across literature searching, study design, analysis, and disclosure.",
-    "Assess AI health tools for diagnostic performance, algorithmic bias, and equitable patient access."
+    "Judge when a study, clinical, or research task benefits from AI support versus direct primary sources.",
+    "Verify AI outputs against clinical guidelines, trial data, and institutional rules before acting on them.",
+    "Keep human judgment accountable for patient care, scientific decisions, and equitable health outcomes."
   ],
   "modules": [
     {
@@ -16,11 +14,11 @@ window.COURSE = {
       "duration": "Estimated 10–15 minutes",
       "sourceTab": "t.0",
       "objectives": [
-        "Use generative AI to organize complex medical information into useful learning frameworks.",
-        "Ask targeted follow-up questions to develop a deeper understanding of physiology and pathophysiology.",
-        "Identify potentially inaccurate or misleading AI-generated medical information and verify important claims.",
-        "Use AI to support active recall and clinical reasoning alongside passive review.",
-        "Recognize the limitations of AI in clinical decision-making and distinguish educational support from clinical authority."
+        "Turn scattered lecture notes into comparison tables that connect mechanisms, clinical clues, and initial tests.",
+        "Prompt for step-by-step cellular and physiological mechanisms when summary explanations skip causal links.",
+        "Spot confident false claims in chatbot answers and check them against primary reference texts.",
+        "Set up one-question-at-a-time case practice that withholds explanations until you attempt an answer.",
+        "Separate educational brainstorming from clinical authority when evaluating an individual patient."
       ],
       "scenes": [
         {
@@ -1155,12 +1153,11 @@ window.COURSE = {
       "duration": "Estimated 12–15 minutes",
       "sourceTab": "t.ldpzup5a7j34",
       "objectives": [
-        "Explain how ambient AI scribes convert clinical conversations into draft documentation.",
-        "Identify UBC's restrictions on AI scribes and generative AI for clinical documentation.",
-        "Recognize the importance of informed patient consent, privacy, and appropriate technology approval.",
-        "Identify clinically significant errors and omissions in AI-generated notes.",
-        "Understand the responsibilities of medical students and supervising physicians when AI tools are used.",
-        "Recognize how AI scribes may affect documentation skills, clinical reasoning, and the patient–physician relationship."
+        "Explain how ambient scribes turn spoken clinical conversations into draft encounter notes.",
+        "Apply UBC rules governing student use of ambient scribes and large language models in clinical documentation.",
+        "Obtain and document informed patient consent before recording an encounter, and respect refusals.",
+        "Audit draft notes against the encounter to catch fabricated findings, omissions, and unauthorized plans.",
+        "Fulfill student and preceptor sign-off duties while protecting clinical reasoning and the patient relationship."
       ],
       "scenes": [
         {
@@ -2204,13 +2201,11 @@ window.COURSE = {
       "duration": "Estimated 15–20 minutes",
       "sourceTab": "t.furte4vj53l4",
       "objectives": [
-        "Use AI to explore research questions and develop an initial understanding of unfamiliar literature.",
-        "Recognize the limitations of AI-assisted literature searching and citation generation.",
-        "Use AI to brainstorm research designs and methods while recognizing the need for methodological expertise.",
-        "Understand how AI can assist with statistical planning, R/SPSS syntax, and Excel formulas.",
-        "Identify errors in AI-generated data analysis and code.",
-        "Use AI appropriately for manuscript organization and language editing.",
-        "Recognize the importance of research integrity, transparency, disclosure, and independent learning."
+        "Draft initial search terms for unfamiliar topics while building reproducible database strategies with a librarian.",
+        "Structure PICO protocols and eligibility criteria with supervisor input.",
+        "Check extracted trial endpoints and effect sizes against published primary tables.",
+        "Match statistical models to outcome types and inspect analysis code for scale and formula mistakes.",
+        "Edit manuscript prose without altering verified results, and disclose tool usage under journal policies."
       ],
       "scenes": [
         {
@@ -3910,12 +3905,11 @@ window.COURSE = {
       "duration": "Estimated 15–20 minutes",
       "sourceTab": "t.j42zwwf8yssh",
       "objectives": [
-        "Explain how AI-assisted diabetic retinopathy screening may improve access to early disease detection.",
-        "Recognize limitations of AI diagnostic performance, including false negatives, false positives, and ungradable images.",
-        "Identify how training data and deployment settings can contribute to algorithmic bias.",
-        "Recognize important privacy, consent, and data-governance considerations.",
-        "Distinguish technological accessibility from equitable access to healthcare.",
-        "Explain the importance of accountability, patient follow-up, and evaluating real-world health outcomes."
+        "Describe how community retinal photography and automated screening fit into rural diabetic eye care.",
+        "Interpret screening sensitivity, false positives, false negatives, and ungradable images for patients.",
+        "Evaluate how training cohorts and cataract prevalence shape subgroup performance and algorithmic bias.",
+        "Protect patient data through authorized clinical systems and clear secondary-use governance.",
+        "Address travel, cost, and follow-up barriers so local screening translates into completed specialist care."
       ],
       "scenes": [
         {
