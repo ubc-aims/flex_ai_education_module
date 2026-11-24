@@ -1,0 +1,90 @@
+.conversation {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+  min-width: 0;
+}
+
+.conversation-turn {
+  max-width: 92%;
+  min-width: 0;
+  width: fit-content;
+  overflow-wrap: anywhere;
+  box-sizing: border-box;
+  justify-self: start;
+  padding: var(--space-md) 22px;
+  border: 1px solid var(--line);
+  border-radius: 14px 14px 14px 3px;
+  background: var(--surface);
+}
+
+.conversation-turn.turn-left {
+  justify-self: start;
+  background: var(--surface);
+  border-radius: 14px 14px 14px 3px;
+}
+
+.conversation-turn.turn-right {
+  justify-self: end;
+  background: var(--tint);
+  border-radius: 14px 14px 3px 14px;
+}
+
+.conversation-turn .speaker {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--link);
+  margin: 0 0 10px;
+}
+
+.conversation-turn p:last-child,
+.scene-narration p:last-child {
+  margin-bottom: 0;
+}
+
+.scene-narration {
+  color: var(--text2);
+  font-size: .94rem;
+  min-width: 0;
+}
+
+.conversation-turn pre,
+.conversation-turn .table-wrap {
+  max-width: 100%;
+}
+
+.conversation .table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.conversation .table-wrap table {
+  min-width: 680px;
+}
+
+.conversation .table-wrap th,
+.conversation .table-wrap td {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.chat-list {
+  padding-left: 22px;
+  margin: var(--space-sm) 0 var(--space-md);
+}
+
+.chat-list li {
+  margin: 4px 0;
+}
+
+@media (max-width: 600px) {
+  .conversation-turn {
+    max-width: 96%;
+    padding: 16px;
+  }
+
+  .conversation {
+    gap: 16px;
+  }
+}

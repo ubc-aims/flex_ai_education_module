@@ -144,8 +144,8 @@ function noteReview(q){
  const items=buildNoteSentences();
  const noteHtml=items.map(it=>it.heading?`<h3>${esc(it.text)}</h3>`:noteSentenceHtml(it.segs,q)).join('');
  const interactive=q&&q.multi&&answers[q.id]===undefined;
- const hint=interactive?'<p class="note-hint">Select text in the draft note below (drag to highlight or click a sentence) to mark inaccuracies, then choose <b>Check my review</b>.</p>':'';
- return `<div class="note-review"><section class="clinical-note"><div class="editor-bar"><span class="editor-title">draft_note.txt</span>${interactive?'<button type="button" class="text-button editor-clear" data-action="clear-note">Clear highlights</button>':''}</div><h2>AI-generated draft note</h2>${hint}<div class="clinical-note-editor">${noteHtml}</div></section><details class="encounter" open><summary>Encounter (reference transcript)</summary>${fullScene(all.slice(a+1,b))}</details></div>`;
+ const hint=interactive?'<p class="note-hint">Drag to select text to highlight it; drag again over a highlight to remove it.</p>':'';
+ return `<div class="note-review"><section class="clinical-note"><div class="editor-bar"><span class="editor-title">draft_note.txt</span>${interactive?'<button type="button" class="text-button editor-clear" data-action="clear-note">Clear highlights</button>':''}</div>${hint}<h2>AI-generated draft note</h2><div class="clinical-note-editor">${noteHtml}</div></section><details class="encounter" open><summary>Encounter (reference transcript)</summary>${fullScene(all.slice(a+1,b))}</details></div>`;
 }
 function calgaryFlow(m,n){
  const maps={
@@ -296,13 +296,14 @@ function fullScene(blocks){
 function lesson(m,sceneIndex,qIndex){
  const s=m.scenes[sceneIndex],q=s.questions[qIndex];current={m,scene:s,sceneIndex,qIndex,q};
  const count=s.questions.length>1?`Decision ${qIndex+1} of ${s.questions.length}`:'';
+ const qNav=s.questions.length>1?`<nav class="question-nav" aria-label="Question navigation"><button type="button" class="secondary question-nav-btn" data-action="prev-q" aria-label="Previous question"${qIndex===0?' disabled':''}>&lt;</button><span class="question-counter" aria-live="polite">${qIndex+1} / ${s.questions.length}</span><button type="button" class="secondary question-nav-btn" data-action="next-q" aria-label="Next question"${qIndex===s.questions.length-1?' disabled':''}>&gt;</button></nav>`:'';
  const answered=q&&answers[q.id]!==undefined;
  const learn=s.teaching;
  const teaching=`<section class="teaching" aria-label="Learn before applying"><p class="eyebrow">Learn</p><h2>${esc(learn.title)}</h2><p>${referenceText(learn.explanation)}</p><p class="application">${esc(learn.application)}</p>${calgaryFlow(m,sceneIndex)}${videoDropdown(m,sceneIndex)}</section>`;
  const note=m.id==='scribes'&&[2,3].includes(sceneIndex);
  const visual=m.id==='ethics'&&[0,3,5,6].includes(sceneIndex)?evidence(m,s,sceneIndex,q):'';
  const story=note?`${q?fullScene(q.before):textBlocks(s.reading.slice(0,s.reading.findIndex(b=>b.text==='Patient consultation'))) }${noteReview(q)}`:fullScene(q?q.before:s.reading);
- return `${count?`<p class="eyebrow">${count}</p>`:''}<h1>${esc(s.title)}</h1>${!answered?`${teaching}<section class="scenario" aria-label="Apply in the scenario"><div class="scenario-heading"><h2>Apply it: Alex’s story</h2>${q?'<button type="button" class="text-button" data-action="decision">Go to your decision ↓</button>':''}</div>${m.id==='scribes'&&[0,4].includes(sceneIndex)?policy():''}${story}${visual}</section>`:''}${answered&&q.multi?`<details open><summary>Compare the draft note and encounter again</summary>${noteReview(q)}</details>`:''}${q?questionView(q):`<div class="actions">${button('Continue','next')}</div>`}${sourceLinks(m)}<div class="back">${button('Back','go',qIndex?`${m.id}/${sceneIndex}/${qIndex-1}`:sceneIndex?`${m.id}/${sceneIndex-1}/${Math.max(0,m.scenes[sceneIndex-1].questions.length-1)}`:m.id,true)}</div>`;
+ return `${count?`<p class="eyebrow">${count}</p>`:''}<h1>${esc(s.title)}</h1>${!answered?`${teaching}<section class="scenario" aria-label="Apply in the scenario"><div class="scenario-heading"><h2>Apply it: Alex’s story</h2>${q?'<button type="button" class="text-button" data-action="decision">Go to your decision ↓</button>':''}</div>${m.id==='scribes'&&[0,4].includes(sceneIndex)?policy():''}${story}${visual}</section>`:''}${answered&&q.multi?`<details open><summary>Compare the draft note and encounter again</summary>${noteReview(q)}</details>`:''}${qNav}${q?questionView(q):`<div class="actions">${button('Continue','next')}</div>`}${sourceLinks(m)}<div class="back">${button('Back','go',qIndex?`${m.id}/${sceneIndex}/${qIndex-1}`:sceneIndex?`${m.id}/${sceneIndex-1}/${Math.max(0,m.scenes[sceneIndex-1].questions.length-1)}`:m.id,true)}</div>`;
 }
 function finish(m){return `<p class="eyebrow">${esc(m.label)}</p><h1>What Alex learned</h1><div class="closing">${textBlocks(m.summary)}</div><div class="actions">${button('Review this module','go',m.id)}${modules.indexOf(m)<modules.length-1?button('Next module','go',modules[modules.indexOf(m)+1].id,true):''}</div>${sourceLinks(m)}`;}
 function sources(m){return `<h1>Sources & about</h1><p>Made by Karanvir Gill, Arvin Zaker and Luka Vukovic.</p><p>Supervisors: Rohit, Ilker and Ricky.</p><h2>Foundational curriculum literature</h2><section class="reference"><a href="https://doi.org/10.1038/s41746-024-01307-1" target="_blank" rel="noopener noreferrer">Singla R, Pupic N, Ghaffarizadeh SA, Kim C, Hu R, Forster BB, Hacihaliloglu I. Developing a Canadian artificial intelligence medical curriculum using a Delphi study. NPJ Digit Med. 2024;7:323.</a><p class="ref-note">Establishes 82 Delphi-endorsed competencies across ethics, clinical application, communication and quality evaluation that inform these four modules.</p></section><h2>${esc(m.label)} references</h2>${m.references.map((r,i)=>`<section class="reference"><span class="ref-num">[${i+1}]</span> <a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.title)}</a></section>`).join('')}${m.id==='education'?'<p><a href="https://www.endocrine.org/clinical-practice-guidelines/primary-aldosteronism-2" target="_blank" rel="noopener noreferrer">Endocrine Society official guideline recommendations</a></p>':''}<div class="actions">${button('Back to module','go',m.id)}</div>`;}
@@ -321,7 +322,7 @@ function render(focusFeedback=false){
 function toggleNoteIndices(idxs){
  if(!current?.q?.multi||answers[current.q.id]!==undefined)return;
  let cur=selections[current.q.id]||[];
- for(const idx of idxs){cur=cur.includes(idx)?cur.filter(x=>x!==idx):[...cur,idx];}
+ for(const idx of new Set(idxs)){cur=cur.includes(idx)?cur.filter(x=>x!==idx):[...cur,idx];}
  selections[current.q.id]=cur;
  for(const el of main.querySelectorAll('.note-span[data-note-idx]')){
   const i=Number(el.dataset.noteIdx);
@@ -339,6 +340,8 @@ document.addEventListener('click',e=>{
  const b=e.target.closest('[data-action]');if(!b)return;const {action,value}=b.dataset;
  if(action==='decision'){const target=main.querySelector('.decision');target?.focus();target?.scrollIntoView({block:'start',behavior:'smooth'});return;}
  if(action==='tab'||action==='go'){closeRefPanel();go(value);return;}
+ if(action==='prev-q'&&current&&current.qIndex>0){go(`${current.m.id}/${current.sceneIndex}/${current.qIndex-1}`);return;}
+ if(action==='next-q'&&current&&current.qIndex<current.scene.questions.length-1){go(`${current.m.id}/${current.sceneIndex}/${current.qIndex+1}`);return;}
  if(action==='clear-note'&&current?.q?.multi){selections[current.q.id]=[];toggleNoteIndices([]);return;}
  if(action==='submit-note'&&current?.q?.multi){answers[current.q.id]=[...(selections[current.q.id]||[])];render(true);return;}
  if(action==='choose'&&current?.q){const n=Number(value);if(!current.q.choices[n])return;answers[current.q.id]=n;render(true);}
@@ -359,6 +362,10 @@ document.addEventListener('mouseup',e=>{
 });
 document.addEventListener('keydown',e=>{
  if(e.key==='Escape'){closeRefPanel();return;}
+ if(e.target.closest?.('.question-nav')&&current?.scene?.questions?.length>1){
+  if(e.key==='ArrowLeft'&&current.qIndex>0){e.preventDefault();go(`${current.m.id}/${current.sceneIndex}/${current.qIndex-1}`);return;}
+  if(e.key==='ArrowRight'&&current.qIndex<current.scene.questions.length-1){e.preventDefault();go(`${current.m.id}/${current.sceneIndex}/${current.qIndex+1}`);return;}
+ }
  if((e.key==='Enter'||e.key===' ')&&e.target.classList?.contains('note-span')&&e.target.dataset.noteIdx!==undefined){e.preventDefault();toggleNoteIndices([Number(e.target.dataset.noteIdx)]);}
 });
 document.addEventListener('submit',e=>{if(e.target.id!=='note-form'||!current?.q)return;e.preventDefault();answers[current.q.id]=[...new FormData(e.target).getAll('note-error')].map(Number);render(true);});
