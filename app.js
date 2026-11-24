@@ -14,19 +14,8 @@ const go = route => { if (location.hash === '#'+route) render(); else location.h
 const button = (text, action, value='', secondary=false) => `<button class="${secondary?'secondary':'primary'}" data-action="${action}" data-value="${esc(value)}">${esc(text)}</button>`;
 function save(){try{localStorage.setItem(key,JSON.stringify({completed:[...completed]}));}catch{/* The course also works without browser storage. */}}
 function resume(m){const n=m.scenes.findIndex(s=>!completed.has(s.id));return n<0?m.id+'/finish':m.id+'/'+n;}
-function citeSuperscripts(html,m=activeModule){
- return html.replace(/\[(\d+(?:,\s*\d+)*)\]/g,(_,nums)=>{
-  return nums.split(',').map(s=>s.trim()).map(n=>{
-   const ref=m?.references?.[Number(n)-1];
-   const href=ref?esc(ref.url):`#${m?.id||'education'}/sources`;
-   const extra=ref?' target="_blank" rel="noopener noreferrer"':'';
-   const title=ref?` title="${esc(ref.title)}"`:'';
-   return `<sup><a class="cite" href="${href}"${extra}${title}>[${esc(n)}]</a></sup>`;
-  }).join('');
- });
-}
-function referenceText(text,m=activeModule){
- const refs=modules.flatMap(mod=>mod.references);
+function referenceText(text){
+ const refs=modules.flatMap(m=>m.references);
  const aliases=[
  ['MDUP Use of Generative Artificial Intelligence (Gen AI) Guideline', 'MDUP Use of Generative'],
  ['Use of Large Language Models (LLMs) in Clinical Documentation Guideline','Use of Large Language Models'],
@@ -37,8 +26,8 @@ function referenceText(text,m=activeModule){
  ];
  let result='',rest=text;
  while(rest){let best=null;for(const [label,prefix] of aliases){const at=rest.indexOf(label);if(at>=0&&(!best||at<best.at||(at===best.at&&label.length>best.label.length)))best={at,label,prefix};}
- if(!best){result+=citeSuperscripts(esc(rest),m);break;}
- const ref=refs.find(r=>r.title.includes(best.prefix));result+=citeSuperscripts(esc(rest.slice(0,best.at)),m);result+=ref?`<a href="${esc(ref.url)}" target="_blank" rel="noopener noreferrer">${esc(best.label)}</a>`:esc(best.label);rest=rest.slice(best.at+best.label.length);
+ if(!best){result+=esc(rest);break;}
+ const ref=refs.find(r=>r.title.includes(best.prefix));result+=esc(rest.slice(0,best.at));result+=ref?`<a href="${esc(ref.url)}" target="_blank" rel="noopener noreferrer">${esc(best.label)}</a>`:esc(best.label);rest=rest.slice(best.at+best.label.length);
  }
  return result;
 }
@@ -52,7 +41,7 @@ function textBlocks(blocks){
   if(t==='library(meta)'||t.startsWith('library(meta)'))code=true;
   if(code){codeLines.push(t);if(t==='forest(result)')flush();continue;}
   if(t==='Story continues'||t==='Story continues')continue;
-  if(/^(SE <-|=LN\(|=\(LN\(|log_HR <-|result <-|forest\()/.test(t)){html+=`<pre class="code-view"><code>${esc(t)}</code></pre>`;continue;}
+  if(/^(SE <-|=LN\(|=\(LN\(|log_HR <-)/.test(t)){html+=`<pre class="code-view"><code>${esc(t)}</code></pre>`;continue;}
   html+=b.heading?`<h3>${esc(t.replace(/^Key takeaway displayed$/,'Takeaway'))}</h3>`:`<p>${referenceText(t)}</p>`;
  }
  flush();return html;
@@ -62,71 +51,14 @@ function sourceLinks(m){
  const links=m.id==='education'?[{title:'Endocrine Society: primary aldosteronism, recommendations 1–3',url:'https://www.endocrine.org/clinical-practice-guidelines/primary-aldosteronism-2'},m.references[0]]:m.id==='scribes'?m.references.slice(0,3):m.id==='research'?[{title:'Cochrane Handbook: effect measures and standard errors, §§6.3.2 and 6.8',url:'https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-06'},m.references.at(-1)]:[{title:'Privacy regulators: responsible AI in health',url:'https://www.priv.gc.ca/en/about-the-opc/what-we-do/provincial-and-territorial-collaboration/joint-resolutions-with-provinces-and-territories/res_20260915_aihealth'},m.references[4]];
  return `<details class="sources"><summary>References for this module</summary>${links.filter(Boolean).map(r=>`<p><a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.title)}</a></p>`).join('')}<a href="#${m.id}/sources">All references & about</a></details>`;
 }
-function introduction(m){
- const courseObj=(window.COURSE.objectives||[]).map(v=>`<li>${esc(v)}</li>`).join('');
- const modObj=m.objectives.map(v=>`<li>${esc(v)}</li>`).join('');
- return `<h1>${esc(m.title)}</h1><p class="lead">${esc(m.description)}</p>${m.background.map(p=>`<p>${esc(p)}</p>`).join('')}<section class="objectives-box" aria-label="Module learning objectives"><h2>Module learning objectives</h2><ul>${modObj}</ul></section><section class="objectives-box" aria-label="Course learning objectives"><h2>Course learning objectives</h2><ul>${courseObj}</ul></section><p class="learning-route">Read the principle, apply it in Alex’s story, then use the feedback to check your reasoning.</p>${m.id==='scribes'?policy():''}<div class="actions">${button(completed.size&&m.scenes.some(s=>completed.has(s.id))?'Resume this module':'Start this module','go',resume(m))}</div>${sourceLinks(m)}`;
-}
-const noteTargets=[
- ['Denies chest pain, dyspnea, dizziness, or syncope.',0],
- ['Reports excellent medication adherence.',1],
- ['Neurological: Cranial nerves II–XII intact. Normal gait. No focal neurological deficits.',2],
- ['Increase ramipril to 10 mg daily.',3],
- ['Home blood pressure averages 135/85 mmHg.',4]
-];
-function interactiveNoteHtml(blocks,q){
- const picked=selections[q.id]||[];
- const renderText=t=>{
-  let out=t;
-  const matched=noteTargets.filter(([s])=>out.includes(s)).sort((a,b)=>t.indexOf(a[0])-t.indexOf(b[0]));
-  if(!matched.length)return `<p>${esc(t)}</p>`;
-  const parts=[];let rest=t;
-  for(const [sentence,idx] of matched){
-   const at=rest.indexOf(sentence);if(at<0)continue;
-   if(at>0)parts.push(`<p>${esc(rest.slice(0,at).trim())}</p>`);
-   parts.push(`<label class="note-sentence"><input type="checkbox" form="note-form" name="note-error" value="${idx}" ${picked.includes(idx)?'checked':''}><span>${esc(sentence)}</span><span class="note-tag">Flagged</span></label>`);
-   rest=rest.slice(at+sentence.length).trim();
-  }
-  if(rest)parts.push(`<p>${esc(rest)}</p>`);
-  return parts.join('');
- };
- return blocks.map(b=>b.heading?`<h3>${esc(b.text)}</h3>`:renderText(b.text)).join('');
-}
-function noteReview(interactive=false,q=null){
+function introduction(m){return `<h1>${esc(m.title)}</h1><p class="lead">${esc(m.description)}</p>${m.background.map(p=>`<p>${esc(p)}</p>`).join('')}<p class="learning-route">Read the principle, apply it in Alex’s story, then use the feedback to check your reasoning.</p>${m.id==='scribes'?policy():''}<div class="actions">${button(completed.size&&m.scenes.some(s=>completed.has(s.id))?'Resume this module':'Start this module','go',resume(m))}</div><details><summary>What you will practise</summary><ul>${m.objectives.map(v=>`<li>${esc(v)}</li>`).join('')}</ul></details>${sourceLinks(m)}`;}
+function noteReview(){
  const s=modules.find(m=>m.id==='scribes').scenes[2];
  const all=s.reading;const a=all.findIndex(b=>b.text==='Simulated consultation'),b=all.findIndex(b=>b.text==='Story continues'),n=all.findIndex(b=>b.text==='AI-generated draft note');
- const noteBlocks=all.slice(n+1);
- const noteBody=interactive&&q?interactiveNoteHtml(noteBlocks,q):textBlocks(noteBlocks);
- return `<div class="note-review"><section class="clinical-note"><h2>AI-generated draft note${interactive?' · click statements to flag errors':''}</h2>${noteBody}</section><details class="encounter" open><summary>Encounter transcript</summary>${fullScene(all.slice(a+1,b))}</details></div>`;
-}
-function flowchartFor(m,n){
- const charts={
-  'education-0':{title:'Calgary Guide map: organizing secondary hypertension',branches:[['Renal parenchymal','Impaired Na+ excretion / RAAS','Creatinine, urinalysis, albumin'],['Primary aldosteronism','Autonomous aldosterone secretion','Aldosterone, renin, ARR'],['Obstructive sleep apnea','Intermittent hypoxia & sympathetic tone','Sleep history & sleep testing'],['Pheochromocytoma','Excess catecholamine secretion','Plasma/urine metanephrines']]},
-  'education-1':{title:'Pathophysiology pathway: primary aldosteronism',steps:[['1. Autonomous aldosterone','Excess aldosterone independent of renin/angiotensin II'],['2. Principal cell channels','Upregulates apical ENaC Na+ channels and basolateral Na+/K+-ATPase'],['3. Lumen-negative potential','Na+ reabsorption creates negative lumen charge pulling K+ and H+ out'],['4. Clinical pattern','Hypertension, hypokalemia, and metabolic alkalosis']]},
-  'education-2':{title:'Clinical verification pathway: aldosterone-renin ratio (ARR)',steps:[['1. Screen high-risk HTN','Resistant HTN, hypokalemia, or adrenal incidentaloma'],['2. Control test conditions','Draw morning sample; check interfering antihypertensives'],['3. Interpret ARR & renin','Elevated ARR with suppressed renin points toward primary aldosteronism'],['4. Confirm before surgery','Confirmatory testing and specialist workup per guideline [2]']]},
-  'scribes-0':{title:'UBC MDUP AI scribe decision pathway',steps:[['Years 1–3','No independent ambient AI scribing permitted [1]'],['Year 4 electives','Exceptional use requires lead approval, preceptor agreement, and consent [1]'],['Student-authored note','Students must write their own clinical documentation [2]']]},
-  'scribes-3':{title:'Clinical note verification workflow',steps:[['1. Read AI draft note','Review subjective, objective, assessment, and plan first'],['2. Cross-check encounter','Compare every symptom, exam finding, and plan against what occurred'],['3. Flag discrepancies','Catch omitted symptoms, invented exams, and unauthorized orders'],['4. Clinician sign-off','Correct inaccuracies before finalizing any record']]},
-  'research-0':{title:'PRISMA 2020 literature search pathway',steps:[['1. Brainstorm concepts','Use AI to map synonyms and PICO vocabulary'],['2. Multi-database search','Run structured queries in MEDLINE, Embase, and Cochrane'],['3. Deduplicate & screen','Track records identified, screened, and excluded [3]'],['4. Reproducible record','Archive exact search strings and dates']]},
-  'research-1':{title:'PRISMA-P study design pathway',steps:[['1. Define PICO','Specify population, intervention, comparator, and outcomes'],['2. Pre-specify protocol','Document eligibility and endpoints before screening [4]'],['3. Separate outcomes','Keep mortality, hospitalization, and renal endpoints distinct'],['4. Supervisor review','Confirm scope with Dr. Lee before extraction']]}
- };
- const c=charts[`${m.id}-${n}`];if(!c)return '';
- if(c.branches)return `<section class="flowchart" aria-label="${esc(c.title)}"><h3>${esc(c.title)}</h3><div class="flow-branches">${c.branches.map(([a,b,d])=>`<div class="flow-branch"><strong>${esc(a)}</strong><span class="flow-arrow" aria-hidden="true">→</span><span>${esc(b)}</span><span class="flow-arrow" aria-hidden="true">→</span><span>${esc(d)}</span></div>`).join('')}</div></section>`;
- return `<section class="flowchart" aria-label="${esc(c.title)}"><h3>${esc(c.title)}</h3><ol class="flow-steps">${c.steps.map(([t,d],i)=>`<li class="flow-step${i===c.steps.length-1?' warn':''}"><strong>${esc(t)}</strong><span>${referenceText(d,m)}</span></li>`).join('')}</ol></section>`;
-}
-function videoFor(m,n){
- const vids={
-  'education-0':{id:'FqS7vG1V8g8',title:'Ninja Nerd: Hypertension — Secondary Causes & Pathophysiology'},
-  'education-1':{id:'kgawuPx3Brs',title:'Ninja Nerd: Hyperaldosteronism | Clinical Medicine'},
-  'scribes-0':{id:'0jCVSTZGnjE',title:'AMA: AI Scribes for Clinicians — How Ambient Listening Works'},
-  'research-0':{id:'KeKpVgydlAQ',title:'PRISMA Literature Review — Flow Chart & Example'},
-  'ethics-3':{id:'KU8r-YaGChw',title:'TEDMED Clearly: What Is Algorithmic Bias?'}
- };
- const v=vids[`${m.id}-${n}`];if(!v)return '';
- return `<details class="video-dropdown"><summary>Watch explainer video: ${esc(v.title)}</summary><div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/${esc(v.id)}" title="${esc(v.title)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><p class="quiet"><a href="https://www.youtube.com/watch?v=${esc(v.id)}" target="_blank" rel="noopener noreferrer">Open video on YouTube</a></p></details>`;
+ return `<div class="note-review"><details class="encounter" open><summary>Encounter</summary>${fullScene(all.slice(a+1,b))}</details><section class="clinical-note"><h2>AI-generated draft note</h2>${textBlocks(all.slice(n+1))}</section></div>`;
 }
 function evidence(m,s,n,q){
- if(m.id==='scribes'&&(n===2||n===3))return noteReview(n===3&&q&&answers[q.id]===undefined,q);
- if(m.id==='ethics'&&n===1)return `<section class="equity-comparison"><h2>Screening metrics at a glance</h2><div class="stats-grid"><div><strong>Sensitivity</strong>Proportion with disease who test positive.</div><div><strong>Specificity</strong>Proportion without disease who test negative.</div><div><strong>PPV / NPV</strong>Probability a positive or negative result is true.</div><div><strong>NNT / NNH</strong>Patients managed for one added benefit or harm.</div></div></section>`;
+ if(m.id==='scribes'&&(n===2||n===3))return noteReview();
  if(m.id==='ethics'&&n===5)return `<ol class="journey"><li><b>Screen locally</b><span>Retinal photographs near home</span></li><li><b>Referral recommended</b><span>Further assessment is needed</span></li><li class="barrier"><b>Almost four hours away</b><span>Travel, lost wages and transport still prevent attendance</span></li></ol>`;
  if(m.id==='ethics'&&n===6)return `<section class="dashboard" aria-label="Program results"><p class="quiet">Results · six months</p><div><p><strong>400</strong>screened</p><p><strong>60</strong>referral recommended</p><p><strong>24 / 60</strong>completed follow-up</p></div><p>36 had not completed follow-up by the reporting date. Completion was 40%; timing and urgency also matter.</p></section>`;
  if(m.id==='ethics'&&n===0)return `<ol class="journey"><li><b>Photographs near home</b><span>A trained worker captures retinal images.</span></li><li><b>AI screening result</b><span>The system assesses images within its intended use.</span></li><li><b>Follow-up pathway</b><span>The clinic communicates results and arranges further assessment when indicated.</span></li></ol>`;
@@ -158,7 +90,7 @@ function featuredContinuation(q){
  if(q.id==='education-2-1')return `<section class="featured-continuation"><h2>Alex follows the mechanism</h2><p class="chat-label">AI response after the suggested prompt</p>${fullScene([{type:'text',text:'AI response',heading:true},...excerpt(b,'AI response after choosing A')])}</section>`;
  if(q.id==='education-3-1')return `<section class="featured-continuation"><h2>Alex checks and revises the reply</h2>${dialogue(b)}<p class="chat-label">Corrected AI response</p>${fullScene([{type:'text',text:'AI response',heading:true},...excerpt(b,'Corrected AI response')])}</section>`;
  if(q.id==='research-2-1'){const table=b.find(x=>x.type==='table');return `<section class="featured-continuation"><h2>A framework to discuss with Dr. Lee</h2>${table?textBlocks([table]):''}<p><b>Discuss before proceeding:</b> the EF threshold, mixed populations, outcome definitions and whether existing reviews already answer the question.</p></section>`;}
- if(q.id==='research-5-1')return `<section class="formula-check"><h2>Prompting checklist for established packages</h2><ul><li>Name the peer-reviewed package and function (such as <code>meta::metagen</code>).</li><li>Specify exact column names and measurement scales (natural log HR and SE).</li><li>Verify package arguments and outputs with a supervisor before reporting.</li></ul></section>`;
+ if(q.id==='research-5-1')return `<section class="formula-check"><h2>Check the scale of the calculation</h2><p>For the illustrated normal-approximation 95% confidence interval:</p><p><b>Incorrect for a log hazard ratio</b></p><pre class="code-view incorrect-code">SE &lt;- (upper_CI - lower_CI) / (2 * 1.96)</pre><p><b>Use the logarithmic limits</b></p><pre class="code-view correct-code">SE &lt;- (log(upper_CI) - log(lower_CI)) / (2 * 1.96)</pre></section>`;
  if(q.id==='research-6-1'){const a=b.findIndex(x=>x.text==="Alex's original paragraph:"),z=b.findIndex(x=>x.text==='AI-edited version:');return `<section class="featured-continuation"><h2>Compare the wording</h2><div class="writing-comparison"><article><h3>Alex’s draft</h3><p>${esc(b[a+1].text)}</p></article><article><h3>AI-edited draft</h3><p>${esc(b[z+1].text)}</p></article></div><p>Check that the edited version preserves the verified findings and uncertainty.</p></section>`;}
  return '';
 }
@@ -174,16 +106,16 @@ function continuation(q){
 }
 function questionView(q){
  const answer=answers[q.id];
- if(answer===undefined){if(q.multi)return `<form id="note-form" class="decision" tabindex="-1"><fieldset><legend>${esc(q.question)} Highlight the statements in the AI-generated draft note above, then submit your review.</legend></fieldset><div class="actions"><button class="primary" type="submit">Check my review</button></div></form>`;
+ if(answer===undefined){if(q.multi)return `<form id="note-form" class="decision" tabindex="-1"><fieldset><legend>${esc(q.question)}</legend>${q.choices.map((c,i)=>`<label class="check-choice"><input type="checkbox" name="note-error" value="${i}" ${selections[q.id]?.includes(i)?'checked':''}><span>${esc(c.text)}</span></label>`).join('')}</fieldset><div class="actions"><button class="primary" type="submit">Check my review</button></div></form>`;
  return `<section class="decision" tabindex="-1"><p class="eyebrow">Your turn · Choose one response</p><h2>${esc(q.question)}</h2><div class="choices">${q.choices.map((c,i)=>button(c.text,'choose',i,true)).join('')}</div></section>`;}
  const correct=q.multi?q.correct.length===answer.length&&q.correct.every(i=>answer.includes(i)):answer===q.correct;
- const why=q.multi?'<p>Compare each selection with the encounter.</p>'+q.choices.map((c,i)=>{const matched=answer.includes(i)===q.correct.includes(i);return `<div class="review-item ${matched?'matched':'missed'}"><h3>${matched?'Correct':'Incorrect'} · ${q.correct.includes(i)?'This is a documentation error':'This was documented accurately'}</h3><p>${referenceText(c.feedback)}</p></div>`;}).join(''):`<p class="chosen"><b>Your choice</b><br>${esc(q.choices[answer].text)}</p><p>${referenceText(q.choices[answer].feedback)}</p>`;
+ const why=q.multi?'<p>Compare each selection with the encounter.</p>'+q.choices.map((c,i)=>{const matched=answer.includes(i)===q.correct.includes(i);return `<div class="review-item ${matched?'matched':'missed'}"><h3>${matched?'Correct':'Incorrect'} · ${q.correct.includes(i)?'This is a documentation error':'This was documented accurately'}</h3><p>${esc(c.feedback)}</p></div>`;}).join(''):`<p class="chosen"><b>Your choice</b><br>${esc(q.choices[answer].text)}</p><p>${esc(q.choices[answer].feedback)}</p>`;
  return `<section class="result ${correct?'correct':'incorrect'}" id="feedback" tabindex="-1" role="status"><h2>${correct?'Correct':'Incorrect'}</h2>${why}${!correct&&!q.multi?`<p><b>Best approach</b><br>${esc(q.choices[q.correct].text)}</p>`:''}</section>${continuation(q)}<div class="actions">${button('Continue','next')}${button('Try again','retry','',true)}</div>`;
 }
 function chatBody(blocks){
  if(blocks.some(b=>(b.text||'').startsWith('library(meta)')))return textBlocks(blocks);
  let html='',run=[];
- const flush=()=>{html+=run.length>=3?`<ul class="chat-list">${run.map(b=>`<li>${referenceText(b.text)}</li>`).join('')}</ul>`:textBlocks(run);run=[];};
+ const flush=()=>{html+=run.length>=3?`<ul class="chat-list">${run.map(b=>`<li>${esc(b.text)}</li>`).join('')}</ul>`:textBlocks(run);run=[];};
  for(const b of blocks){if(b.type==='text'&&!b.heading&&b.text.length<90&&!/[.!?:]$/.test(b.text)&&!/[<>=#()]/.test(b.text))run.push(b);else{flush();html+=textBlocks([b]);}}
  flush();return html;
 }
@@ -211,14 +143,14 @@ function lesson(m,sceneIndex,qIndex){
  const count=s.questions.length>1?`Decision ${qIndex+1} of ${s.questions.length}`:'';
  const answered=q&&answers[q.id]!==undefined;
  const learn=s.teaching;
- const teaching=`<section class="teaching" aria-label="Learn before applying"><p class="eyebrow">Learn</p><h2>${esc(learn.title)}</h2><p>${referenceText(learn.explanation,m)}</p><p class="application">${referenceText(learn.application,m)}</p></section>`;
+ const teaching=`<section class="teaching" aria-label="Learn before applying"><p class="eyebrow">Learn</p><h2>${esc(learn.title)}</h2><p>${esc(learn.explanation)}</p><p class="application">${esc(learn.application)}</p></section>`;
  const note=m.id==='scribes'&&[2,3].includes(sceneIndex);
- const visual=(m.id==='ethics'&&[0,1,3,5,6].includes(sceneIndex)?evidence(m,s,sceneIndex,q):'')+flowchartFor(m,sceneIndex)+videoFor(m,sceneIndex);
- const story=note?`${q?fullScene(q.before):textBlocks(s.reading.slice(0,s.reading.findIndex(b=>b.text==='Simulated consultation'))) }${noteReview(sceneIndex===3&&!answered,q)}`:fullScene(q?q.before:s.reading);
- return `${count?`<p class="eyebrow">${count}</p>`:''}<h1>${esc(s.title)}</h1>${!answered?`${teaching}<section class="scenario" aria-label="Apply in the scenario"><div class="scenario-heading"><h2>Apply it: Alex’s story</h2>${q?'<button type="button" class="text-button" data-action="decision">Go to your decision ↓</button>':''}</div>${m.id==='scribes'&&[0,4].includes(sceneIndex)?policy():''}${story}${visual}</section>`:''}${answered&&q.multi?`<details open><summary>Compare the encounter and draft again</summary>${noteReview(false,q)}</details>`:''}${q?questionView(q):`<div class="actions">${button('Continue','next')}</div>`}${sourceLinks(m)}<div class="back">${button('Back','go',qIndex?`${m.id}/${sceneIndex}/${qIndex-1}`:sceneIndex?`${m.id}/${sceneIndex-1}/${Math.max(0,m.scenes[sceneIndex-1].questions.length-1)}`:m.id,true)}</div>`;
+ const visual=m.id==='ethics'&&[0,3,5,6].includes(sceneIndex)?evidence(m,s,sceneIndex,q):'';
+ const story=note?`${q?fullScene(q.before):textBlocks(s.reading.slice(0,s.reading.findIndex(b=>b.text==='Simulated consultation'))) }${noteReview()}`:fullScene(q?q.before:s.reading);
+ return `${count?`<p class="eyebrow">${count}</p>`:''}<h1>${esc(s.title)}</h1>${!answered?`${teaching}<section class="scenario" aria-label="Apply in the scenario"><div class="scenario-heading"><h2>Apply it: Alex’s story</h2>${q?'<button type="button" class="text-button" data-action="decision">Go to your decision ↓</button>':''}</div>${m.id==='scribes'&&[0,4].includes(sceneIndex)?policy():''}${story}${visual}</section>`:''}${answered&&q.multi?`<details open><summary>Compare the encounter and draft again</summary>${noteReview()}</details>`:''}${q?questionView(q):`<div class="actions">${button('Continue','next')}</div>`}${sourceLinks(m)}<div class="back">${button('Back','go',qIndex?`${m.id}/${sceneIndex}/${qIndex-1}`:sceneIndex?`${m.id}/${sceneIndex-1}/${Math.max(0,m.scenes[sceneIndex-1].questions.length-1)}`:m.id,true)}</div>`;
 }
 function finish(m){return `<p class="eyebrow">${esc(m.label)}</p><h1>What Alex learned</h1><div class="closing">${textBlocks(m.summary)}</div><div class="actions">${button('Review this module','go',m.id)}${modules.indexOf(m)<modules.length-1?button('Next module','go',modules[modules.indexOf(m)+1].id,true):''}</div>${sourceLinks(m)}`;}
-function sources(m){return `<h1>Sources & about</h1><p>Made by Karanvir Gill, Arvin Zaker and Luka Vukovic.</p><h2>Foundational medical education literature</h2><section class="reference"><a href="https://doi.org/10.1038/s41746-024-01307-1" target="_blank" rel="noopener noreferrer">Singla R, Pupic N, Ghaffarizadeh SA, Kim C, Hu R, Forster BB, Hacihaliloglu I. Developing a Canadian artificial intelligence medical curriculum using a Delphi study. NPJ Digit Med. 2024;7:323.</a></section><section class="reference"><a href="https://doi.org/10.1097/ACM.0000000000005439" target="_blank" rel="noopener noreferrer">Boscardin CK, Gin B, Golde PB, Hauer KE. ChatGPT and Generative Artificial Intelligence for Medical Education: Potential Impact and Opportunity. Acad Med. 2024;99(1):22-27.</a></section><section class="reference"><a href="https://doi.org/10.1056/NEJMp2304993" target="_blank" rel="noopener noreferrer">Cooper A, Rodman A. AI and Medical Education: A 21st-Century Pandora's Box. N Engl J Med. 2023;389(5):385-387.</a></section><section class="reference"><a href="https://doi.org/10.1038/s41746-018-0061-1" target="_blank" rel="noopener noreferrer">Kolachalama VB, Garg PS. Machine learning and medical education. NPJ Digit Med. 2018;1:54.</a></section><h2>${esc(m.label)} references</h2><ol class="ref-list">${m.references.map(r=>`<li><a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.title)}</a></li>`).join('')}</ol>${m.id==='education'?'<p><a href="https://www.endocrine.org/clinical-practice-guidelines/primary-aldosteronism-2" target="_blank" rel="noopener noreferrer">Endocrine Society official guideline recommendations</a></p>':''}<div class="actions">${button('Back to module','go',m.id)}</div>`;}
+function sources(m){return `<h1>Sources & about</h1><p>Made by Karanvir Gill, Arvin Zaker and Luka Vukovic.</p><h2>Related work</h2><section class="reference"><a href="https://doi.org/10.1038/s41746-024-01307-1" target="_blank" rel="noopener noreferrer">Singla R, Pupic N, Ghaffarizadeh SA, Kim C, Hu R, Forster BB, Hacihaliloglu I. Developing a Canadian artificial intelligence medical curriculum using a Delphi study. NPJ Digit Med. 2024;7:323.</a></section><h2>${esc(m.label)} references</h2>${m.references.map(r=>`<section class="reference"><a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.title)}</a></section>`).join('')}${m.id==='education'?'<p><a href="https://www.endocrine.org/clinical-practice-guidelines/primary-aldosteronism-2" target="_blank" rel="noopener noreferrer">Endocrine Society official guideline recommendations</a></p>':''}<div class="actions">${button('Back to module','go',m.id)}</div>`;}
 function render(focusFeedback=false){
  current=null;const [id,step,qraw='0']=location.hash.slice(1).split('/');const m=modules.find(m=>m.id===id)||modules[0];activeModule=m;let html;
  if(step==='sources')html=sources(m);else if(step==='finish')html=finish(m);else if(step!==undefined&&/^\d+$/.test(step)&&Number(step)<m.scenes.length){const n=Number(step);const qi=/^\d+$/.test(qraw)&&Number(qraw)<Math.max(1,m.scenes[n].questions.length)?Number(qraw):0;html=lesson(m,n,qi);}else html=introduction(m);
@@ -234,7 +166,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-action]');
  else if(action==='retry'&&current?.q){delete answers[current.q.id];render();}
  else if(action==='next'&&current){const {m,scene,sceneIndex,qIndex,q}=current;if(q&&answers[q.id]===undefined)return;if(qIndex<scene.questions.length-1)go(`${m.id}/${sceneIndex}/${qIndex+1}`);else{completed.add(scene.id);save();go(sceneIndex<m.scenes.length-1?`${m.id}/${sceneIndex+1}`:m.id+'/finish');}}
 });
-document.addEventListener('submit',e=>{if(e.target.id!=='note-form'||!current?.q)return;e.preventDefault();answers[current.q.id]=[...document.querySelectorAll('[name="note-error"]:checked')].map(x=>Number(x.value));render(true);});
+document.addEventListener('submit',e=>{if(e.target.id!=='note-form'||!current?.q)return;e.preventDefault();answers[current.q.id]=[...new FormData(e.target).getAll('note-error')].map(Number);render(true);});
 document.addEventListener('change',e=>{if(e.target.name==='note-error'&&current?.q)selections[current.q.id]=[...document.querySelectorAll('[name="note-error"]:checked')].map(x=>Number(x.value));});
 tabs.addEventListener('keydown',e=>{const list=[...tabs.querySelectorAll('[role="tab"]')];const i=list.indexOf(document.activeElement);if(i<0)return;let n;if(e.key==='ArrowRight')n=(i+1)%list.length;else if(e.key==='ArrowLeft')n=(i+list.length-1)%list.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=list.length-1;else return;e.preventDefault();pendingTabFocus=modules[n].id;go(modules[n].id);});
 document.querySelector('#reset').addEventListener('click',()=>{for(const s of activeModule.scenes){completed.delete(s.id);for(const q of s.questions){delete answers[q.id];delete selections[q.id];}}save();go(activeModule.id);});
