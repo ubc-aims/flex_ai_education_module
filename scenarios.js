@@ -1,4 +1,4 @@
-/* Adapted scripted scenarios from AI Modules, source revision retained offline. These are not recorded model outputs. */
+/* Four interactive modules for medical students on working with AI responsibly. */
 window.COURSE = {
   "objectives": [
     "Judge when a study, clinical, or research task benefits from AI support versus direct primary sources.",
@@ -1235,17 +1235,17 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "MDUP Use of Generative Artificial Intelligence (Gen AI) Guideline, January 19, 2026.",
+                  "text": "MDUP Use of Generative Artificial Intelligence (Gen AI) Guideline, January 19, 2026 [1].",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Use of Large Language Models (LLMs) in Clinical Documentation Guideline, January 19, 2026.",
+                  "text": "Use of Large Language Models (LLMs) in Clinical Documentation Guideline, January 19, 2026 [2].",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Expectations of Medical Students in Supervised Clinical Settings Policy, May 11, 2026.",
+                  "text": "Expectations of Medical Students in Supervised Clinical Settings Policy, May 11, 2026 [3].",
                   "heading": false
                 },
                 {
@@ -1255,7 +1255,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "For this simulated scenario, Dr. Chen explains that the relevant educational lead has already approved an exceptional, supervised Year 4 learning experience involving the clinic's authorized ambient scribe.",
+                  "text": "In this scenario, Dr. Chen explains that the relevant educational lead has already approved an exceptional, supervised Year 4 learning experience involving the clinic's authorized ambient scribe.",
                   "heading": false
                 },
                 {
@@ -1265,7 +1265,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Alex will observe the physician's workflow and practise reviewing a simulated AI-generated note. Alex will continue to develop independent documentation skills and will not use a general-purpose LLM to write or edit student notes.",
+                  "text": "Alex will observe the physician's workflow and practise reviewing an AI-generated note. Alex will continue to develop independent documentation skills and will not use a general-purpose LLM to write or edit student notes.",
                   "heading": false
                 },
                 {
@@ -1499,7 +1499,7 @@ window.COURSE = {
             },
             {
               "type": "text",
-              "text": "Simulated consultation",
+              "text": "Patient consultation",
               "heading": true
             },
             {
@@ -1579,7 +1579,7 @@ window.COURSE = {
             },
             {
               "type": "text",
-              "text": "Dr. Chen asks Alex to examine the simulated output and compare it with the consultation.",
+              "text": "Dr. Chen asks Alex to examine the draft note and compare it with the consultation.",
               "heading": false
             },
             {
@@ -2249,7 +2249,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Simulated AI response",
+                  "text": "AI response",
                   "heading": true
                 },
                 {
@@ -2334,7 +2334,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Reference: PRISMA 2020; UBC Library FLEX Research Guide.",
+                  "text": "Reference: PRISMA 2020 [3]; UBC Library FLEX AI Guide [1]; UBC Library FLEX Research Guide [2].",
                   "heading": false
                 }
               ],
@@ -2430,7 +2430,7 @@ window.COURSE = {
           "reading": [],
           "teaching": {
             "title": "Use an overview as a starting point",
-            "explanation": "A chatbot’s summary can help you learn vocabulary and draft search concepts. Under PRISMA 2020, a systematic review requires a transparent, reproducible search record across databases so another researcher can repeat it. A plausible list of papers is not that search record.",
+            "explanation": "A chatbot’s summary can help you learn vocabulary and draft search concepts. Under PRISMA 2020 [3], a systematic review requires a transparent, reproducible search record across databases so another researcher can repeat it. A plausible list of papers is not that search record.",
             "application": "Decide how Alex should move from a general overview to finding the evidence systematically."
           }
         },
@@ -2471,7 +2471,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Simulated AI response",
+                  "text": "AI response",
                   "heading": true
                 },
                 {
@@ -2558,7 +2558,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "References: PRISMA-P; Cochrane Handbook; Cochrane RoB 2.",
+                  "text": "References: PRISMA-P [4]; Cochrane Handbook [5]; Cochrane RoB 2 [6].",
                   "heading": false
                 }
               ],
@@ -2644,7 +2644,7 @@ window.COURSE = {
           "reading": [],
           "teaching": {
             "title": "Define what question the review answers",
-            "explanation": "PICO means population, intervention, comparator and outcomes. PRISMA-P guides pre-specified review protocols before screening begins so eligibility and outcomes are locked in early. Similar-sounding outcomes can measure different things.",
+            "explanation": "PICO means population, intervention, comparator and outcomes. PRISMA-P [4] guides pre-specified review protocols before screening begins so eligibility and outcomes are locked in early. Similar-sounding outcomes can measure different things.",
             "application": "Look for where the proposed plan changes Alex’s population or combines outcomes that need separate consideration."
           }
         },
@@ -2773,7 +2773,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Reference: Anker et al., EMPEROR-Preserved, 2021.",
+                  "text": "Reference: Anker et al., EMPEROR-Preserved, 2021 [7]; Solomon et al., DELIVER, 2022 [8].",
                   "heading": false
                 }
               ],
@@ -2855,7 +2855,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Simulated AI response",
+                  "text": "AI response",
                   "heading": true
                 },
                 {
@@ -2950,7 +2950,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Reference: Cochrane Handbook, Chapters 6, 9 and 10.",
+                  "text": "Reference: Cochrane Handbook, Chapters 6, 9 and 10 [5].",
                   "heading": false
                 }
               ],
@@ -3107,7 +3107,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Reference: Cochrane Handbook, Chapters 6, 9 and 10.",
+                  "text": "Reference: Cochrane Handbook, Chapters 6, 9 and 10 [5].",
                   "heading": false
                 }
               ],
@@ -3139,7 +3139,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Simulated AI response",
+                  "text": "AI response",
                   "heading": true
                 },
                 {
@@ -3364,7 +3364,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Reference: ICMJE Recommendations on AI Use in Publishing.",
+                  "text": "Reference: ICMJE Recommendations on AI Use in Publishing [9].",
                   "heading": false
                 }
               ],
@@ -3568,7 +3568,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Before submitting the work, Alex reviews the journal's author instructions, the ICMJE recommendations, and institutional AI guidelines from MIT and Stanford.",
+                  "text": "Before submitting the work, Alex reviews the journal's author instructions, the ICMJE recommendations [9], and institutional AI guidelines from MIT [10] and Stanford [11].",
                   "heading": false
                 },
                 {
@@ -3582,7 +3582,7 @@ window.COURSE = {
           "reading": [],
           "teaching": {
             "title": "Keep a record of AI assistance",
-            "explanation": "Record which tasks used AI and what the researcher checked. Disclosure should describe the actual use and follow ICMJE recommendations as well as institutional AI review guidelines (such as MIT and Stanford guidance on transparency, data confidentiality, and human authorship).",
+            "explanation": "Record which tasks used AI and what the researcher checked. Disclosure should describe the actual use and follow ICMJE recommendations [9] as well as institutional AI review guidelines (such as MIT [10] and Stanford [11] guidance on transparency, data confidentiality, and human authorship).",
             "application": "Help Alex prepare an accurate account of the assistance used in this project."
           }
         }
@@ -3681,8 +3681,8 @@ window.COURSE = {
       ],
       "references": [
         {
-          "title": "UBC Faculty of Medicine. FLEX Activity Supervisor Handbook, Academic Year 2025–2026.",
-          "url": "https://med-fom-mednet.sites.olt.ubc.ca/files/2025/11/FLEX-Activity-Supervisor-Handbook-AY-2025-2026.pdf"
+          "title": "UBC Library. MD Program: FLEX (MEDD 419, MEDD 429, MEDD 449) – Artificial Intelligence / GenAI.",
+          "url": "https://guides.library.ubc.ca/flex/chatgpt"
         },
         {
           "title": "UBC Library. MD Program: FLEX Project Support.",

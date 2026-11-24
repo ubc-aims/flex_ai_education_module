@@ -21,7 +21,7 @@ function referenceText(text){
  ['Use of Large Language Models (LLMs) in Clinical Documentation Guideline','Use of Large Language Models'],
  ['Expectations of Medical Students in Supervised Clinical Settings Policy','Expectations of Medical Students'],
  ['Jones et al., 2025','Jones DW'],['Endocrine Society Primary Aldosteronism Guideline, 2025','Endocrine Society:'],['Endocrine Society, 2025','Endocrine Society:'],['Carey et al., 2018','Carey et al.'],['NotebookLM','NotebookLM'],
- ['UBC Library FLEX Research Guide','UBC Library.'],['PRISMA 2020','Page MJ'],['PRISMA-P','Shamseer L'],['Cochrane RoB 2','Sterne JAC'],['Cochrane Handbook','Higgins JPT'],['Anker et al., EMPEROR-Preserved, 2021','Anker SD'],['ICMJE Recommendations on AI Use in Publishing','International Committee'],['ICMJE recommendations','International Committee'],['MIT','MIT Information Systems'],['Stanford','Stanford University Office'],
+ ['UBC Library FLEX AI Guide','UBC Library. MD Program: FLEX (MEDD'],['UBC Library FLEX Research Guide','UBC Library. MD Program: FLEX Project'],['PRISMA 2020','Page MJ'],['PRISMA-P','Shamseer L'],['Cochrane RoB 2','Sterne JAC'],['Cochrane Handbook','Higgins JPT'],['Anker et al., EMPEROR-Preserved, 2021','Anker SD'],['Solomon et al., DELIVER, 2022','Solomon SD'],['ICMJE Recommendations on AI Use in Publishing','International Committee'],['ICMJE recommendations','International Committee'],['MIT','MIT Information Systems'],['Stanford','Stanford University Office'],
  ['Michael Smith Health Research BC, National Tele-ophthalmology Research Program','Michael Smith'],['Michael Smith Health Research BC','Michael Smith'],['Abràmoff et al., 2018','Abràmoff MD'],['World Health Organization, Ethics and Governance of AI for Health','World Health Organization'],['WHO','World Health Organization'],['Office of the Privacy Commissioner of Canada','Office of the Privacy'],['Health Canada, National Strategy for Eye Care','Health Canada.']
  ];
  const renderCites=str=>esc(str).replace(/\[(\d+)\]/g,(m,num)=>{
@@ -93,7 +93,7 @@ function noteSentenceHtml(text,q){
 }
 function noteReview(q){
  const s=modules.find(m=>m.id==='scribes').scenes[2];
- const all=s.reading;const a=all.findIndex(b=>b.text==='Simulated consultation'),b=all.findIndex(b=>b.text==='Story continues'),n=all.findIndex(b=>b.text==='AI-generated draft note');
+ const all=s.reading;const a=all.findIndex(b=>b.text==='Patient consultation'),b=all.findIndex(b=>b.text==='Story continues'),n=all.findIndex(b=>b.text==='AI-generated draft note');
  const noteHtml=all.slice(n+1).map(blk=>blk.heading?`<h3>${esc(blk.text)}</h3>`:noteSentenceHtml(blk.text,q)).join('');
  const hint=q&&q.multi&&answers[q.id]===undefined?'<p class="note-hint">Click or tap the inaccurate sentences directly in the draft note below, then select <b>Check my review</b>.</p>':'';
  return `<div class="note-review"><section class="clinical-note"><h2>AI-generated draft note</h2>${hint}${noteHtml}</section><details class="encounter" open><summary>Encounter (reference transcript)</summary>${fullScene(all.slice(a+1,b))}</details></div>`;
@@ -125,10 +125,10 @@ function calgaryFlow(m,n){
 }
 function videoDropdown(m,n){
  const videos={
-  'education-3':{id:'uSVBfyHBiDU',title:'How to Use Google NotebookLM (Full Tutorial)',author:'Kevin Stratvert'},
-  'scribes-0':{id:'0jCVSTZGnjE',title:'AI scribes for clinicians: How ambient listening in medicine works',author:'American Medical Association (AMA)'},
+  'education-3':{id:'6dHmu1GALmA',title:'NotebookLM demo',author:'Google Cloud'},
+  'scribes-0':{id:'0jCVSTZGnjE',title:'AI scribes for clinicians: How ambient listening in medicine works and future AI use case',author:'American Medical Association (AMA)'},
   'scribes-4':{id:'uhrfEqELAuk',title:'AI Tools for Documentation: The Newest Member of the Care Team',author:'American Medical Association (AMA)'},
-  'research-0':{id:'ewndp9_9zeI',title:'What Is PRISMA? Systematic Review Reporting in Plain Language',author:'J-STEAM'},
+  'research-0':{id:'_3RYgMJeoGg',title:'Dr. Matthew Page: The PRISMA 2020 Statement: an updated guideline for reporting systematic reviews',author:'Therapeutics Initiative'},
   'ethics-3':{id:'KU8r-YaGChw',title:'What Is Algorithmic Bias? | TEDMED Clearly',author:'TEDMED'}
  };
  const v=videos[`${m.id}-${n}`];
@@ -141,14 +141,14 @@ function evidence(m,s,n,q){
  if(m.id==='ethics'&&n===6)return `<section class="dashboard" aria-label="Program results"><p class="quiet">Results · six months</p><div><p><strong>400</strong>screened</p><p><strong>60</strong>referral recommended</p><p><strong>24 / 60</strong>completed follow-up</p></div><p>36 had not completed follow-up by the reporting date. Completion was 40%; timing and urgency also matter.</p></section>`;
  if(m.id==='ethics'&&n===0)return `<ol class="journey"><li><b>Photographs near home</b><span>A trained worker captures retinal images.</span></li><li><b>AI screening result</b><span>The system assesses images within its intended use.</span></li><li><b>Follow-up pathway</b><span>The clinic communicates results and arranges further assessment when indicated.</span></li></ol>`;
  if(m.id==='ethics'&&n===3)return `<section class="equity-comparison"><h2>Compare what the story tells us</h2><table><thead><tr><th>Patient group</th><th>Evidence in the story</th></tr></thead><tbody><tr><th scope="row">Older patients with cataracts</th><td>More ungradable results are observed.</td></tr><tr><th scope="row">Other patient groups</th><td>Group-specific results are not supplied.</td></tr></tbody></table><p>Numeric image-quality rates, diagnostic performance and access to screening and follow-up by group are not provided. The clinic needs those comparisons before concluding that benefits are equitable. This observation alone does not establish algorithmic bias.</p></section>`;
- if(m.id==='ethics'&&[1,2].includes(n)&&q){const a=q.before.findIndex(b=>b.text==='AI SCREENING RESULT');if(a>=0){let end=a+1;while(end<q.before.length&&!/^(Alex:|Dr\. Chen:|The patient)/.test(q.before[end].text||''))end++;return `<section class="chat-example screening-result"><p class="chat-label">Simulated AI screening result</p>${textBlocks(q.before.slice(a+1,end))}</section>`;}}
+ if(m.id==='ethics'&&[1,2].includes(n)&&q){const a=q.before.findIndex(b=>b.text==='AI SCREENING RESULT');if(a>=0){let end=a+1;while(end<q.before.length&&!/^(Alex:|Dr\. Chen:|The patient)/.test(q.before[end].text||''))end++;return `<section class="chat-example screening-result"><p class="chat-label">AI screening result</p>${textBlocks(q.before.slice(a+1,end))}</section>`;}}
  if(!q)return '';
  const blocks=q.before;
- const ai=blocks.findIndex(b=>/^(AI response|Simulated AI response|AI-generated practice question)$/.test(b.text||''));
+ const ai=blocks.findIndex(b=>/^(AI response|AI-generated practice question)$/.test(b.text||''));
  if(m.id==='research'&&n===4){const a=blocks.findIndex(b=>b.text==='Example R code');return a>=0?`<details class="example-code"><summary>Read the R code</summary>${textBlocks(blocks.slice(a+1).filter(b=>b.text!=='Story continues'))}</details>`:'';}
  if(ai>=0){let end=ai+1;while(end<blocks.length&&!blocks[end].heading)end++;return `<section class="chat-example"><p class="chat-label">AI response${m.id==='education'&&n===2||m.id==='education'&&n===4||m.id==='research'&&[1,3,5].includes(n)?' · evaluate this reply':''}</p>${textBlocks(blocks.slice(ai+1,end))}</section>`;}
  if(m.id==='education'&&n===3&&current.qIndex===1){const at=blocks.findIndex(b=>b.text==='AI-generated practice question');return `<section class="case-card">${textBlocks(at>=0?blocks.slice(at+1):blocks)}</section>`;}
- if(m.id==='research'&&n===2&&current.qIndex===1)return `<blockquote>“Empagliflozin reduced cardiovascular mortality by 21%.”</blockquote><p>Compare this simulated extraction with the trial’s primary composite endpoint: cardiovascular death or hospitalization for heart failure.</p>`;
+ if(m.id==='research'&&n===2&&current.qIndex===1)return `<blockquote>“Empagliflozin reduced cardiovascular mortality by 21%.”</blockquote><p>Compare this extracted statement with the trial’s primary composite endpoint: cardiovascular death or hospitalization for heart failure.</p>`;
  return '';
 }
 function dialogue(blocks){
@@ -199,7 +199,7 @@ function chatBody(blocks){
 }
 function fullScene(blocks){
  let html='',pending=[],speaker=null;
- const flush=()=>{if(!pending.length)return;const body=speaker?.startsWith('AI')?chatBody(pending):textBlocks(pending);const aiNote=speaker?.startsWith('AI')?'<p class="ai-source-note">Unverified simulated AI output: check all claims against primary sources.</p>':'';html+=speaker?`<article class="conversation-turn ${speaker==='Alex'?'from-student':speaker.startsWith('AI')?'from-ai':'from-person'}"><p class="speaker">${esc(speaker)}</p>${body}${aiNote}</article>`:`<div class="scene-narration">${body}</div>`;pending=[];speaker=null;};
+ const flush=()=>{if(!pending.length)return;const body=speaker?.startsWith('AI')?chatBody(pending):textBlocks(pending);html+=speaker?`<article class="conversation-turn ${speaker==='Alex'?'from-student':speaker.startsWith('AI')?'from-ai':'from-person'}"><p class="speaker">${esc(speaker)}</p>${body}</article>`:`<div class="scene-narration">${body}</div>`;pending=[];speaker=null;};
  for(let i=0;i<blocks.length;i++){
   const b=blocks[i],t=b.text||'';
   if(/^Estimated duration:/.test(t))continue;
@@ -209,7 +209,7 @@ function fullScene(blocks){
   if(/^(Alex types:|Alex then asks:|Alex asks the chatbot:)$/.test(t)){
    if(/^["“]/.test(blocks[i+1]?.text||'')){flush();speaker='Alex';pending=[{type:'text',text:blocks[++i].text.replace(/^["“]|["”]$/g,'')}];flush();}continue;
   }
-  if(/^(AI response(?: after choosing .)?|Simulated AI response|Corrected AI response|AI-generated practice question|AI SCREENING RESULT)$/.test(t)){flush();speaker=t==='AI SCREENING RESULT'?'AI screening system':'AI chatbot';continue;}
+  if(/^(AI response(?: after choosing .)?|Corrected AI response|AI-generated practice question|AI SCREENING RESULT)$/.test(t)){flush();speaker=t==='AI SCREENING RESULT'?'AI screening system':'AI chatbot';continue;}
   if(b.heading&&['Story','Story continues'].includes(t)){flush();continue;}
   if(b.heading&&t!=='Example R code'){flush();pending.push(b);continue;}
   pending.push(b);
@@ -224,7 +224,7 @@ function lesson(m,sceneIndex,qIndex){
  const teaching=`<section class="teaching" aria-label="Learn before applying"><p class="eyebrow">Learn</p><h2>${esc(learn.title)}</h2><p>${referenceText(learn.explanation)}</p><p class="application">${esc(learn.application)}</p>${calgaryFlow(m,sceneIndex)}${videoDropdown(m,sceneIndex)}</section>`;
  const note=m.id==='scribes'&&[2,3].includes(sceneIndex);
  const visual=m.id==='ethics'&&[0,3,5,6].includes(sceneIndex)?evidence(m,s,sceneIndex,q):'';
- const story=note?`${q?fullScene(q.before):textBlocks(s.reading.slice(0,s.reading.findIndex(b=>b.text==='Simulated consultation'))) }${noteReview(q)}`:fullScene(q?q.before:s.reading);
+ const story=note?`${q?fullScene(q.before):textBlocks(s.reading.slice(0,s.reading.findIndex(b=>b.text==='Patient consultation'))) }${noteReview(q)}`:fullScene(q?q.before:s.reading);
  return `${count?`<p class="eyebrow">${count}</p>`:''}<h1>${esc(s.title)}</h1>${!answered?`${teaching}<section class="scenario" aria-label="Apply in the scenario"><div class="scenario-heading"><h2>Apply it: Alex’s story</h2>${q?'<button type="button" class="text-button" data-action="decision">Go to your decision ↓</button>':''}</div>${m.id==='scribes'&&[0,4].includes(sceneIndex)?policy():''}${story}${visual}</section>`:''}${answered&&q.multi?`<details open><summary>Compare the draft note and encounter again</summary>${noteReview(q)}</details>`:''}${q?questionView(q):`<div class="actions">${button('Continue','next')}</div>`}${sourceLinks(m)}<div class="back">${button('Back','go',qIndex?`${m.id}/${sceneIndex}/${qIndex-1}`:sceneIndex?`${m.id}/${sceneIndex-1}/${Math.max(0,m.scenes[sceneIndex-1].questions.length-1)}`:m.id,true)}</div>`;
 }
 function finish(m){return `<p class="eyebrow">${esc(m.label)}</p><h1>What Alex learned</h1><div class="closing">${textBlocks(m.summary)}</div><div class="actions">${button('Review this module','go',m.id)}${modules.indexOf(m)<modules.length-1?button('Next module','go',modules[modules.indexOf(m)+1].id,true):''}</div>${sourceLinks(m)}`;}

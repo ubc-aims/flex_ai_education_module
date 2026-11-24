@@ -648,13 +648,6 @@ main {
   text-decoration: none;
   font-weight: 600;
 }
-.ai-source-note {
-  margin-top: 12px;
-  padding-top: 8px;
-  border-top: 1px dashed var(--line);
-  font-size: .84rem;
-  color: var(--muted);
-}
 .calgary-flow {
   margin: 18px 0 6px;
   padding: 16px 18px;
