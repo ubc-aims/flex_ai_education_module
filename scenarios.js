@@ -48,8 +48,18 @@ window.COURSE = {
               "after": [
                 {
                   "type": "text",
+                  "text": "Alex: \"Compare causes of secondary hypertension in a table: mechanism, key clues, and initial tests. Separate common causes from uncommon ones.\"",
+                  "heading": false
+                },
+                {
+                  "type": "text",
                   "text": "AI response after choosing B",
                   "heading": true
+                },
+                {
+                  "type": "text",
+                  "text": "Here is a structured comparison separating more common causes of secondary hypertension from less common ones, linking pathophysiology to clinical clues and initial screening tests:",
+                  "heading": false
                 },
                 {
                   "type": "table",
@@ -162,7 +172,12 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Secondary hypertension is hypertension caused by an identifiable underlying condition. Important causes include:",
+                  "text": "Secondary hypertension is elevated blood pressure caused by an identifiable, potentially treatable underlying condition, accounting for roughly 5–10% of hypertension cases overall. Unlike primary (essential) hypertension, which develops gradually from multifactorial genetic and environmental factors, secondary hypertension often presents with specific clinical clues such as severe or resistant hypertension, abrupt onset, onset at a young age, or suggestive laboratory abnormalities.",
+                  "heading": false
+                },
+                {
+                  "type": "text",
+                  "text": "Common and important causes span several organ systems:",
                   "heading": false
                 },
                 {
@@ -212,7 +227,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "The evaluation depends on the patient's history, examination findings, and clinical presentation.",
+                  "text": "Initial evaluation typically begins with a focused history, physical examination, medication review, and basic laboratory tests (electrolytes, creatinine/eGFR, and urinalysis), followed by targeted screening tests when clinical suspicion is raised.",
                   "heading": false
                 },
                 {
@@ -267,27 +282,32 @@ window.COURSE = {
               "after": [
                 {
                   "type": "text",
+                  "text": "Alex: \"Explain step-by-step how aldosterone causes sodium retention, potassium loss, and renin suppression at the nephron level.\"",
+                  "heading": false
+                },
+                {
+                  "type": "text",
                   "text": "AI response after choosing A",
                   "heading": true
                 },
                 {
                   "type": "text",
-                  "text": "In principal cells of the late distal tubule and collecting duct, aldosterone increases the activity and expression of epithelial sodium channels (ENaC) on the apical membrane and Na⁺/K⁺-ATPase on the basolateral membrane.",
+                  "text": "To connect hypertension, hypokalemia, and suppressed renin, follow what happens inside the principal cells of the late distal convoluted tubule and cortical collecting duct.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "This increases sodium reabsorption into the bloodstream.",
+                  "text": "First, aldosterone binds mineralocorticoid receptors inside principal cells and upregulates two key transporters: epithelial sodium channels (ENaC) on the apical (luminal) membrane and Na⁺/K⁺-ATPase pumps on the basolateral (blood-facing) membrane. Sodium enters the cell through ENaC down its concentration gradient and is pumped into the bloodstream by Na⁺/K⁺-ATPase, driving net sodium and water reabsorption.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "The resulting lumen-negative electrical potential promotes potassium secretion through apical potassium channels, including ROMK.",
+                  "text": "Second, because positively charged Na⁺ ions are reabsorbed across the apical membrane faster than accompanying anions (such as Cl⁻), the tubular lumen becomes electrically negative relative to the cell. That lumen-negative electrical potential creates an electrochemical gradient that pulls positively charged K⁺ ions out of principal cells into the urine through apical potassium channels, including ROMK.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "In primary aldosteronism:",
+                  "text": "Third, in primary aldosteronism, this cascade operates autonomously despite normal or expanded volume:",
                   "heading": false
                 },
                 {
@@ -302,17 +322,12 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Volume expansion suppresses renin secretion through negative feedback.",
+                  "text": "Volume expansion and elevated renal perfusion pressure suppress renin secretion from juxtaglomerular cells through negative feedback.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Aldosterone secretion remains inappropriately elevated relative to renin because it is autonomous.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "This explains why primary aldosteronism is typically associated with suppressed renin and inappropriately elevated aldosterone.",
+                  "text": "Aldosterone secretion remains inappropriately elevated relative to suppressed renin because it is autonomous, which is why the aldosterone-to-renin ratio (ARR) is the key screening relationship.",
                   "heading": false
                 },
                 {
@@ -394,12 +409,12 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Aldosterone increases sodium reabsorption and potassium secretion in the distal nephron.",
+                  "text": "Aldosterone is a mineralocorticoid hormone produced by the adrenal cortex that regulates salt, water, and potassium balance in the kidneys. In primary aldosteronism, autonomous aldosterone secretion drives the distal nephron to reabsorb more sodium and water while excreting more potassium into the urine.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "In primary aldosteronism, excessive aldosterone activity leads to increased sodium retention, which contributes to hypertension, and increased potassium excretion, which can cause hypokalemia.",
+                  "text": "Over time, increased sodium and water retention expands extracellular fluid volume and raises arterial blood pressure, producing hypertension. Simultaneously, ongoing urinary potassium loss lowers serum potassium levels, which can lead to hypokalemia.",
                   "heading": false
                 },
                 {
@@ -458,17 +473,17 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Alex consults the 2025 Endocrine Society guideline on primary aldosteronism.",
+                  "text": "Alex consults the 2025 Endocrine Society guideline on primary aldosteronism [2].",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "The guideline emphasizes that hypokalemia is not required for primary aldosteronism and recommends screening using aldosterone and renin measurements, with interpretation of the aldosterone-to-renin ratio.",
+                  "text": "The guideline emphasizes that hypokalemia is not required for primary aldosteronism and recommends screening using aldosterone and renin measurements, with interpretation of the aldosterone-to-renin ratio [2].",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "The guideline also highlights that low potassium can suppress aldosterone and potentially contribute to a false-negative screen.",
+                  "text": "The guideline also highlights that low potassium can suppress aldosterone and potentially contribute to a false-negative screen [2].",
                   "heading": false
                 },
                 {
@@ -488,22 +503,17 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "You're right. My previous statement was incorrect.",
+                  "text": "You're right—my previous statement was incorrect. Normal serum potassium does not exclude primary aldosteronism.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Although aldosterone promotes renal potassium secretion, many patients with primary aldosteronism have normal serum potassium concentrations.",
+                  "text": "Although aldosterone increases potassium secretion in the distal nephron, most patients with primary aldosteronism are actually normokalemic at presentation. Hypokalemia tends to appear in more severe or longstanding disease, so it is a helpful clinical clue when present, but it is neither necessary nor sufficient to establish or rule out the diagnosis.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Hypokalemia is therefore an important clinical clue but is neither necessary nor sufficient to establish the diagnosis.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Primary aldosteronism should still be considered in hypertensive patients with normal potassium, and biochemical screening involves measuring aldosterone and renin and interpreting their relationship.",
+                  "text": "Accordingly, primary aldosteronism should still be considered in hypertensive patients with normal serum potassium, particularly those with resistant hypertension, severe blood pressure elevation, an adrenal incidentaloma, or a suggestive family history. Biochemical screening relies on measuring serum aldosterone and plasma renin (activity or concentration) and interpreting the aldosterone-to-renin ratio, while keeping in mind that uncorrected hypokalemia can itself suppress aldosterone release and cause false-negative screening results.",
                   "heading": false
                 },
                 {
@@ -575,17 +585,12 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Primary aldosteronism classically presents with hypertension and hypokalemia.",
+                  "text": "Primary aldosteronism classically presents with the triad of hypertension, hypokalemia, and metabolic alkalosis. Patients may also report nonspecific symptoms related to low potassium, such as muscle weakness, fatigue, cramping, or polyuria.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Because excess aldosterone increases potassium excretion, patients with primary aldosteronism will have low serum potassium.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Therefore, normal potassium levels make primary aldosteronism very unlikely.",
+                  "text": "Because excess aldosterone directly drives renal potassium wasting in the collecting duct, patients with primary aldosteronism will have low serum potassium. Therefore, normal potassium levels make primary aldosteronism very unlikely, and clinicians generally reserve biochemical screening for patients who present with unexplained hypokalemia alongside hypertension.",
                   "heading": false
                 },
                 {
@@ -702,6 +707,26 @@ window.COURSE = {
               "after": [
                 {
                   "type": "text",
+                  "text": "Alex: \"Primary aldosteronism, and I would screen with serum aldosterone, plasma renin, and the aldosterone-to-renin ratio (while noting the low potassium).\"",
+                  "heading": false
+                },
+                {
+                  "type": "text",
+                  "text": "AI response",
+                  "heading": true
+                },
+                {
+                  "type": "text",
+                  "text": "Correct. Resistant hypertension combined with unprovoked hypokalemia (3.1 mmol/L without diuretics or GI losses) and high-normal sodium strongly raises suspicion for primary aldosteronism [2].",
+                  "heading": false
+                },
+                {
+                  "type": "text",
+                  "text": "The appropriate initial biochemical screen is paired measurement of morning serum aldosterone and plasma renin (renin activity or direct renin concentration) to calculate the aldosterone-to-renin ratio (ARR) [1] [2]. One practical nuance: because hypokalemia can suppress aldosterone secretion and produce a false-negative screen, potassium should be corrected before or alongside testing when interpreting borderline results [2].",
+                  "heading": false
+                },
+                {
+                  "type": "text",
                   "text": "Story continues",
                   "heading": true
                 },
@@ -737,6 +762,11 @@ window.COURSE = {
                 }
               ],
               "before": [
+                {
+                  "type": "text",
+                  "text": "Alex: \"Give me one clinical vignette on secondary hypertension at a time. Wait for my answer before giving the explanation, and then give targeted feedback.\"",
+                  "heading": false
+                },
                 {
                   "type": "text",
                   "text": "AI-generated practice question",
@@ -823,17 +853,12 @@ window.COURSE = {
               "after": [
                 {
                   "type": "text",
-                  "text": "Improved AI prompt",
-                  "heading": true
-                },
-                {
-                  "type": "text",
-                  "text": "\"Help me reason through this case as a medical student. Don't assume a diagnosis. Create a prioritized differential that includes essential and secondary hypertension. Identify important missing history and examination findings, explain how they would change the differential, and distinguish appropriate initial evaluation from specialized investigations. Highlight areas of uncertainty.\"",
+                  "text": "Alex: \"Help me reason through this case as a medical student. Don't assume a diagnosis. Create a prioritized differential that includes essential and secondary hypertension. Identify important missing history and examination findings, explain how they would change the differential, and distinguish appropriate initial evaluation from specialized investigations. Highlight areas of uncertainty.\"",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Improved AI response",
+                  "text": "AI response",
                   "heading": true
                 },
                 {
@@ -918,7 +943,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Primary aldosteronism screening can be considered in accordance with current guidance. The 2025 Endocrine Society guideline suggests screening individuals with hypertension, while the 2025 AHA/ACC guideline particularly emphasizes several higher-risk groups.",
+                  "text": "Primary aldosteronism screening can be considered in accordance with current guidance. The 2025 Endocrine Society guideline [2] suggests screening individuals with hypertension, while the 2025 AHA/ACC guideline [1] particularly emphasizes several higher-risk groups.",
                   "heading": false
                 },
                 {
@@ -1080,17 +1105,22 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
+                  "text": "Alex: \"We have a 32-year-old man with clinic BPs around 165/100 mmHg, K 4.2 mmol/L, Cr 85 µmol/L, no medications, and no symptoms. What is the diagnosis and what should we order?\"",
+                  "heading": false
+                },
+                {
+                  "type": "text",
                   "text": "AI response",
                   "heading": true
                 },
                 {
                   "type": "text",
-                  "text": "Based on the patient's young age and hypertension, primary aldosteronism is the most likely diagnosis.",
+                  "text": "Based on the patient's young age and markedly elevated blood pressure, primary aldosteronism is the most likely diagnosis—remember that many patients with primary aldosteronism present with normal serum potassium.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "The patient should undergo aldosterone-to-renin ratio testing and adrenal CT imaging.",
+                  "text": "The patient should undergo aldosterone-to-renin ratio testing and adrenal CT imaging right away to localize a potential aldosterone-producing adenoma.",
                   "heading": false
                 },
                 {
@@ -1128,19 +1158,23 @@ window.COURSE = {
       "references": [
         {
           "title": "Jones DW, et al. 2025 AHA/ACC/AANP/AAPA/ABC/ACCP/ACPM/AGS/AMA/ASPC/NMA/PCNA/SGIM Guideline for the Prevention, Detection, Evaluation, and Management of High Blood Pressure in Adults. Circulation. 2025.",
-          "url": "https://doi.org/10.1161/CIR.0000000000001356"
+          "url": "https://doi.org/10.1161/CIR.0000000000001356",
+          "abstract": "AIM: The \"2025 AHA/ACC/AANP/AAPA/ABC/ACCP/ACPM/AGS/AMA/ASPC/NMA/PCNA/SGIM Guideline for the Prevention, Detection, Evaluation, and Management of High Blood Pressure in Adults\" retires and replaces the \"2017 ACC/AHA/AAPA/ABC/ACPM/AGS/APhA/ASH/ASPC/NMA/PCNA Guideline for the Prevention, Detection, Evaluation, and Management of High Blood Pressure in Adults.\" METHODS: A comprehensive literature search was conducted from December 2023 to June 2024 to identify clinical studies, reviews, and other evidence performed on human subjects that were published since February 2015 in English from MEDLINE (through PubMed), EMBASE, the Cochrane Library, the Agency for Healthcare Research and Quality, and other selected databases relevant to this guideline. STRUCTURE: The focus of this clinical practice guideline is to create a living, working document updating current knowledge in the field of high blood pressure aimed at all practicing primary care and specialty clinicians who manage patients with hypertension."
         },
         {
           "title": "Endocrine Society: Primary Aldosteronism clinical practice guideline (2025)",
-          "url": "https://academic.oup.com/jcem/article/110/9/2453/8196671"
+          "url": "https://doi.org/10.1210/clinem/dgaf284",
+          "abstract": "BACKGROUND: Primary aldosteronism (PA), a primary adrenal disorder leading to excessive aldosterone production by one or both adrenal glands, is a common cause of hypertension. It is associated with an increased risk of cardiovascular complications compared with primary hypertension. Despite effective methods for diagnosing and treating PA, it remains markedly underdiagnosed and undertreated. OBJECTIVE: To develop an updated guideline that provides a practical, clinical approach to identifying and managing PA to improve diagnosis rates and encourage targeted treatment. METHODS: The Guideline Development Panel (GDP), composed of a multidisciplinary panel of clinical experts and experts in systemic review methodology, used the Grading of Recommendations, Assessment, Development, and Evaluation (GRADE) approach to define 10 questions related to the diagnosis and treatment of PA. Systematic reviews were conducted for each question. The GDP used the GRADE Evidence to Decision (EtD) framework to consider contextual factors, such as stakeholder values and preferences, costs and required resources, cost-effectiveness, acceptability, feasibility, and the potential impact on health equity. RESULTS: We suggest that all individuals with hypertension be screened for PA by measuring aldosterone and renin and determining the aldosterone to renin ratio, and that subsequent clinical care be guided by the results. We suggest that individuals with PA receive PA-specific therapy, either medical or surgical. In individuals who screen positive for PA, we suggest (1) commencement of PA-specific medical therapy in individuals who do not desire or are not candidates for surgery and in situations where the probability of lateralizing PA (excess aldosterone produced by one adrenal) is low based on screening results; and (2) aldosterone suppression testing in situations when screening results indicate an intermediate probability for lateralizing PA and individualized decision making confirms a desire to pursue eligibility for surgical therapy. In those who test positive by aldosterone suppression testing, and in those in whom screening results show a high probability of lateralizing PA (obviating the need for aldosterone suppression testing), we suggest adrenal lateralization with computed tomography scanning and adrenal venous sampling prior to deciding the treatment approach (medical vs surgical). In all individuals with PA and an adrenal adenoma, we suggest performing a 1-mg overnight dexamethasone suppression test. We suggest the use of mineralocorticoid receptor antagonists (MRAs) over epithelial sodium-channel (ENaC) inhibitors in the medical treatment of PA. We suggest the use of spironolactone over other MRAs, given its lower cost and greater availability; however, all MRAs, when titrated to equivalent potencies, are anticipated to have similar efficacy in treating PA. Thus, MRAs with greater mineralocorticoid receptor specificity and fewer androgen/progesterone receptor-mediated side effects may be preferred in some situations. In individuals receiving MRA therapy, we suggest monitoring renin and, in those whose hypertension remains uncontrolled and renin is suppressed, titrating the MRA to increase renin. CONCLUSION: These recommendations provide a practical framework for the diagnosis and treatment of PA. They are based on currently available literature and take into consideration outcomes that are important to key stakeholders. The goal is to increase identification of individuals with PA and, by initiating PA-specific medical or surgical therapy, improve blood pressure control and reduce PA-associated adverse cardiovascular events. The guidelines also highlight important knowledge gaps in PA diagnosis and management."
         },
         {
           "title": "Carey et al.: Resistant Hypertension, AHA scientific statement (2018)",
-          "url": "https://doi.org/10.1161/HYP.0000000000000084"
+          "url": "https://doi.org/10.1161/HYP.0000000000000084",
+          "abstract": "Resistant hypertension (RH) is defined as above-goal elevated blood pressure (BP) in a patient despite the concurrent use of 3 antihypertensive drug classes, commonly including a long-acting calcium channel blocker, a blocker of the renin-angiotensin system (angiotensin-converting enzyme inhibitor or angiotensin receptor blocker), and a diuretic. The antihypertensive drugs should be administered at maximum or maximally tolerated daily doses. RH also includes patients whose BP achieves target values on ≥4 antihypertensive medications. The diagnosis of RH requires assurance of antihypertensive medication adherence and exclusion of the \"white-coat effect\" (office BP above goal but out-of-office BP at or below target). The importance of RH is underscored by the associated risk of adverse outcomes compared with non-RH. This article is an updated American Heart Association scientific statement on the detection, evaluation, and management of RH. Once antihypertensive medication adherence is confirmed and out-of-office BP recordings exclude a white-coat effect, evaluation includes identification of contributing lifestyle issues, detection of drugs interfering with antihypertensive medication effectiveness, screening for secondary hypertension, and assessment of target organ damage. Management of RH includes maximization of lifestyle interventions, use of long-acting thiazide-like diuretics (chlorthalidone or indapamide), addition of a mineralocorticoid receptor antagonist (spironolactone or eplerenone), and, if BP remains elevated, stepwise addition of antihypertensive drugs with complementary mechanisms of action to lower BP. If BP remains uncontrolled, referral to a hypertension specialist is advised."
         },
         {
           "title": "Google. NotebookLM Help: Create and manage notebooks and source citations.",
-          "url": "https://support.google.com/notebooklm/answer/14273541"
+          "url": "https://support.google.com/notebooklm/",
+          "abstract": "Official  Help Center where you can find tips and tutorials on using  and other answers to frequently asked questions."
         }
       ],
       "background": [
@@ -2173,15 +2207,18 @@ window.COURSE = {
       "references": [
         {
           "title": "University of British Columbia MD Undergraduate Program. MDUP Use of Generative Artificial Intelligence (Gen AI) Guideline. Approved January 19, 2026.",
-          "url": "https://med-fom-mednet.sites.olt.ubc.ca/files/2026/04/MDUP-Use-of-Generative-Artificial-Intelligence-Gen-AI-Guideline-1.pdf"
+          "url": "https://med-fom-mednet.sites.olt.ubc.ca/files/2026/04/MDUP-Use-of-Generative-Artificial-Intelligence-Gen-AI-Guideline-1.pdf",
+          "abstract": "MD Undergraduate Program Guideline Purpose: MDUP Use of Generative Artificial Intelligence (Gen AI) Guideline MD Undergraduate Education Committee January 19, 2026 Years 1-4 Students (all sites), Faculty and Staff To provide guidance on the use of Generative AI. Related Policies and Resources: Contact: 1. Expectations of Medical Students in Supervised Clinical Settings Policy (031A) 2. Expectations of Clinical Supervisors and Preceptors of Students in Clinical Settings Policy (031B) Associate Dean, Undergraduate Medical Education Title: Approved By: Approval Date: Audience: Preamble The integration of Generative Artificial Intelligence (GenAI) into medical education represents an advancement in teaching and learning methodologies. GenAI tools may enhance the educational experience by provi"
         },
         {
           "title": "University of British Columbia MD Undergraduate Program. Use of Large Language Models (LLMs) in Clinical Documentation Guideline. Approved January 19, 2026.",
-          "url": "https://med-fom-mednet.sites.olt.ubc.ca/files/2026/04/MDUP-Use-of-Large-Language-Models-LLMs-in-Clinical-Documentation-Guideline-1.pdf"
+          "url": "https://med-fom-mednet.sites.olt.ubc.ca/files/2026/04/MDUP-Use-of-Large-Language-Models-LLMs-in-Clinical-Documentation-Guideline-1.pdf",
+          "abstract": "MD Undergraduate Program Title: Approved By: Approval Date: Audience: Purpose: Related Policies and Resources: Contact: Guideline Use of Large Language Models (LLMs) in Clinical Documentation Guideline MD Undergraduate Education Committee January 19, 2026 Years 1-4 Students (all sites), Faculty and Staff To provide students guidance on how to use large language models in all clinical encounters in Years 1 – 4. 1. Expectations of Medical Students in Supervised Clinical Settings Policy (031A) 2. Expectations of Clinical Supervisors and Preceptors of Students in Clinical Settings Policy (031B) Associate Dean, Undergraduate Medical Education Guideline Requirement Students must independently generate all written clinical documentation. Large Language Models (LLMs) or other generative AI tools m"
         },
         {
           "title": "University of British Columbia MD Undergraduate Program. Expectations of Medical Students in Supervised Clinical Settings Policy (031A). Effective May 11, 2026.",
-          "url": "https://med-fom-mednet.sites.olt.ubc.ca/files/2026/05/031A-Expectations-of-Medical-Students-in-Supervised-Clinical-Settings.pdf"
+          "url": "https://med-fom-mednet.sites.olt.ubc.ca/files/2026/05/031A-Expectations-of-Medical-Students-in-Supervised-Clinical-Settings.pdf",
+          "abstract": "Title: Approved By: Approval Date: Effective Date: Audience: Purpose: Related Policies and Procedures: Exclusions: Calendar Statement: Contact: Expectations of Medical Students in Supervised Clinical Settings Number: 031A Policy Undergraduate Medical Education Committee 11 May 2026 Next Review 01 May 2029 11 May 2026 Students (all years), clinical supervisors, teaching faculty and staff in supervised clinical settings To describe the activities and responsibilities expected of students in supervised clinical settings. 1. Attendance Policy and Absence Procedure (006) 2. Communicable Diseases Policy and Procedure (032) 3. Complaints Against Students in the Clinical Setting Policy (034) 4. Dual Relationships – Medical Service Provider and Assessor Policy (005) 5. Extracurricular Activities - "
         },
         {
           "title": "University of British Columbia Faculty of Medicine. Artificial Intelligence and Teaching in the Faculty of Medicine. Faculty Development resources.",
@@ -2239,12 +2276,7 @@ window.COURSE = {
               "after": [
                 {
                   "type": "text",
-                  "text": "Improved prompt",
-                  "heading": true
-                },
-                {
-                  "type": "text",
-                  "text": "\"Help me brainstorm a PubMed search strategy for randomized controlled trials of SGLT2 inhibitors in patients with HFpEF. Include synonyms for heart failure with preserved ejection fraction, empagliflozin, dapagliflozin, and SGLT2 inhibitors. Explain how Boolean operators and MeSH terms could be used. Do not invent citations.\"",
+                  "text": "Alex: \"Help me brainstorm a PubMed search strategy for randomized controlled trials of SGLT2 inhibitors in patients with HFpEF. Include synonyms for heart failure with preserved ejection fraction, empagliflozin, dapagliflozin, and SGLT2 inhibitors. Explain how Boolean operators and MeSH terms could be used. Do not invent citations.\"",
                   "heading": false
                 },
                 {
@@ -2254,42 +2286,32 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "A preliminary search could combine three concepts:",
+                  "text": "To build a structured PubMed search, break your question into three core concepts—Population, Intervention, and Study Design—join synonyms within each concept using OR, and combine concepts using AND:",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Population: Heart failure with preserved ejection fraction, HFpEF, heart failure with mildly reduced ejection fraction, diastolic heart failure.",
+                  "text": "Population: \"heart failure with preserved ejection fraction\", HFpEF, \"heart failure with mildly reduced ejection fraction\", \"diastolic heart failure\", paired with relevant MeSH terms such as \"Heart Failure\"[Mesh] or \"Heart Failure, Diastolic\"[Mesh].",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Intervention: SGLT2 inhibitors, sodium-glucose cotransporter-2 inhibitors, empagliflozin, dapagliflozin.",
+                  "text": "Intervention: \"sodium-glucose transporter 2 inhibitors\"[Mesh], \"SGLT2 inhibitors\", empagliflozin, dapagliflozin, sotagliflozin, canagliflozin.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Study design: Randomized controlled trials, randomized trials, placebo-controlled trials.",
+                  "text": "Study design: \"Randomized Controlled Trial\"[pt], \"randomized\", \"placebo-controlled\".",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Within each concept, synonyms can be joined using OR. Different concepts can then be combined using AND.",
+                  "text": "For example, a preliminary Boolean string might look like: (HFpEF OR \"heart failure with preserved ejection fraction\" OR \"Heart Failure, Diastolic\"[Mesh]) AND (empagliflozin OR dapagliflozin OR \"SGLT2 inhibitors\" OR \"Sodium-Glucose Transporter 2 Inhibitors\"[Mesh]).",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "For example:",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "(HFpEF OR \"heart failure with preserved ejection fraction\") AND (empagliflozin OR dapagliflozin OR SGLT2)",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "This is only a preliminary search, not a validated systematic-review search strategy.",
+                  "text": "Treat this as a starting vocabulary only. Under PRISMA 2020 [3], a systematic review requires a validated, multi-database search strategy (e.g., MEDLINE, Embase, CENTRAL) with exact search dates and full reproducibility.",
                   "heading": false
                 },
                 {
@@ -2376,37 +2398,17 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "SGLT2 inhibitors have been studied in several major heart failure trials.",
+                  "text": "Sodium-glucose cotransporter 2 (SGLT2) inhibitors have become a major focus in heart failure with preserved ejection fraction (HFpEF) following large-scale randomized controlled trials.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Important trials include:",
+                  "text": "Two landmark phase 3 trials anchor the evidence base: EMPEROR-Preserved (evaluating empagliflozin) and DELIVER (evaluating dapagliflozin). Both enrolled patients with symptomatic heart failure and a left ventricular ejection fraction above 40%, meaning they included both mildly reduced (HFmrEF, 41–49%) and preserved (HFpEF, ≥50%) ejection fractions.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "EMPEROR-Preserved, investigating empagliflozin.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "DELIVER, investigating dapagliflozin.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "These trials evaluated cardiovascular outcomes in patients with symptomatic heart failure and left ventricular ejection fraction above the traditional reduced-EF range.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "The literature suggests benefits in reducing worsening heart failure events, although effects on mortality and renal outcomes require more nuanced interpretation.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Several systematic reviews and meta-analyses have also examined this topic.",
+                  "text": "Overall, these trials reported statistically significant reductions in their primary composite endpoints—driven largely by fewer heart failure hospitalizations—whereas effects on cardiovascular mortality alone and specific renal endpoints require more careful, separate interpretation. Multiple systematic reviews and meta-analyses have also been published, so checking existing reviews and registered protocols is essential before defining a new review question.",
                   "heading": false
                 },
                 {
@@ -2461,18 +2463,18 @@ window.COURSE = {
               "after": [
                 {
                   "type": "text",
-                  "text": "Improved AI prompt",
-                  "heading": true
-                },
-                {
-                  "type": "text",
-                  "text": "\"Help me develop a PICO framework for a systematic review of SGLT2 inhibitors in HFpEF. Identify important design decisions, including ejection fraction thresholds, study eligibility, cardiovascular and renal outcomes, follow-up duration, and risk-of-bias assessment. Present these as questions for discussion with my supervisor rather than making the decisions for me.\"",
+                  "text": "Alex: \"Help me develop a PICO framework for a systematic review of SGLT2 inhibitors in HFpEF. Identify important design decisions, including ejection fraction thresholds, study eligibility, cardiovascular and renal outcomes, follow-up duration, and risk-of-bias assessment. Present these as questions for discussion with my supervisor rather than making the decisions for me.\"",
                   "heading": false
                 },
                 {
                   "type": "text",
                   "text": "AI response",
                   "heading": true
+                },
+                {
+                  "type": "text",
+                  "text": "Here is a structured PICO draft highlighting the key methodological choices to review with your supervisor before locking your protocol [4] [5]:",
+                  "heading": false
                 },
                 {
                   "type": "table",
@@ -2513,7 +2515,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Important questions include whether HFpEF subgroup data are available, whether renal outcome definitions are sufficiently comparable for pooling, and whether published meta-analyses already address the same question.",
+                  "text": "Important questions include whether HFpEF subgroup data (EF ≥ 50%) are available separately from HFmrEF (EF 41–49%), whether renal outcome definitions are sufficiently comparable for pooling, and whether published meta-analyses already address the same question.",
                   "heading": false
                 },
                 {
@@ -2605,17 +2607,12 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "You should conduct a systematic review and meta-analysis of randomized controlled trials comparing SGLT2 inhibitors with placebo.",
+                  "text": "You can design a systematic review and meta-analysis of randomized controlled trials comparing any SGLT2 inhibitor against placebo in heart failure.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Include all heart failure patients with ejection fraction above 40%.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Pool cardiovascular mortality, heart failure hospitalization, renal outcomes, and changes in eGFR into one overall effect estimate.",
+                  "text": "To maximize sample size and statistical power, include all trials enrolling patients with an ejection fraction above 40%, and pool cardiovascular mortality, heart failure hospitalization, composite renal events, and annual eGFR slope into one overall composite effect estimate.",
                   "heading": false
                 },
                 {
@@ -2710,7 +2707,12 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Yes. Upload the papers and I can identify which studies meet your inclusion criteria, extract sample sizes and effect estimates, and create a spreadsheet ready for meta-analysis.",
+                  "text": "Yes—you can upload the full-text PDFs and I can screen each paper against your inclusion criteria, pull out sample sizes, baseline characteristics, and hazard ratios with 95% confidence intervals, and organize everything into a spreadsheet formatted for meta-analysis.",
+                  "heading": false
+                },
+                {
+                  "type": "text",
+                  "text": "Once you review the spreadsheet, you can import it directly into your statistical software to generate pooled estimates and forest plots.",
                   "heading": false
                 },
                 {
@@ -2785,27 +2787,27 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Alex asks AI to extract the primary cardiovascular outcome from EMPEROR-Preserved.",
+                  "text": "Alex: \"Extract the primary cardiovascular outcome and relative risk reduction from EMPEROR-Preserved.\"",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "The AI returns:",
+                  "text": "AI response",
+                  "heading": true
+                },
+                {
+                  "type": "text",
+                  "text": "\"In EMPEROR-Preserved [7], empagliflozin reduced cardiovascular mortality by 21% compared with placebo.\"",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "\"Empagliflozin reduced cardiovascular mortality by 21%.\"",
+                  "text": "Alex checks the original paper [7] and discovers that the approximately 21% relative reduction (HR 0.79; 95% CI, 0.69 to 0.90) refers to the trial's primary composite outcome of cardiovascular death or hospitalization for heart failure—not cardiovascular mortality alone.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Alex checks the original paper and discovers that the approximately 21% relative reduction refers to the trial's primary composite outcome of cardiovascular death or hospitalization for heart failure—not cardiovascular mortality alone.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "This distinction matters because the composite benefit was driven mainly by fewer heart failure hospitalizations.",
+                  "text": "This distinction matters because the composite benefit was driven mainly by fewer heart failure hospitalizations [7].",
                   "heading": false
                 }
               ]
@@ -2845,12 +2847,7 @@ window.COURSE = {
               "after": [
                 {
                   "type": "text",
-                  "text": "Improved AI prompt",
-                  "heading": true
-                },
-                {
-                  "type": "text",
-                  "text": "\"My included trials report hazard ratios for time-to-event cardiovascular outcomes and differences in annual eGFR slope for renal function. Explain which effect measures may be appropriate, how pooling could be performed, and what assumptions and limitations I should discuss with my supervisor. Do not perform an analysis without the data.\"",
+                  "text": "Alex: \"My included trials report hazard ratios for time-to-event cardiovascular outcomes and differences in annual eGFR slope for renal function. Explain which effect measures may be appropriate, how pooling could be performed, and what assumptions and limitations I should discuss with my supervisor. Do not perform an analysis without the data.\"",
                   "heading": false
                 },
                 {
@@ -2860,22 +2857,27 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "For time-to-event outcomes, published hazard ratios and their confidence intervals may be synthesized using log hazard ratios and corresponding standard errors, provided the endpoints and populations are sufficiently comparable.",
+                  "text": "Because your outcomes measure fundamentally different constructs on different scales, they should be analyzed in separate meta-analyses rather than combined into a single forest plot [5].",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "For continuous outcomes such as annual eGFR slope, mean differences may be appropriate when studies report comparable units and definitions.",
+                  "text": "For time-to-event cardiovascular endpoints (such as time to cardiovascular death or first heart failure hospitalization), published hazard ratios and their 95% confidence intervals are typically synthesized on the natural-logarithm scale (log HR) using inverse-variance weighting, with standard errors derived from the log-transformed confidence limits [5]. Converting time-to-event hazard ratios into odds ratios ignores censoring and follow-up duration.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Important considerations include:",
+                  "text": "For continuous outcomes such as annual eGFR slope, a mean difference (MD) is appropriate if all trials report the slope in identical units (e.g., mL/min/1.73 m²/year) over comparable follow-up; if scales or definitions differ, pooling may be inappropriate.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Whether studies report the same outcome and follow-up period",
+                  "text": "Key assumptions and limitations to review with your supervisor include:",
+                  "heading": false
+                },
+                {
+                  "type": "text",
+                  "text": "Whether studies report the same outcome definition and follow-up period",
                   "heading": false
                 },
                 {
@@ -2890,27 +2892,17 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Between-study heterogeneity",
+                  "text": "Between-study heterogeneity (and the limited precision of τ² when only 2–3 trials are pooled)",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Risk of bias",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Small numbers of included studies",
+                  "text": "Risk of bias [6]",
                   "heading": false
                 },
                 {
                   "type": "text",
                   "text": "Differences between statistical significance and clinical importance",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "A random-effects model does not automatically resolve differences in study populations or outcome definitions.",
                   "heading": false
                 },
                 {
@@ -3017,17 +3009,12 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Use a random-effects meta-analysis for all outcomes.",
+                  "text": "For a meta-analysis of clinical trials, you should use a random-effects model across all outcomes to account for potential differences between studies.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Calculate odds ratios for cardiovascular outcomes and mean differences for renal outcomes.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Combine the results into a single forest plot.",
+                  "text": "Calculate pooled odds ratios for your cardiovascular outcomes and mean differences for your renal outcomes, and combine all of the results into a single forest plot so readers can see the overall treatment effect at a glance.",
                   "heading": false
                 },
                 {
@@ -3087,12 +3074,12 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "1. Name the established, peer-reviewed library (for example, the meta package in R) and the exact function you want to run.",
+                  "text": "1. Name the established, peer-reviewed library (for example, the meta package in R [12]) and the exact function you want to run.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "2. State your exact input columns, scale (for example, hazard ratios and 95% confidence limits on the log scale), and random-effects model choice.",
+                  "text": "2. State your exact input columns, scale (for example, hazard ratios and 95% confidence limits on the log scale [5]), and random-effects model choice.",
                   "heading": false
                 },
                 {
@@ -3107,7 +3094,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Reference: Cochrane Handbook, Chapters 6, 9 and 10 [5].",
+                  "text": "Reference: Cochrane Handbook, Chapters 6, 9 and 10 [5]; Balduzzi et al., 2019 [12].",
                   "heading": false
                 }
               ],
@@ -3129,12 +3116,17 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Dr. Lee suggests prompting the AI to use an established, peer-reviewed R package with documented inputs so the team can inspect the choices clearly.",
+                  "text": "To see why prompting strategy matters, Alex tests the exact same task two ways: first without guidance, and then with guidance specifying an established, peer-reviewed R library [12].",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Alex: \"Use the established meta package in R (metagen) for a random-effects meta-analysis of hazard ratios (sm = 'HR'). Specify the log-transformed inputs clearly and explain each argument.\"",
+                  "text": "1. Prompt without guidance",
+                  "heading": true
+                },
+                {
+                  "type": "text",
+                  "text": "Alex: \"Write R code to run a random-effects meta-analysis of two hazard ratios with 95% confidence intervals (Study A: HR 0.79, 95% CI 0.69–0.90; Study B: HR 0.82, 95% CI 0.71–0.95) and make a forest plot.\"",
                   "heading": false
                 },
                 {
@@ -3144,7 +3136,37 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Use metagen() from the peer-reviewed meta package with log-transformed hazard ratios and standard errors, setting sm = \"HR\" and random = TRUE.",
+                  "text": "Here is self-contained base R code that computes a DerSimonian-Laird random-effects meta-analysis on the log-HR scale and draws a simple forest plot:",
+                  "heading": false
+                },
+                {
+                  "type": "text",
+                  "text": "study <- c(\"Study A\", \"Study B\")\nhr <- c(0.79, 0.82)\nlci <- c(0.69, 0.71)\nuci <- c(0.90, 0.95)\nyi <- log(hr)\nsei <- (log(uci) - log(lci)) / (2 * 1.96)\nwi <- 1 / sei^2\ntheta_fe <- sum(wi * yi) / sum(wi)\nQ <- sum(wi * (yi - theta_fe)^2)\nC_val <- sum(wi) - sum(wi^2) / sum(wi)\ntau2 <- max(0, (Q - 1) / C_val)\nwi_re <- 1 / (sei^2 + tau2)\ntheta_re <- sum(wi_re * yi) / sum(wi_re)\nse_re <- sqrt(1 / sum(wi_re))\ncat(sprintf(\"Pooled HR: %.3f (95%% CI %.3f-%.3f)\\n\", exp(theta_re), exp(theta_re - 1.96 * se_re), exp(theta_re + 1.96 * se_re)))\nplot(hr, 2:1, xlim = c(0.5, 1.2), ylim = c(0.5, 2.5), pch = 15, xlab = \"Hazard Ratio\", ylab = \"\", yaxt = \"n\")\nsegments(lci, 2:1, uci, 2:1)\nabline(v = 1, lty = 2)\naxis(2, at = 2:1, labels = study)",
+                  "heading": false
+                },
+                {
+                  "type": "text",
+                  "text": "Because no package was specified, the model wrote raw DerSimonian-Laird math and a manual base-R plot—leaving Alex to verify every formula, heterogeneity estimator, and confidence-interval calculation by hand.",
+                  "heading": false
+                },
+                {
+                  "type": "text",
+                  "text": "2. Prompt with guidance (established library)",
+                  "heading": true
+                },
+                {
+                  "type": "text",
+                  "text": "Alex: \"Use the established meta package in R (metagen) for a random-effects meta-analysis of hazard ratios (sm = 'HR') for Study A (HR 0.79, 95% CI 0.69–0.90) and Study B (HR 0.82, 95% CI 0.71–0.95). Specify the log-transformed inputs clearly, explain each argument, and include summary() and forest().\"",
+                  "heading": false
+                },
+                {
+                  "type": "text",
+                  "text": "AI response",
+                  "heading": true
+                },
+                {
+                  "type": "text",
+                  "text": "Using metagen() from the peer-reviewed meta package [12] keeps the statistical estimator, heterogeneity calculation, and forest plot standardized and auditable:",
                   "heading": false
                 },
                 {
@@ -3244,12 +3266,17 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
+                  "text": "Argument check: TE takes the natural-log hazard ratio, seTE takes the standard error on the log scale (derived from log-transformed 95% CI bounds [5]), studlab labels each trial, sm = \"HR\" back-transforms the pooled estimate to a hazard ratio, and random = TRUE fits the random-effects model.",
+                  "heading": false
+                },
+                {
+                  "type": "text",
                   "text": "Story continues",
                   "heading": true
                 },
                 {
                   "type": "text",
-                  "text": "Alex gets a clean forest plot from the meta package.",
+                  "text": "Alex gets a clean forest plot from the meta package [12].",
                   "heading": false
                 },
                 {
@@ -3263,7 +3290,7 @@ window.COURSE = {
           "reading": [],
           "teaching": {
             "title": "Prompt for established libraries and verify inputs",
-            "explanation": "Established statistical libraries such as R's meta package implement peer-reviewed methods and standard defaults. Prompt the AI to name the library, document every input and scale, and explain the arguments so you and your supervisor can verify them.",
+            "explanation": "Established statistical libraries such as R's meta package [12] implement peer-reviewed methods and standard defaults. Compare an unguided prompt against a guided prompt that names the library, documents every input and scale, and asks for argument explanations so you and your supervisor can verify them.",
             "application": "Choose the workflow that pairs an established library with proper human verification."
           }
         },
@@ -3304,7 +3331,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "\"The studies showed that SGLT2 inhibitors had benefits in patients with HFpEF. The main benefits were in heart failure hospitalization, and the results for cardiovascular mortality were less clear. The renal results were also difficult to compare because the studies used different outcomes.\"",
+                  "text": "\"The included trials (EMPEROR-Preserved [7] and DELIVER [8]) showed that SGLT2 inhibitors had benefits in patients with HFpEF. The main benefits were in heart failure hospitalization, and the results for cardiovascular mortality were less clear. The renal results were also difficult to compare because the studies used different outcomes.\"",
                   "heading": false
                 },
                 {
@@ -3314,7 +3341,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "\"Across the included studies, SGLT2 inhibitors demonstrated cardiovascular benefits in patients with HFpEF, primarily through reductions in heart failure hospitalization. Evidence for cardiovascular mortality was less conclusive, while differences in renal outcome definitions limited direct comparisons between studies.\"",
+                  "text": "\"Across the included studies [7] [8], SGLT2 inhibitors demonstrated cardiovascular benefits in patients with HFpEF, primarily through reductions in heart failure hospitalization. Evidence for cardiovascular mortality was less conclusive, while differences in renal outcome definitions limited direct comparisons between studies.\"",
                   "heading": false
                 },
                 {
@@ -3324,12 +3351,12 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Alex compares the two paragraphs.",
+                  "text": "Alex compares the two paragraphs against the trial abstracts [7] [8].",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "The revised version is clearer and more concise without obviously changing the intended meaning.",
+                  "text": "The revised version is clearer and more concise without altering the verified findings or overstating mortality or renal claims.",
                   "heading": false
                 },
                 {
@@ -3339,7 +3366,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Dr. Lee reminds Alex that journal and institutional rules about AI-assisted writing vary, and that AI use may need to be disclosed.",
+                  "text": "Dr. Lee reminds Alex that journal and institutional rules about AI-assisted writing vary, and that AI use may need to be disclosed [9].",
                   "heading": false
                 },
                 {
@@ -3364,7 +3391,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Reference: ICMJE Recommendations on AI Use in Publishing [9].",
+                  "text": "References: Anker et al., EMPEROR-Preserved, 2021 [7]; Solomon et al., DELIVER, 2022 [8]; ICMJE Recommendations on AI Use in Publishing [9].",
                   "heading": false
                 }
               ],
@@ -3406,12 +3433,12 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "SGLT2 inhibitors significantly improve cardiovascular and renal outcomes in patients with HFpEF, demonstrating consistent reductions in mortality, heart failure hospitalization, and kidney disease progression.",
+                  "text": "In our systematic review of SGLT2 inhibitors in HFpEF, empagliflozin and dapagliflozin significantly improved both cardiovascular and renal outcomes across major trials [7] [8], demonstrating consistent reductions in cardiovascular mortality, heart failure hospitalization, and progression to end-stage kidney disease.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "These findings establish SGLT2 inhibitors as effective treatments for improving both cardiac and renal survival outcomes.",
+                  "text": "These findings establish SGLT2 inhibitors as uniformly effective treatments for improving both cardiac and renal survival outcomes in patients with preserved ejection fraction.",
                   "heading": false
                 },
                 {
@@ -3421,12 +3448,12 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Alex notices that the paragraph sounds polished but makes several claims that may not be supported by the actual analysis.",
+                  "text": "Alex clicks the cited trial abstracts [7] [8] to check whether the AI's claims actually match the published results.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "The evidence for heart failure hospitalization is not necessarily equivalent to evidence for cardiovascular mortality or clinical renal endpoints.",
+                  "text": "EMPEROR-Preserved [7] and DELIVER [8] met their primary composite endpoints (cardiovascular death or worsening heart failure), driven primarily by reductions in heart failure hospitalization rather than significant reductions in cardiovascular mortality alone, and renal composite endpoints differed across trials.",
                   "heading": false
                 },
                 {
@@ -3682,47 +3709,63 @@ window.COURSE = {
       "references": [
         {
           "title": "UBC Library. MD Program: FLEX (MEDD 419, MEDD 429, MEDD 449) – Artificial Intelligence / GenAI.",
-          "url": "https://guides.library.ubc.ca/flex/chatgpt"
+          "url": "https://guides.library.ubc.ca/flex/chatgpt",
+          "abstract": "From the FLEX (MED 419) Coursebook: \"FLEX allows the use of AI as a tool, but not as a replacement for student-generated work; students are asked to seek/read/cite genuine sources of relevant material, and to reflect on and document their real-life experiences. Students must also check their work, be able to defend anything they submit, and provide details on how they produced it. This includes disclosing whether, when/how AI was used in completing all coursework. Failure by a student to disclose the use of AI and/or declare how AI was used in work submitted to the course would be considered a breach of academic integrity. See HTTPS://ACADEMICINTEGRITY.UBC.CA/GENAI/ \""
         },
         {
           "title": "UBC Library. MD Program: FLEX Project Support.",
-          "url": "https://guides.library.ubc.ca/MEDD/flex"
+          "url": "https://guides.library.ubc.ca/MEDD/flex",
+          "abstract": "Please see our FLEX guide for lots of information to help you get started on FLEX-related research."
         },
         {
           "title": "Page MJ, McKenzie JE, Bossuyt PM, et al. The PRISMA 2020 statement: an updated guideline for reporting systematic reviews. BMJ. 2021;372.",
-          "url": "https://doi.org/10.1136/bmj.n71"
+          "url": "https://doi.org/10.1136/bmj.n71",
+          "abstract": "The Preferred Reporting Items for Systematic reviews and Meta-Analyses (PRISMA) statement, published in 2009, was designed to help systematic reviewers transparently report why the review was done, what the authors did, and what they found. Over the past decade, advances in systematic review methodology and terminology have necessitated an update to the guideline. The PRISMA 2020 statement replaces the 2009 statement and includes new reporting guidance that reflects advances in methods to identify, select, appraise, and synthesise studies. The structure and presentation of the items have been modified to facilitate implementation. In this article, we present the PRISMA 2020 27-item checklist, an expanded checklist that details reporting recommendations for each item, the PRISMA 2020 abstract checklist, and the revised flow diagrams for original and updated reviews."
         },
         {
           "title": "Shamseer L, Moher D, Clarke M, et al. Preferred reporting items for systematic review and meta-analysis protocols (PRISMA-P) 2015: elaboration and explanation. BMJ. 2015;350.",
-          "url": "https://doi.org/10.1136/bmj.g7647"
+          "url": "https://doi.org/10.1136/bmj.g7647",
+          "abstract": "Protocols of systematic reviews and meta-analyses allow for planning and documentation of review methods, act as a guard against arbitrary decision making during review conduct, enable readers to assess for the presence of selective reporting against completed reviews, and, when made publicly available, reduce duplication of efforts and potentially prompt collaboration. Evidence documenting the existence of selective reporting and excessive duplication of reviews on the same or similar topics is accumulating and many calls have been made in support of the documentation and public availability of review protocols. Several efforts have emerged in recent years to rectify these problems, including development of an international register for prospective reviews (PROSPERO) and launch of the first open access journal dedicated to the exclusive publication of systematic review products, including protocols (BioMed Central's Systematic Reviews). Furthering these efforts and building on the PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-analyses) guidelines, an international group of experts has created a guideline to improve the transparency, accuracy, completeness, and frequency of documented systematic review and meta-analysis protocols--PRISMA-P (for protocols) 2015. The PRISMA-P checklist contains 17 items considered to be essential and minimum components of a systematic review or meta-analysis protocol.This PRISMA-P 2015 Explanation and Elaboration paper provides readers with a full understanding of and evidence about the necessity of each item as well as a model example from an existing published protocol. This paper should be read together with the PRISMA-P 2015 statement. Systematic review authors and assessors are strongly encouraged to make use of PRISMA-P when drafting and appraising review protocols."
         },
         {
           "title": "Higgins JPT, Thomas J, Chandler J, et al., editors. Cochrane Handbook for Systematic Reviews of Interventions. Cochrane.",
-          "url": "https://training.cochrane.org/handbook"
+          "url": "https://training.cochrane.org/handbook",
+          "abstract": "Cochrane Handbook for Systematic Reviews of Interventions Methodological Expectations of Cochrane Intervention Reviews (MECIR) Cochrane Style Manual News News Exclude news Breadcrumb Home For authors Handbooks and manuals Cochrane Handbook for Systematic Reviews of Interventions Cochrane Handbook for Systematic Reviews of Interventions (current version) Part 1: About Cochrane Reviews Chapter I: Introduction Chapter II: Planning a Cochrane Review Chapter III: Reporting the review III.S1 Supplementary material: Considerations and recommendations for figures in Cochrane reviews: graphs of statistical data III.S2 Supplementary material: Guidance for writing a Cochrane Plain language summary Chapter IV: Updating a review Chapter V: Overviews of Reviews Part 2: Core methods Chapter 1: Starting a review Chapter 2: Determining the scope of the review and the questions it will address Chapter 3: Defining the criteria for including studies and how they will be grouped for the synthesis Chapter 4: Searching for and selecting studies 4.S1 Supplementary material: Technical supplement 4.S2 Supplementary material: Appendix of resources Chapter 5: Collecting data Chapter 6: Choosing effect measures and computing estimates of effect Chapter 7: Considering bias and conflicts of interest among the included studies Chapter 8: Assessing risk of bias in a randomized trial Chapter 9: Summarizing study characteristics and preparing for synthesis Chapter 10: Analysing data and undertaking meta-analyses Chapter 11: Undertaking network meta-analyses Chapter 12: Synthesizing and presenting findings using other methods Chapter 13: Assessing risk of bias due to missing results in a synthesis Chapter 14: Completing ‘Summary of findings’ tables and grading the certainty of the evidence Chapter 15: Interpreting results and drawing conclusions Part 3: Specific perspectives in reviews Chapter 16: Equity and specific populations Chapter 17: Intervention complexity Chapter 18: Patient-reported outcomes Chapter 19: Adverse effects Chapter 20: Economic evidence 20.S Technical Supplement: Integrated full systematic review of economic evidence Chapter 21: Living systematic reviews Part 4: Other topics Chapter 22: Prospective, collaborative approaches to meta-analysis Chapter 23: Including variants on randomized trials Chapter 24: Including non-randomized studies on intervention effects Chapter 25: Assessing risk of bias in a non-randomized study Chapter 26: Individual participant data Version 6.5, 2024"
         },
         {
           "title": "Sterne JAC, Savović J, Page MJ, et al. RoB 2: a revised tool for assessing risk of bias in randomised trials. BMJ. 2019;366.",
-          "url": "https://doi.org/10.1136/bmj.l4898"
+          "url": "https://doi.org/10.1136/bmj.l4898",
+          "abstract": "Assessment of risk of bias is regarded as an essential component of a systematic review on the effects of an intervention. The most commonly used tool for randomised trials is the Cochrane risk-of-bias tool. We updated the tool to respond to developments in understanding how bias arises in randomised trials, and to address user feedback on and limitations of the original tool."
         },
         {
           "title": "Anker SD, Butler J, Filippatos G, et al. Empagliflozin in Heart Failure with a Preserved Ejection Fraction. New England Journal of Medicine. 2021;385:1451–1461.",
-          "url": "https://doi.org/10.1056/NEJMoa2107038"
+          "url": "https://doi.org/10.1056/NEJMoa2107038",
+          "abstract": "BACKGROUND: Sodium-glucose cotransporter 2 inhibitors reduce the risk of hospitalization for heart failure in patients with heart failure and a reduced ejection fraction, but their effects in patients with heart failure and a preserved ejection fraction are uncertain. METHODS: In this double-blind trial, we randomly assigned 5988 patients with class II-IV heart failure and an ejection fraction of more than 40% to receive empagliflozin (10 mg once daily) or placebo, in addition to usual therapy. The primary outcome was a composite of cardiovascular death or hospitalization for heart failure. RESULTS: Over a median of 26.2 months, a primary outcome event occurred in 415 of 2997 patients (13.8%) in the empagliflozin group and in 511 of 2991 patients (17.1%) in the placebo group (hazard ratio, 0.79; 95% confidence interval [CI], 0.69 to 0.90; P<0.001). This effect was mainly related to a lower risk of hospitalization for heart failure in the empagliflozin group. The effects of empagliflozin appeared consistent in patients with or without diabetes. The total number of hospitalizations for heart failure was lower in the empagliflozin group than in the placebo group (407 with empagliflozin and 541 with placebo; hazard ratio, 0.73; 95% CI, 0.61 to 0.88; P<0.001). Uncomplicated genital and urinary tract infections and hypotension were reported more frequently with empagliflozin. CONCLUSIONS: Empagliflozin reduced the combined risk of cardiovascular death or hospitalization for heart failure in patients with heart failure and a preserved ejection fraction, regardless of the presence or absence of diabetes. (Funded by Boehringer Ingelheim and Eli Lilly; EMPEROR-Preserved ClinicalTrials.gov number, NCT03057951)."
         },
         {
           "title": "Solomon SD, McMurray JJV, Claggett B, et al. Dapagliflozin in Heart Failure with Mildly Reduced or Preserved Ejection Fraction. New England Journal of Medicine. 2022;387:1089–1098.",
-          "url": "https://doi.org/10.1056/NEJMoa2206286"
+          "url": "https://doi.org/10.1056/NEJMoa2206286",
+          "abstract": "BACKGROUND: Sodium-glucose cotransporter 2 (SGLT2) inhibitors reduce the risk of hospitalization for heart failure and cardiovascular death among patients with chronic heart failure and a left ventricular ejection fraction of 40% or less. Whether SGLT2 inhibitors are effective in patients with a higher left ventricular ejection fraction remains less certain. METHODS: We randomly assigned 6263 patients with heart failure and a left ventricular ejection fraction of more than 40% to receive dapagliflozin (at a dose of 10 mg once daily) or matching placebo, in addition to usual therapy. The primary outcome was a composite of worsening heart failure (which was defined as either an unplanned hospitalization for heart failure or an urgent visit for heart failure) or cardiovascular death, as assessed in a time-to-event analysis. RESULTS: Over a median of 2.3 years, the primary outcome occurred in 512 of 3131 patients (16.4%) in the dapagliflozin group and in 610 of 3132 patients (19.5%) in the placebo group (hazard ratio, 0.82; 95% confidence interval [CI], 0.73 to 0.92; P<0.001). Worsening heart failure occurred in 368 patients (11.8%) in the dapagliflozin group and in 455 patients (14.5%) in the placebo group (hazard ratio, 0.79; 95% CI, 0.69 to 0.91); cardiovascular death occurred in 231 patients (7.4%) and 261 patients (8.3%), respectively (hazard ratio, 0.88; 95% CI, 0.74 to 1.05). Total events and symptom burden were lower in the dapagliflozin group than in the placebo group. Results were similar among patients with a left ventricular ejection fraction of 60% or more and those with a left ventricular ejection fraction of less than 60%, and results were similar in prespecified subgroups, including patients with or without diabetes. The incidence of adverse events was similar in the two groups. CONCLUSIONS: Dapagliflozin reduced the combined risk of worsening heart failure or cardiovascular death among patients with heart failure and a mildly reduced or preserved ejection fraction. (Funded by AstraZeneca; DELIVER ClinicalTrials.gov number, NCT03619213.)."
         },
         {
           "title": "International Committee of Medical Journal Editors. Recommendations: Use of Artificial Intelligence in Publishing.",
-          "url": "https://www.icmje.org/recommendations/browse/artificial-intelligence/"
+          "url": "https://www.icmje.org/recommendations/browse/artificial-intelligence/",
+          "abstract": "Proliferation of artificial intelligence (AI) and large language models (LLMs) has made their use ubiquitous and the utility of AI/LLM in advancing science holds promise. However, there are concerns regarding validity, confidentiality, transparency, and accountability in the use of AI/LLM in scientific publishing. Because AI can generate authoritative-sounding output that can be incorrect, incomplete, or biased, humans are ultimately responsible for reviewing and ensuring the accuracy of any content generated with assistance of AI. Therefore, authors, reviewers, and editors/publishers should adhere to the following principles when using AI/LLM:"
         },
         {
           "title": "MIT Information Systems & Technology. Guidance for use of Generative AI tools.",
-          "url": "https://ist.mit.edu/ai-guidance"
+          "url": "https://ist.mit.edu/ai-guidance",
+          "abstract": "Generative AI tools can support many types of work at MIT. However, using these tools requires care — especially when working with Institute data. MIT work should be conducted using MIT-licensed AI tools whenever Institute data is involved."
         },
         {
           "title": "Stanford University Office of Community Standards. Generative AI Policy Guidance.",
-          "url": "https://communitystandards.stanford.edu/generative-ai-policy-guidance"
+          "url": "https://communitystandards.stanford.edu/generative-ai-policy-guidance",
+          "abstract": "The Board on Conduct Affairs (BCA) offers guidance to help students and instructors better understand expectations and responsibilities. Learn how these recommendations support a fair and transparent academic environment."
+        },
+        {
+          "title": "Balduzzi S, Rücker G, Schwarzer G. How to perform a meta-analysis with R: a practical tutorial. Evid Based Ment Health. 2019;22(4):153–160.",
+          "url": "https://doi.org/10.1136/ebmental-2019-300117",
+          "abstract": "OBJECTIVE: Meta-analysis is of fundamental importance to obtain an unbiased assessment of the available evidence. In general, the use of meta-analysis has been increasing over the last three decades with mental health as a major research topic. It is then essential to well understand its methodology and interpret its results. In this publication, we describe how to perform a meta-analysis with the freely available statistical software environment R, using a working example taken from the field of mental health. METHODS: R package meta is used to conduct standard meta-analysis. Sensitivity analyses for missing binary outcome data and potential selection bias are conducted with R package metasens. All essential R commands are provided and clearly described to conduct and report analyses. RESULTS: The working example considers a binary outcome: we show how to conduct a fixed effect and random effects meta-analysis and subgroup analysis, produce a forest and funnel plot and to test and adjust for funnel plot asymmetry. All these steps work similar for other outcome types. CONCLUSIONS: R represents a powerful and flexible tool to conduct meta-analyses. This publication gives a brief glimpse into the topic and provides directions to more advanced meta-analysis methods available in R."
         }
       ],
       "background": [
@@ -4941,27 +4984,32 @@ window.COURSE = {
       "references": [
         {
           "title": "Michael Smith Health Research BC. Diabetic retinopathy screening – National tele-ophthalmology. Describes Canadian research involving community-based screening and approaches to improving access in remote and underserved communities.",
-          "url": "https://www.healthresearchbc.ca/award/diabetic-retinopathy-screening-national-tele-ophthalmology/"
+          "url": "https://www.healthresearchbc.ca/award/diabetic-retinopathy-screening-national-tele-ophthalmology/",
+          "abstract": "MSFHR is providing matching funds to support the research of Dr. David Maberley as part of Diabetes Action Canada, one of five national chronic disease networks established through the Canadian Institutes of Health Research’s (CIHR) Strategy for Patient-Oriented Research (SPOR) Networks in Chronic Disease, connecting researchers, health professionals, policy-makers, and patients across the country. MSFHR […]"
         },
         {
           "title": "Abràmoff MD, Lavin PT, Birch M, Shah N, Folk JC. Pivotal trial of an autonomous AI-based diagnostic system for detection of diabetic retinopathy in primary care offices. npj Digital Medicine. 2018;1:39.",
-          "url": "https://doi.org/10.1038/s41746-018-0040-6"
+          "url": "https://doi.org/10.1038/s41746-018-0040-6",
+          "abstract": "Artificial Intelligence (AI) has long promised to increase healthcare affordability, quality and accessibility but FDA, until recently, had never authorized an autonomous AI diagnostic system. This pivotal trial of an AI system to detect diabetic retinopathy (DR) in people with diabetes enrolled 900 subjects, with no history of DR at primary care clinics, by comparing to Wisconsin Fundus Photograph Reading Center (FPRC) widefield stereoscopic photography and macular Optical Coherence Tomography (OCT), by FPRC certified photographers, and FPRC grading of Early Treatment Diabetic Retinopathy Study Severity Scale (ETDRS) and Diabetic Macular Edema (DME). More than mild DR (mtmDR) was defined as ETDRS level 35 or higher, and/or DME, in at least one eye. AI system operators underwent a standardized training protocol before study start. Median age was 59 years (range, 22-84 years); among participants, 47.5% of participants were male; 16.1% were Hispanic, 83.3% not Hispanic; 28.6% African American and 63.4% were not; 198 (23.8%) had mtmDR. The AI system exceeded all pre-specified superiority endpoints at sensitivity of 87.2% (95% CI, 81.8-91.2%) (>85%), specificity of 90.7% (95% CI, 88.3-92.7%) (>82.5%), and imageability rate of 96.1% (95% CI, 94.6-97.3%), demonstrating AI's ability to bring specialty-level diagnostics to primary care settings. Based on these results, FDA authorized the system for use by health care providers to detect more than mild DR and diabetic macular edema, making it, the first FDA authorized autonomous AI diagnostic system in any field of medicine, with the potential to help prevent vision loss in thousands of people with diabetes annually. ClinicalTrials.gov NCT02963441."
         },
         {
           "title": "World Health Organization. Ethics and governance of artificial intelligence for health: WHO guidance. Geneva: WHO; 2021.",
-          "url": "https://www.who.int/publications/i/item/9789240029200"
+          "url": "https://www.who.int/publications/i/item/9789240029200",
+          "abstract": "The WHO guidance on Ethics & Governance of Artificial Intelligence for Health is the product of eighteen months of deliberation amongst leading experts in ethics, digital technology, law, human rights, as well as experts from Ministries of Health. While new technologies that use artificial intelligence hold great promise to improve diagnosis, treatment, health research and drug development and to support governments carrying out public health functions, including surveillance and outbreak response, such technologies, according to the report, must put ethics and human rights at the heart of its design, deployment, and use."
         },
         {
           "title": "Office of the Privacy Commissioner of Canada. Responsible use of artificial intelligence in health and health research. Joint resolution of federal, provincial, and territorial privacy regulators; 2026.",
-          "url": "https://www.priv.gc.ca/en/about-the-opc/what-we-do/provincial-and-territorial-collaboration/joint-resolutions-with-provinces-and-territories/res_20260915_aihealth"
+          "url": "https://www.priv.gc.ca/en/about-the-opc/what-we-do/provincial-and-territorial-collaboration/joint-resolutions-with-provinces-and-territories/res_20260915_aihealth",
+          "abstract": "Resolution of the Federal, Provincial and Territorial Information and Privacy Commissioners and Ombuds with responsibility for privacy oversight (“FPT Privacy Regulators”)"
         },
         {
           "title": "Health Canada. National Strategy for Eye Care. 2026. Discusses barriers to accessing eye care, including geographic distance and socioeconomic factors.",
-          "url": "https://www.canada.ca/en/health-canada/services/publications/health-system-services/national-strategy-eye-care.html"
+          "url": "https://www.canada.ca/en/health-canada/services/publications/health-system-services/national-strategy-eye-care.html",
+          "abstract": "The National Strategy for Eye Care, the first of its kind in Canada, sets out a common plan for governments and partners to improve eye care for everyone."
         },
         {
           "title": "Canadian Ophthalmological Society. Evidence-based clinical practice guidelines for the management of diabetic retinopathy. Canadian Journal of Ophthalmology. 2017. Relevant guidance on diabetic retinopathy screening and teleophthalmology.",
-          "url": "https://www.canadianjournalofophthalmology.ca/article/S0008418217310475/pdf"
+          "url": "https://doi.org/10.1016/j.jcjo.2017.09.027"
         },
         {
           "title": "Ontario Health. Teleophthalmology. Example of a Canadian community-based retinal screening and specialist referral pathway.",

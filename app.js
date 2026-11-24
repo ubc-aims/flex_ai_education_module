@@ -14,6 +14,28 @@ const go = route => { if (location.hash === '#'+route) render(); else location.h
 const button = (text, action, value='', secondary=false) => `<button class="${secondary?'secondary':'primary'}" data-action="${action}" data-value="${esc(value)}">${esc(text)}</button>`;
 function save(){try{localStorage.setItem(key,JSON.stringify({completed:[...completed]}));}catch{/* The course also works without browser storage. */}}
 function resume(m){const n=m.scenes.findIndex(s=>!completed.has(s.id));return n<0?m.id+'/finish':m.id+'/'+n;}
+function findRefEntry(ref){
+ for(const mod of modules){const idx=mod.references.indexOf(ref);if(idx>=0)return {mod,idx};}
+ return null;
+}
+function openRefPanel(modId,refIdx){
+ const mod=modules.find(m=>m.id===modId)||activeModule;
+ const ref=mod?.references?.[Number(refIdx)];
+ const panel=document.querySelector('#ref-panel');
+ if(!ref||!panel)return;
+ const abs=ref.abstract?`<div class="ref-abstract"><h3>Abstract</h3><p>${esc(ref.abstract)}</p></div>`:`<p class="ref-no-abstract">No abstract is stored for this reference. Use the source link below to read the full document.</p>`;
+ panel.innerHTML=`<div class="ref-panel-head"><p class="eyebrow">Reference [${Number(refIdx)+1}]</p><button type="button" class="ref-close" data-action="close-ref" aria-label="Close reference panel">×</button></div><h2>${esc(ref.title)}</h2>${abs}<p class="ref-external"><a href="${esc(ref.url)}" target="_blank" rel="noopener noreferrer">Open full source ↗</a></p>`;
+ panel.hidden=false;
+ document.body.classList.add('has-ref-panel');
+ panel.focus({preventScroll:true});
+}
+function closeRefPanel(){
+ const panel=document.querySelector('#ref-panel');
+ if(!panel||panel.hidden)return;
+ panel.hidden=true;
+ panel.innerHTML='';
+ document.body.classList.remove('has-ref-panel');
+}
 function referenceText(text){
  const refs=modules.flatMap(m=>m.references);
  const aliases=[
@@ -25,15 +47,15 @@ function referenceText(text){
  ['Michael Smith Health Research BC, National Tele-ophthalmology Research Program','Michael Smith'],['Michael Smith Health Research BC','Michael Smith'],['Abràmoff et al., 2018','Abràmoff MD'],['World Health Organization, Ethics and Governance of AI for Health','World Health Organization'],['WHO','World Health Organization'],['Office of the Privacy Commissioner of Canada','Office of the Privacy'],['Health Canada, National Strategy for Eye Care','Health Canada.']
  ];
  const renderCites=str=>esc(str).replace(/\[(\d+)\]/g,(m,num)=>{
-  const r=activeModule?.references?.[Number(num)-1];
-  const href=r?esc(r.url):`#${activeModule?.id||'education'}/sources`;
-  const target=r?' target="_blank" rel="noopener noreferrer"':'';
-  return `<sup class="cite"><a href="${href}"${target}>[${num}]</a></sup>`;
+  const idx=Number(num)-1;
+  const r=activeModule?.references?.[idx];
+  if(r)return `<sup class="cite"><a href="${esc(r.url)}" class="cite-link" data-action="open-ref" data-mod="${esc(activeModule.id)}" data-ref="${idx}" aria-label="View reference ${num}">[${num}]</a></sup>`;
+  return `<sup class="cite"><a href="#${activeModule?.id||'education'}/sources">[${num}]</a></sup>`;
  });
  let result='',rest=text;
  while(rest){let best=null;for(const [label,prefix] of aliases){const at=rest.indexOf(label);if(at>=0&&(!best||at<best.at||(at===best.at&&label.length>best.label.length)))best={at,label,prefix};}
  if(!best){result+=renderCites(rest);break;}
- const ref=refs.find(r=>r.title.includes(best.prefix));result+=renderCites(rest.slice(0,best.at));result+=ref?`<a href="${esc(ref.url)}" target="_blank" rel="noopener noreferrer">${esc(best.label)}</a>`:esc(best.label);rest=rest.slice(best.at+best.label.length);
+ const ref=refs.find(r=>r.title.includes(best.prefix));const found=ref?findRefEntry(ref):null;result+=renderCites(rest.slice(0,best.at));result+=ref&&found?`<a href="${esc(ref.url)}" class="inline-ref-link" data-action="open-ref" data-mod="${esc(found.mod.id)}" data-ref="${found.idx}">${esc(best.label)}</a>`:esc(best.label);rest=rest.slice(best.at+best.label.length);
  }
  return result;
 }
@@ -47,7 +69,7 @@ function textBlocks(blocks){
   if(t==='library(meta)'||t.startsWith('library(meta)'))code=true;
   if(code){codeLines.push(t);if(t==='forest(result)')flush();continue;}
   if(t==='Story continues'||t==='Story continues')continue;
-  if(/^(SE <-|=LN\(|=\(LN\(|log_HR <-)/.test(t)){html+=`<pre class="code-view"><code>${esc(t)}</code></pre>`;continue;}
+  if(/^(SE <-|=LN\(|=\(LN\(|log_HR <-|study <- c\()/.test(t)){html+=`<pre class="code-view"><code>${esc(t)}</code></pre>`;continue;}
   html+=b.heading?`<h3>${esc(t.replace(/^Key takeaway displayed$/,'Takeaway'))}</h3>`:`<p>${referenceText(t)}</p>`;
  }
  flush();return html;
@@ -60,7 +82,7 @@ function sourceLinks(m){
 function courseIntro(){
  const courseObj=(window.COURSE.objectives||[]).map(v=>`<li>${esc(v)}</li>`).join('');
  const cards=modules.map((mod,i)=>`<button type="button" class="intro-module-card" data-action="tab" data-value="${mod.id}"><strong>${i+1}. ${esc(mod.label)}</strong><span>${esc(mod.title)}</span></button>`).join('');
- return `<h1>Learning with AI</h1><p class="lead">Four interactive modules for medical students on working with AI responsibly in studying, clinical documentation, research and health equity.</p><p>AI supports your learning and work, while you verify its output and keep your own judgment in charge.</p><section class="objectives-box" aria-label="General learning objectives"><h2>General learning objectives</h2><ul>${courseObj}</ul></section><div class="actions">${button('Start Module 1: AI in Education','go','education')}</div><h2>Modules</h2><div class="intro-modules">${cards}</div>`;
+ return `<p class="dev-notice" role="note"><strong>In development:</strong> This module is currently being developed and refined.</p><p class="eyebrow">0. Introduction</p><h1>Learning with AI</h1><p class="lead">Four interactive modules for medical students on working with AI responsibly in studying, clinical documentation, research and health equity.</p><p>AI supports your learning and work, while you verify its output and keep your own judgment in charge.</p><section class="intro-note" aria-label="Personal note and team"><h2>A note from the team</h2><p>We created this module to give medical students practical scenarios for using AI in studying, clinical documentation, research and health equity while keeping verification and clinical judgment at the centre.</p><p><strong>Created by:</strong> Arvin Zaker and Karanvir Gill</p><p><strong>Advisors:</strong> Rohit and Ilker</p></section><section class="objectives-box" aria-label="General learning objectives"><h2>General learning objectives</h2><ul>${courseObj}</ul></section><div class="actions">${button('Start Module 1: AI in Education','go','education')}</div><h2>Modules</h2><div class="intro-modules">${cards}</div>`;
 }
 function introduction(m){return `<h1>${esc(m.title)}</h1><p class="lead">${esc(m.description)}</p>${m.background.map(p=>`<p>${esc(p)}</p>`).join('')}<section class="objectives-box" aria-label="Module learning objectives"><h2>Module learning objectives</h2><ul>${m.objectives.map(v=>`<li>${esc(v)}</li>`).join('')}</ul></section><p class="learning-route">Read the principle, apply it in Alex’s story, then use the feedback to check your reasoning.</p>${m.id==='scribes'?policy():''}<div class="actions">${button(completed.size&&m.scenes.some(s=>completed.has(s.id))?'Resume this module':'Start this module','go',resume(m))}</div>${sourceLinks(m)}`;}
 const noteTargets=[
@@ -70,58 +92,85 @@ const noteTargets=[
  [3,'Increase ramipril to 10 mg daily.'],
  [4,'Home blood pressure averages 135/85 mmHg.']
 ];
-function noteSentenceHtml(text,q){
+function buildNoteSentences(){
+ const s=modules.find(m=>m.id==='scribes').scenes[2];
+ const all=s.reading,n=all.findIndex(b=>b.text==='AI-generated draft note');
+ let extraIdx=100;
+ const items=[];
+ for(const blk of all.slice(n+1)){
+  if(blk.heading){items.push({heading:true,text:blk.text});continue;}
+  let rest=blk.text;
+  const parts=[];
+  while(rest){
+   let best=null;
+   for(const [idx,phrase] of noteTargets){const at=rest.indexOf(phrase);if(at>=0&&(!best||at<best.at))best={at,idx,phrase};}
+   if(!best){parts.push({text:rest,target:null});break;}
+   if(best.at>0)parts.push({text:rest.slice(0,best.at),target:null});
+   parts.push({text:best.phrase,target:best.idx});
+   rest=rest.slice(best.at+best.phrase.length);
+  }
+  const segs=[];
+  for(const p of parts){
+   if(p.target!==null){segs.push({idx:p.target,text:p.text});continue;}
+   const sentences=p.text.match(/[^.!?]+[.!?]+(?:\s+|$)|[^.!?]+$/g)||[p.text];
+   for(const st of sentences){if(st.trim())segs.push({idx:extraIdx++,text:st});}
+  }
+  items.push({heading:false,segs});
+ }
+ return items;
+}
+function noteSentenceHtml(segs,q){
  const interactive=q&&q.multi;
- if(!interactive)return `<p>${referenceText(text)}</p>`;
+ if(!interactive)return `<p>${segs.map(s=>esc(s.text)).join(' ')}</p>`;
  const sel=selections[q.id]||[],ans=answers[q.id];
- let out=esc(text);
- for(const [idx,phrase] of noteTargets){
-  const pe=esc(phrase);
-  if(!out.includes(pe))continue;
+ const html=segs.map(seg=>{
+  const idx=seg.idx;
   const isSel=ans!==undefined?ans.includes(idx):sel.includes(idx);
-  const isCorr=q.correct.includes(idx);
-  let cls='note-sentence';
+  const isTarget=idx<100;
+  const isCorr=isTarget&&q.correct.includes(idx);
+  let cls='note-span';
   if(ans!==undefined){
    if(isSel&&isCorr)cls+=' matched';
    else if(!isSel&&isCorr)cls+=' missed';
    else if(isSel&&!isCorr)cls+=' false-positive';
   }else if(isSel)cls+=' selected';
-  const btn=`<button type="button" class="${cls}" data-action="toggle-note" data-value="${idx}" aria-pressed="${isSel}"${ans!==undefined?' disabled':''}>${pe}</button>`;
-  out=out.replace(pe,btn);
- }
- return `<p>${out}</p>`;
+  return `<span class="${cls}" data-note-idx="${idx}"${ans===undefined?' tabindex="0" role="button" aria-pressed="'+isSel+'"':''}>${esc(seg.text)}</span>`;
+ }).join(' ');
+ return `<p>${html}</p>`;
 }
 function noteReview(q){
  const s=modules.find(m=>m.id==='scribes').scenes[2];
- const all=s.reading;const a=all.findIndex(b=>b.text==='Patient consultation'),b=all.findIndex(b=>b.text==='Story continues'),n=all.findIndex(b=>b.text==='AI-generated draft note');
- const noteHtml=all.slice(n+1).map(blk=>blk.heading?`<h3>${esc(blk.text)}</h3>`:noteSentenceHtml(blk.text,q)).join('');
- const hint=q&&q.multi&&answers[q.id]===undefined?'<p class="note-hint">Click or tap the inaccurate sentences directly in the draft note below, then select <b>Check my review</b>.</p>':'';
- return `<div class="note-review"><section class="clinical-note"><h2>AI-generated draft note</h2>${hint}${noteHtml}</section><details class="encounter" open><summary>Encounter (reference transcript)</summary>${fullScene(all.slice(a+1,b))}</details></div>`;
+ const all=s.reading;const a=all.findIndex(b=>b.text==='Patient consultation'),b=all.findIndex(b=>b.text==='Story continues');
+ const items=buildNoteSentences();
+ const noteHtml=items.map(it=>it.heading?`<h3>${esc(it.text)}</h3>`:noteSentenceHtml(it.segs,q)).join('');
+ const interactive=q&&q.multi&&answers[q.id]===undefined;
+ const hint=interactive?'<p class="note-hint">Select text in the draft note below (drag to highlight or click a sentence) to mark inaccuracies, then choose <b>Check my review</b>.</p>':'';
+ return `<div class="note-review"><section class="clinical-note"><div class="editor-bar"><span class="editor-title">draft_note.txt</span>${interactive?'<button type="button" class="text-button editor-clear" data-action="clear-note">Clear highlights</button>':''}</div><h2>AI-generated draft note</h2>${hint}<div class="clinical-note-editor">${noteHtml}</div></section><details class="encounter" open><summary>Encounter (reference transcript)</summary>${fullScene(all.slice(a+1,b))}</details></div>`;
 }
 function calgaryFlow(m,n){
  const maps={
   'education-0':{title:'Calgary Guide map: Using AI as a study partner',steps:[
    ['1. Start from your lecture notes','Identify concepts or mechanisms that feel fragmented.'],
    ['2. Prompt for structure or causality','Ask for comparison tables or step-by-step pathophysiology.'],
-   ['3. Verify against primary sources','Check numbers, thresholds and claims in guidelines or textbooks.'],
-   ['4. Practise active recall','Test yourself one question at a time before reading explanations.']
+   ['3. Verify against primary sources','Check numbers, thresholds and claims in clinical guidelines or textbooks [1][2].'],
+   ['4. Practise active recall','Test yourself one question at a time before reading explanations [4].']
   ]},
   'scribes-0':{title:'Calgary Guide map: Clinical AI scribe workflow',steps:[
-   ['1. Check UBC eligibility rules','Years 1–3: no independent ambient scribing. Year 4: formal approval required.'],
-   ['2. Obtain informed patient consent','Explain how audio is processed and document consent before recording.'],
-   ['3. Audit the AI draft note','Read the draft note first, then compare every claim against the encounter.'],
-   ['4. Author and sign off','Write or revise your own note and verify it with your preceptor.']
+   ['1. Confirm institutional and preceptor approval','Verify whether ambient AI scribing is permitted for your training level and clinical site [1][3].'],
+   ['2. Obtain informed patient consent','Explain how audio is processed and document patient consent before recording [1].'],
+   ['3. Audit the AI draft note','Read the draft note first, then compare every claim against the encounter [2].'],
+   ['4. Author and sign off','Write or revise your own note and verify it with your preceptor [2][3].']
   ]},
   'research-0':{title:'Calgary Guide map: PRISMA-aligned AI research workflow',steps:[
-   ['1. Brainstorm search terms','Use AI to explore vocabulary; build reproducible PRISMA 2020 searches with a librarian.'],
-   ['2. Lock PICO and protocol','Pre-specify eligibility and outcomes under PRISMA-P with supervisor review.'],
-   ['3. Verify extracted data','Check every trial endpoint and confidence interval against published primary tables.'],
-   ['4. Use established libraries & disclose','Prompt peer-reviewed R packages, verify with a supervisor, and disclose AI use.']
+   ['1. Brainstorm search terms','Use AI to explore vocabulary; build reproducible PRISMA 2020 searches with a librarian [1][3].'],
+   ['2. Lock PICO and protocol','Pre-specify inclusion criteria and outcomes under PRISMA-P with supervisor review [4].'],
+   ['3. Verify extracted data','Check every trial endpoint and confidence interval against published primary tables [5].'],
+   ['4. Use established libraries & disclose','Prompt peer-reviewed R packages, verify with a supervisor, and disclose AI use [9].']
   ]}
  };
  const item=maps[`${m.id}-${n}`];
  if(!item)return '';
- return `<section class="calgary-flow" aria-label="${esc(item.title)}"><h2>${esc(item.title)}</h2><ol class="flow-steps">${item.steps.map(([head,desc])=>`<li><strong>${esc(head)}</strong><span>${esc(desc)}</span></li>`).join('')}</ol></section>`;
+ return `<section class="calgary-flow" aria-label="${esc(item.title)}"><h2>${esc(item.title)}</h2><ol class="flow-steps">${item.steps.map(([head,desc])=>`<li><strong>${esc(head)}</strong><span>${referenceText(desc)}</span></li>`).join('')}</ol></section>`;
 }
 function videoDropdown(m,n){
  const videos={
@@ -184,10 +233,11 @@ function continuation(q){
 }
 function questionView(q){
  const answer=answers[q.id];
- if(answer===undefined){if(q.multi){const count=(selections[q.id]||[]).length;return `<section class="decision" tabindex="-1"><p class="eyebrow">Your turn · Highlight errors in the draft note above</p><h2>${esc(q.question)}</h2><p class="selection-count">${count} ${count===1?'sentence':'sentences'} highlighted</p><div class="actions"><button type="button" class="primary" data-action="submit-note">Check my review</button></div></section>`;}
+ if(answer===undefined){if(q.multi){const count=(selections[q.id]||[]).length;return `<section class="decision" tabindex="-1"><p class="eyebrow">Your turn · Highlight errors in the draft note above</p><h2>${esc(q.question)}</h2><p class="selection-count">${count} ${count===1?'selection':'selections'} highlighted</p><div class="actions"><button type="button" class="primary" data-action="submit-note">Check my review</button></div></section>`;}
  return `<section class="decision" tabindex="-1"><p class="eyebrow">Your turn · Choose one response</p><h2>${esc(q.question)}</h2><div class="choices">${q.choices.map((c,i)=>button(c.text,'choose',i,true)).join('')}</div></section>`;}
  const correct=q.multi?q.correct.length===answer.length&&q.correct.every(i=>answer.includes(i)):answer===q.correct;
- const why=q.multi?'<p>Compare each sentence highlight with the encounter.</p>'+q.choices.map((c,i)=>{const matched=answer.includes(i)===q.correct.includes(i);return `<div class="review-item ${matched?'matched':'missed'}"><h3>${matched?'Correct':'Incorrect'} · ${q.correct.includes(i)?'This is a documentation error':'This was documented accurately'}</h3><p>${esc(c.feedback)}</p></div>`;}).join(''):`<p class="chosen"><b>Your choice</b><br>${esc(q.choices[answer].text)}</p><p>${esc(q.choices[answer].feedback)}</p>`;
+ const extraCount=q.multi?answer.filter(i=>i>=100).length:0;
+ const why=q.multi?'<p>Compare each highlight with the encounter.</p>'+q.choices.map((c,i)=>{const matched=answer.includes(i)===q.correct.includes(i);return `<div class="review-item ${matched?'matched':'missed'}"><h3>${matched?'Correct':'Incorrect'} · ${q.correct.includes(i)?'This is a documentation error':'This was documented accurately'}</h3><p>${esc(c.feedback)}</p></div>`;}).join('')+(extraCount?`<div class="review-item missed"><h3>Incorrect · Additional accurate text highlighted</h3><p>You also highlighted ${extraCount} accurate ${extraCount===1?'sentence':'sentences'} from the draft note that matched the encounter.</p></div>`:''):`<p class="chosen"><b>Your choice</b><br>${esc(q.choices[answer].text)}</p><p>${esc(q.choices[answer].feedback)}</p>`;
  return `<section class="result ${correct?'correct':'incorrect'}" id="feedback" tabindex="-1" role="status"><h2>${correct?'Correct':'Incorrect'}</h2>${why}${!correct&&!q.multi?`<p><b>Best approach</b><br>${esc(q.choices[q.correct].text)}</p>`:''}</section>${continuation(q)}<div class="actions">${button('Continue','next')}${button('Try again','retry','',true)}</div>`;
 }
 function chatBody(blocks){
@@ -206,10 +256,11 @@ function fullScene(blocks){
   if(/^Reference[s]?:/.test(t)){flush();html+=`<p class="scene-reference">${referenceText(t)}</p>`;continue;}
   const named=t.match(/^(Alex|Dr\. Chen|Dr\. Lee|Mr\. Patel|Mr\. Singh|Ms\. Williams):\s*["“](.*)/);
   if(named){flush();speaker=named[1];pending=[{type:'text',text:named[2].replace(/["”]$/,'')}];flush();continue;}
-  if(/^(Alex types:|Alex then asks:|Alex asks the chatbot:)$/.test(t)){
+  if(/^(Alex types:|Alex then asks:|Alex asks the chatbot:|Alex asks:|Alex asks AI:)$/.test(t)){
    if(/^["“]/.test(blocks[i+1]?.text||'')){flush();speaker='Alex';pending=[{type:'text',text:blocks[++i].text.replace(/^["“]|["”]$/g,'')}];flush();}continue;
   }
-  if(/^(AI response(?: after choosing .)?|Corrected AI response|AI-generated practice question|AI SCREENING RESULT)$/.test(t)){flush();speaker=t==='AI SCREENING RESULT'?'AI screening system':'AI chatbot';continue;}
+  if(b.heading&&/^(Improved AI prompt|Improved prompt)$/.test(t)){flush();speaker='Alex';continue;}
+  if(/^(AI response(?: after choosing .)?|Corrected AI response|Improved AI response|AI-generated practice question|AI SCREENING RESULT)$/.test(t)){flush();speaker=t==='AI SCREENING RESULT'?'AI screening system':'AI chatbot';continue;}
   if(b.heading&&['Story','Story continues'].includes(t)){flush();continue;}
   if(b.heading&&t!=='Example R code'){flush();pending.push(b);continue;}
   pending.push(b);
@@ -233,26 +284,60 @@ function render(focusFeedback=false){
  current=null;const [id,step,qraw='0']=location.hash.slice(1).split('/');const isIntro=!id||id==='intro';const m=modules.find(m=>m.id===id)||modules[0];activeModule=m;let html;
  if(isIntro)html=courseIntro();
  else if(step==='sources')html=sources(m);else if(step==='finish')html=finish(m);else if(step!==undefined&&/^\d+$/.test(step)&&Number(step)<m.scenes.length){const n=Number(step);const qi=/^\d+$/.test(qraw)&&Number(qraw)<Math.max(1,m.scenes[n].questions.length)?Number(qraw):0;html=lesson(m,n,qi);}else html=introduction(m);
- tabs.innerHTML=modules.map((mod,i)=>{const sel=!isIntro&&mod.id===m.id;return `<button type="button" role="tab" id="tab-${mod.id}" aria-controls="main" aria-selected="${sel}" tabindex="${sel||(isIntro&&i===0)?0:-1}" data-action="tab" data-value="${mod.id}"><span class="tab-number" aria-hidden="true">${i+1}</span><span>${esc(mod.label)}</span></button>`;}).join('');
+ tabs.innerHTML=`<button type="button" role="tab" id="tab-intro" aria-controls="main" aria-selected="${isIntro}" tabindex="${isIntro?0:-1}" data-action="tab" data-value="intro"><span class="tab-number" aria-hidden="true">0</span><span>Introduction</span></button>`+modules.map((mod,i)=>{const sel=!isIntro&&mod.id===m.id;return `<button type="button" role="tab" id="tab-${mod.id}" aria-controls="main" aria-selected="${sel}" tabindex="-1" data-action="tab" data-value="${mod.id}"><span class="tab-number" aria-hidden="true">${i+1}</span><span>${esc(mod.label)}</span></button>`;}).join('');
  const sceneTabs=document.querySelector('#scene-tabs');
  if(isIntro){sceneTabs.innerHTML='';sceneTabs.hidden=true;}
- else{sceneTabs.hidden=false;const sn=/^\d+$/.test(step)?Number(step):-1;const entries=[{label:'Overview',route:m.id,done:sn>=0||step==='finish'||m.scenes.some(s=>completed.has(s.id)),cur:step===undefined},...m.scenes.map((sc,i)=>({label:`${i+1}. ${shortTitles[m.id]?.[i]||sc.title}`,route:`${m.id}/${i}`,done:completed.has(sc.id),cur:i===sn})),{label:'Summary',route:`${m.id}/finish`,done:m.scenes.every(s=>completed.has(s.id)),cur:step==='finish'}];sceneTabs.innerHTML=`<ol class="case-track">${entries.map(e=>`<li class="station-stop"${e.done?' data-completed="true"':''}${e.cur?' aria-current="step"':''}><button type="button" class="track-label" data-action="go" data-value="${esc(e.route)}"${e.cur?' aria-current="page"':''}>${esc(e.label)}</button></li>`).join('')}</ol>`;const active=sceneTabs.querySelector('li[aria-current="step"]');if(active&&sceneTabs.scrollWidth>sceneTabs.clientWidth)sceneTabs.scrollLeft=active.offsetLeft-(sceneTabs.clientWidth-active.offsetWidth)/2;}
- if(isIntro)main.removeAttribute('aria-labelledby');else main.setAttribute('aria-labelledby','tab-'+m.id);
+ else{sceneTabs.hidden=false;const sn=/^\d+$/.test(step)?Number(step):-1;const entries=[{label:'Overview',route:m.id,done:sn>=0||step==='finish'||step==='sources'||m.scenes.some(s=>completed.has(s.id)),cur:step===undefined},...m.scenes.map((sc,i)=>({label:`${i+1}. ${shortTitles[m.id]?.[i]||sc.title}`,route:`${m.id}/${i}`,done:completed.has(sc.id),cur:i===sn})),{label:'Summary',route:`${m.id}/finish`,done:m.scenes.every(s=>completed.has(s.id)),cur:step==='finish'},{label:'Sources',route:`${m.id}/sources`,done:false,cur:step==='sources'}];sceneTabs.innerHTML=`<ol class="case-track">${entries.map(e=>`<li class="station-stop"${e.done?' data-completed="true"':''}${e.cur?' aria-current="step"':''}><button type="button" class="track-label" data-action="go" data-value="${esc(e.route)}"${e.cur?' aria-current="page"':''}>${esc(e.label)}</button></li>`).join('')}</ol>`;const active=sceneTabs.querySelector('li[aria-current="step"]');if(active&&sceneTabs.scrollWidth>sceneTabs.clientWidth)sceneTabs.scrollLeft=active.offsetLeft-(sceneTabs.clientWidth-active.offsetWidth)/2;}
+ if(isIntro)main.setAttribute('aria-labelledby','tab-intro');else main.setAttribute('aria-labelledby','tab-'+m.id);
  main.innerHTML=html;
  document.title=(isIntro?'Introduction':m.label)+' | Learning with AI';const target=pendingTabFocus?document.querySelector('#tab-'+pendingTabFocus):focusFeedback?document.querySelector('#feedback'):main;pendingTabFocus=null;target.focus({preventScroll:true});if(focusFeedback)target.scrollIntoView({block:'center'});else window.scrollTo(0,0);
 }
-document.addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;const {action,value}=b.dataset;
+function toggleNoteIndices(idxs){
+ if(!current?.q?.multi||answers[current.q.id]!==undefined)return;
+ let cur=selections[current.q.id]||[];
+ for(const idx of idxs){cur=cur.includes(idx)?cur.filter(x=>x!==idx):[...cur,idx];}
+ selections[current.q.id]=cur;
+ for(const el of main.querySelectorAll('.note-span[data-note-idx]')){
+  const i=Number(el.dataset.noteIdx);
+  const on=cur.includes(i);
+  el.classList.toggle('selected',on);
+  el.setAttribute('aria-pressed',String(on));
+ }
+ const sc=main.querySelector('.selection-count');
+ if(sc){const c=cur.length;sc.textContent=`${c} ${c===1?'selection':'selections'} highlighted`;}
+}
+document.addEventListener('click',e=>{
+ const refBtn=e.target.closest('[data-action="open-ref"]');
+ if(refBtn){e.preventDefault();openRefPanel(refBtn.dataset.mod,refBtn.dataset.ref);return;}
+ if(e.target.closest('[data-action="close-ref"]')){closeRefPanel();return;}
+ const b=e.target.closest('[data-action]');if(!b)return;const {action,value}=b.dataset;
  if(action==='decision'){const target=main.querySelector('.decision');target?.focus();target?.scrollIntoView({block:'start',behavior:'smooth'});return;}
- if(action==='tab'||action==='go'){go(value);return;}
- if(action==='toggle-note'&&current?.q?.multi){const idx=Number(value);const cur=selections[current.q.id]||[];selections[current.q.id]=cur.includes(idx)?cur.filter(x=>x!==idx):[...cur,idx];b.classList.toggle('selected');b.setAttribute('aria-pressed',String(selections[current.q.id].includes(idx)));const sc=main.querySelector('.selection-count');if(sc){const c=selections[current.q.id].length;sc.textContent=`${c} ${c===1?'sentence':'sentences'} highlighted`;}return;}
+ if(action==='tab'||action==='go'){closeRefPanel();go(value);return;}
+ if(action==='clear-note'&&current?.q?.multi){selections[current.q.id]=[];toggleNoteIndices([]);return;}
  if(action==='submit-note'&&current?.q?.multi){answers[current.q.id]=[...(selections[current.q.id]||[])];render(true);return;}
  if(action==='choose'&&current?.q){const n=Number(value);if(!current.q.choices[n])return;answers[current.q.id]=n;render(true);}
  else if(action==='retry'&&current?.q){delete answers[current.q.id];delete selections[current.q.id];render();}
  else if(action==='next'&&current){const {m,scene,sceneIndex,qIndex,q}=current;if(q&&answers[q.id]===undefined)return;if(qIndex<scene.questions.length-1)go(`${m.id}/${sceneIndex}/${qIndex+1}`);else{completed.add(scene.id);save();go(sceneIndex<m.scenes.length-1?`${m.id}/${sceneIndex+1}`:m.id+'/finish');}}
 });
+document.addEventListener('mouseup',e=>{
+ const editor=e.target.closest('.clinical-note-editor');
+ if(!editor||!current?.q?.multi||answers[current.q.id]!==undefined)return;
+ const sel=window.getSelection();
+ if(sel&&!sel.isCollapsed&&sel.rangeCount){
+  const range=sel.getRangeAt(0);
+  const hits=[...editor.querySelectorAll('.note-span[data-note-idx]')].filter(el=>range.intersectsNode(el)).map(el=>Number(el.dataset.noteIdx));
+  if(hits.length){sel.removeAllRanges();toggleNoteIndices(hits);return;}
+ }
+ const span=e.target.closest('.note-span[data-note-idx]');
+ if(span)toggleNoteIndices([Number(span.dataset.noteIdx)]);
+});
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){closeRefPanel();return;}
+ if((e.key==='Enter'||e.key===' ')&&e.target.classList?.contains('note-span')&&e.target.dataset.noteIdx!==undefined){e.preventDefault();toggleNoteIndices([Number(e.target.dataset.noteIdx)]);}
+});
 document.addEventListener('submit',e=>{if(e.target.id!=='note-form'||!current?.q)return;e.preventDefault();answers[current.q.id]=[...new FormData(e.target).getAll('note-error')].map(Number);render(true);});
 document.addEventListener('change',e=>{if(e.target.name==='note-error'&&current?.q)selections[current.q.id]=[...document.querySelectorAll('[name="note-error"]:checked')].map(x=>Number(x.value));});
-tabs.addEventListener('keydown',e=>{const list=[...tabs.querySelectorAll('[role="tab"]')];const i=list.indexOf(document.activeElement);if(i<0)return;let n;if(e.key==='ArrowRight')n=(i+1)%list.length;else if(e.key==='ArrowLeft')n=(i+list.length-1)%list.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=list.length-1;else return;e.preventDefault();pendingTabFocus=modules[n].id;go(modules[n].id);});
+tabs.addEventListener('keydown',e=>{const list=[...tabs.querySelectorAll('[role="tab"]')];const routes=['intro',...modules.map(m=>m.id)];const i=list.indexOf(document.activeElement);if(i<0)return;let n;if(e.key==='ArrowRight')n=(i+1)%list.length;else if(e.key==='ArrowLeft')n=(i+list.length-1)%list.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=list.length-1;else return;e.preventDefault();pendingTabFocus=routes[n];go(routes[n]);});
 document.querySelector('#reset').addEventListener('click',()=>{for(const s of activeModule.scenes){completed.delete(s.id);for(const q of s.questions){delete answers[q.id];delete selections[q.id];}}save();go(activeModule.id);});
 function syncTheme(){const dark=document.documentElement.dataset.theme==='dark',b=document.querySelector('#theme-toggle'),label=dark?'Switch to light mode':'Switch to dark mode';b.setAttribute('aria-label',label);b.title=label;document.querySelector('meta[name="theme-color"]').content=dark?'#111715':'#173e35';}
 document.querySelector('#theme-toggle').addEventListener('click',()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('learning-with-ai-theme',t);}catch{/* Theme still switches without storage. */}syncTheme();});

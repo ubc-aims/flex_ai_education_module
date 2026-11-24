@@ -433,8 +433,8 @@ th,td {
 .choices { min-width: 0; }
 .choices button { min-width: 0; overflow-wrap: anywhere; }
 
-/* Four persistent top-level modules; all four stay visible on phones. */
-.module-tabs { max-width: 1020px; margin: 0 auto; padding: 18px 32px 0; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; }
+/* Five persistent top-level tabs: 0. Introduction + four modules. */
+.module-tabs { max-width: 1020px; margin: 0 auto; padding: 18px 32px 0; display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 8px; }
 .module-tabs button { display: flex; align-items: center; gap: 9px; text-align: left; padding: 13px 12px; min-height: 68px; border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 7px; font-size: .85rem; line-height: 1.35; }
 .module-tabs button[aria-selected="true"] { background: var(--green); border-color: var(--green); color: var(--on-green); }
 .tab-number { font-size: .78rem; }
@@ -470,8 +470,8 @@ legend { font-size: 1.15rem; font-weight: 600; line-height: 1.5; margin-bottom: 
 .incorrect-code { border-left: 3px solid var(--bad); background: var(--bad-bg); }
 .correct-code { border-left: 3px solid var(--ok); background: var(--ok-bg); }
 .dialogue { display: grid; gap: 12px; margin: 24px 0; }
-.dialogue-turn { padding: 16px 20px; border-radius: 8px; background: var(--tint); border: 1px solid var(--line); }
-.dialogue-turn.student-turn { background: var(--surface); margin-left: 24px; }
+.dialogue-turn { max-width: 85%; justify-self: start; padding: 16px 20px; border-radius: 14px 14px 14px 3px; background: var(--tint); border: 1px solid var(--line); }
+.dialogue-turn.student-turn { justify-self: end; background: var(--surface); border-radius: 14px 14px 3px 14px; }
 .dialogue-turn .chat-label { margin-bottom: 6px; }
 .featured-continuation,.formula-check { margin: 26px 0; padding-top: 20px; border-top: 1px solid var(--line); }
 .writing-comparison { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
@@ -490,7 +490,7 @@ legend { font-size: 1.15rem; font-weight: 600; line-height: 1.5; margin-bottom: 
 @media(max-width:600px){.teaching { padding: 18px; }}
 
 .conversation { display: grid; gap: 18px; margin: 24px 0; min-width: 0; }
-.conversation-turn { max-width: 92%; min-width: 0; padding: 18px 22px; border: 1px solid var(--line); border-radius: 14px 14px 14px 3px; background: var(--surface); }
+.conversation-turn { max-width: 92%; min-width: 0; justify-self: start; padding: 18px 22px; border: 1px solid var(--line); border-radius: 14px 14px 14px 3px; background: var(--surface); }
 .conversation-turn.from-student { justify-self: end; background: var(--tint); border-radius: 14px 14px 3px 14px; }
 .conversation-turn.from-ai { background: var(--tint); }
 .conversation-turn .speaker { font-size: .8rem; font-weight: 700; color: var(--link); margin-bottom: 10px; }
@@ -730,48 +730,143 @@ main {
   color: var(--text2);
   margin-bottom: 12px;
 }
-.note-sentence {
+.editor-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.editor-title {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .82rem;
+  color: var(--muted);
+}
+.editor-clear {
+  padding: 4px 8px;
+  min-height: 32px;
+}
+.clinical-note-editor {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .88rem;
+  line-height: 1.7;
+  cursor: text;
+  user-select: text;
+}
+.clinical-note-editor h3 {
+  font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  margin-top: 1.2rem;
+}
+.note-span {
   display: inline;
-  padding: 2px 6px;
-  margin: 0 2px;
-  border: 1px dashed var(--border);
-  border-radius: 4px;
-  background: var(--surface);
-  color: var(--text);
-  font: inherit;
-  line-height: 1.5;
-  text-align: left;
-  transition: background .15s, border-color .15s;
+  border-radius: 3px;
+  padding: 1px 0;
+  transition: background .15s;
 }
-.note-sentence:hover:not(:disabled) {
+.note-span:hover {
   background: var(--tint);
-  border-color: var(--green);
 }
-.note-sentence.selected {
+.note-span.selected {
   background: #fff3cd;
-  border-color: var(--accent);
-  border-style: solid;
   color: #3d2c00;
 }
-:root[data-theme="dark"] .note-sentence.selected {
+:root[data-theme="dark"] .note-span.selected {
   background: #4a3b12;
   color: #ffe8a3;
 }
-.note-sentence.matched {
+.note-span.matched {
   background: var(--ok-bg);
-  border-color: var(--ok);
-  border-style: solid;
+  color: var(--text);
 }
-.note-sentence.missed, .note-sentence.false-positive {
+.note-span.missed, .note-span.false-positive {
   background: var(--bad-bg);
-  border-color: var(--bad);
-  border-style: solid;
   color: var(--bad-text);
 }
 .selection-count {
   font-size: .92rem;
   color: var(--muted);
   margin-bottom: 12px;
+}
+.dev-notice {
+  background: var(--warm);
+  border-left: 3px solid var(--accent);
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 18px;
+  font-size: .92rem;
+}
+.intro-note {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin: 22px 0;
+  max-width: 70ch;
+}
+.intro-note h2 {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+.ref-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(440px, 92vw);
+  height: 100vh;
+  background: var(--surface);
+  border-left: 1px solid var(--line);
+  box-shadow: -8px 0 28px rgba(0,0,0,.14);
+  padding: 24px;
+  overflow-y: auto;
+  z-index: 40;
+}
+.ref-panel[hidden] {
+  display: none;
+}
+.ref-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.ref-panel-head .eyebrow {
+  margin: 0;
+}
+.ref-close {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+.ref-close:hover {
+  background: var(--tint);
+}
+.ref-panel h2 {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+.ref-abstract h3 {
+  font-size: .95rem;
+  margin-bottom: 8px;
+}
+.ref-abstract p, .ref-no-abstract {
+  font-size: .92rem;
+  color: var(--text2);
+}
+.ref-external {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+@media(min-width:1200px) {
+  body.has-ref-panel .page {
+    margin-right: 450px;
+  }
 }
 .ref-note {
   font-size: .9rem;
