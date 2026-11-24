@@ -469,30 +469,26 @@ legend { font-size: 1.15rem; font-weight: 600; line-height: 1.5; margin-bottom: 
 @media(max-width:600px){.module-tabs { padding: 16px 22px 0; grid-template-columns: repeat(2,minmax(0,1fr)); }.module-tabs button { font-size: .83rem; min-height: 76px; padding: 12px; }.journey { grid-template-columns: 1fr; }.dashboard>div { grid-template-columns: 1fr; }.dashboard>div p { display: flex; align-items: center; gap: 16px; margin: 0; }.dashboard strong { font-size: 1.5rem; min-width: 90px; }.clinical-note { padding: 18px; }}
 .incorrect-code { border-left: 3px solid var(--bad); background: var(--bad-bg); }
 .correct-code { border-left: 3px solid var(--ok); background: var(--ok-bg); }
-.dialogue { display: grid; gap: 12px; margin: 24px 0; }
-.dialogue-turn { max-width: 85%; justify-self: start; padding: 16px 20px; border-radius: 14px 14px 14px 3px; background: var(--tint); border: 1px solid var(--line); }
-.dialogue-turn.student-turn { justify-self: end; background: var(--surface); border-radius: 14px 14px 3px 14px; }
-.dialogue-turn .chat-label { margin-bottom: 6px; }
 .featured-continuation,.formula-check { margin: 26px 0; padding-top: 20px; border-top: 1px solid var(--line); }
 .writing-comparison { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
 .writing-comparison article { border: 1px solid var(--line); border-radius: 7px; padding: 18px; background: var(--surface); }
 .writing-comparison h3 { font-size: .95rem; }.writing-comparison p { font-size: .92rem; }
 .equity-comparison { background: var(--tint); padding: 20px; border-radius: 7px; margin: 24px 0; }
 .equity-comparison p { font-size: .9rem; }.equity-comparison td,.equity-comparison th { overflow-wrap: anywhere; }
-@media(max-width:600px){.writing-comparison { grid-template-columns: 1fr; }.dialogue-turn.student-turn { margin-left: 12px; }.dialogue-turn { padding: 16px; }}
+@media(max-width:600px){.writing-comparison { grid-template-columns: 1fr; }}
 
 .teaching { margin: 28px 0 34px; padding: 22px 24px; background: var(--tint); border-radius: 8px; }
 .teaching h2 { font-size: 1.3rem; }.teaching .eyebrow { margin: 0 0 8px; }
 .teaching p:last-child { margin-bottom: 0; }.application { color: var(--muted); }
 .scenario { border-top: 1px solid var(--line); padding-top: 24px; margin-bottom: 30px; }
-.scenario>h2 { margin-bottom: 24px; }.scenario .dialogue { margin: 16px 0; }
+.scenario>h2 { margin-bottom: 24px; }
 .learning-route { font-weight: 600; }
 @media(max-width:600px){.teaching { padding: 18px; }}
 
 .conversation { display: grid; gap: 18px; margin: 24px 0; min-width: 0; }
 .conversation-turn { max-width: 92%; min-width: 0; justify-self: start; padding: 18px 22px; border: 1px solid var(--line); border-radius: 14px 14px 14px 3px; background: var(--surface); }
-.conversation-turn.from-student { justify-self: end; background: var(--tint); border-radius: 14px 14px 3px 14px; }
-.conversation-turn.from-ai { background: var(--tint); }
+.conversation-turn.turn-left { justify-self: start; background: var(--surface); border-radius: 14px 14px 14px 3px; }
+.conversation-turn.turn-right { justify-self: end; background: var(--tint); border-radius: 14px 14px 3px 14px; }
 .conversation-turn .speaker { font-size: .8rem; font-weight: 700; color: var(--link); margin-bottom: 10px; }
 .conversation-turn p:last-child,.scene-narration p:last-child { margin-bottom: 0; }
 .scene-narration { color: var(--text2); font-size: .94rem; }

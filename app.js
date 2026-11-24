@@ -200,22 +200,12 @@ function evidence(m,s,n,q){
  if(m.id==='research'&&n===2&&current.qIndex===1)return `<blockquote>“Empagliflozin reduced cardiovascular mortality by 21%.”</blockquote><p>Compare this extracted statement with the trial’s primary composite endpoint: cardiovascular death or hospitalization for heart failure.</p>`;
  return '';
 }
-function dialogue(blocks){
- const turns=[];
- for(let i=0;i<blocks.length;i++){
-  const text=blocks[i].text||'';
-  const match=text.match(/^(Alex|Dr\. Chen|Dr\. Lee|Mr\. Patel|Mr\. Singh|Ms\. Williams):\s*["“](.*)/);
-  if(match)turns.push({speaker:match[1],text:match[2].replace(/["”]$/,'')});
-  else if(text==='Alex types:'||text==='Alex then asks:'){const next=blocks[i+1]?.text||'';if(/^["“]/.test(next))turns.push({speaker:'Alex',text:next.replace(/^["“]|["”]$/g,'')});}
- }
- return turns.length?`<section class="dialogue" aria-label="Conversation">${turns.map(t=>`<div class="dialogue-turn ${t.speaker==='Alex'?'student-turn':''}"><p class="chat-label">${esc(t.speaker)}</p><p>${esc(t.text)}</p></div>`).join('')}</section>`:'';
-}
 function excerpt(blocks,title){const a=blocks.findIndex(b=>b.text===title);if(a<0)return [];let end=a+1;while(end<blocks.length&&!blocks[end].heading)end++;return blocks.slice(a+1,end);}
 function featuredContinuation(q){
  const b=q.after;
  if(q.id==='education-1-1')return `<section class="featured-continuation"><h2>Alex organizes the explanation</h2><p class="chat-label">AI response after the suggested prompt</p>${fullScene([{type:'text',text:'AI response',heading:true},...excerpt(b,'AI response after choosing B')])}</section>`;
  if(q.id==='education-2-1')return `<section class="featured-continuation"><h2>Alex follows the mechanism</h2><p class="chat-label">AI response after the suggested prompt</p>${fullScene([{type:'text',text:'AI response',heading:true},...excerpt(b,'AI response after choosing A')])}</section>`;
- if(q.id==='education-3-1')return `<section class="featured-continuation"><h2>Alex checks and revises the reply</h2>${dialogue(b)}<p class="chat-label">Corrected AI response</p>${fullScene([{type:'text',text:'AI response',heading:true},...excerpt(b,'Corrected AI response')])}</section>`;
+ if(q.id==='education-3-1')return `<section class="featured-continuation"><h2>Alex checks and revises the reply</h2>${fullScene(b)}</section>`;
  if(q.id==='research-2-1'){const table=b.find(x=>x.type==='table');return `<section class="featured-continuation"><h2>A framework to discuss with Dr. Lee</h2>${table?textBlocks([table]):''}<p><b>Discuss before proceeding:</b> the EF threshold, mixed populations, outcome definitions and whether existing reviews already answer the question.</p></section>`;}
  if(q.id==='research-5-1')return `<section class="formula-check"><h2>Check the scale of the calculation</h2><p>For the illustrated normal-approximation 95% confidence interval:</p><p><b>Incorrect for a log hazard ratio</b></p><pre class="code-view incorrect-code">SE &lt;- (upper_CI - lower_CI) / (2 * 1.96)</pre><p><b>Use the logarithmic limits</b></p><pre class="code-view correct-code">SE &lt;- (log(upper_CI) - log(lower_CI)) / (2 * 1.96)</pre></section>`;
  if(q.id==='research-6-1'){const a=b.findIndex(x=>x.text==="Alex's original paragraph:"),z=b.findIndex(x=>x.text==='AI-edited version:');return `<section class="featured-continuation"><h2>Compare the wording</h2><div class="writing-comparison"><article><h3>Alex’s draft</h3><p>${esc(b[a+1].text)}</p></article><article><h3>AI-edited draft</h3><p>${esc(b[z+1].text)}</p></article></div><p>Check that the edited version preserves the verified findings and uncertainty.</p></section>`;}
@@ -247,15 +237,39 @@ function chatBody(blocks){
  for(const b of blocks){if(b.type==='text'&&!b.heading&&b.text.length<90&&!/[.!?:]$/.test(b.text)&&!/[<>=#()]/.test(b.text))run.push(b);else{flush();html+=textBlocks([b]);}}
  flush();return html;
 }
-function fullScene(blocks){
- let html='',pending=[],speaker=null;
- const flush=()=>{if(!pending.length)return;const body=speaker?.startsWith('AI')?chatBody(pending):textBlocks(pending);html+=speaker?`<article class="conversation-turn ${speaker==='Alex'?'from-student':speaker.startsWith('AI')?'from-ai':'from-person'}"><p class="speaker">${esc(speaker)}</p>${body}</article>`:`<div class="scene-narration">${body}</div>`;pending=[];speaker=null;};
+const SPEAKER_SIDES={
+ 'Alex':'right',
+ 'Dr. Chen':'left',
+ 'Dr. Lee':'left',
+ 'Mr. Patel':'left',
+ 'Mr. Singh':'left',
+ 'Ms. Williams':'left',
+ 'AI chatbot':'left',
+ 'AI screening system':'left'
+};
+const PATIENT_SPEAKERS=new Set(['Mr. Patel','Mr. Singh','Ms. Williams']);
+function speakerSide(speaker,hasPatient){
+ if(!Object.prototype.hasOwnProperty.call(SPEAKER_SIDES,speaker))throw new Error('Unmapped speaker: '+speaker);
+ if(speaker==='Dr. Chen'&&hasPatient)return 'right';
+ return SPEAKER_SIDES[speaker];
+}
+function chatTurnHtml(speaker,bodyHtml,side){
+ return `<article class="conversation-turn turn-${side}"><p class="speaker">${esc(speaker)}</p>${bodyHtml}</article>`;
+}
+function parseSceneItems(blocks){
+ const items=[];
+ let pending=[],speaker=null;
+ const flush=()=>{
+  if(!pending.length)return;
+  items.push(speaker?{kind:'turn',speaker,blocks:pending}:{kind:'narration',blocks:pending});
+  pending=[];speaker=null;
+ };
  for(let i=0;i<blocks.length;i++){
   const b=blocks[i],t=b.text||'';
   if(/^Estimated duration:/.test(t))continue;
-  if(/^Reference[s]?:/.test(t)){flush();html+=`<p class="scene-reference">${referenceText(t)}</p>`;continue;}
-  const named=t.match(/^(Alex|Dr\. Chen|Dr\. Lee|Mr\. Patel|Mr\. Singh|Ms\. Williams):\s*["“](.*)/);
-  if(named){flush();speaker=named[1];pending=[{type:'text',text:named[2].replace(/["”]$/,'')}];flush();continue;}
+  if(/^Reference[s]?:/.test(t)){flush();items.push({kind:'reference',text:t});continue;}
+  const named=t.match(/^([^:]{1,40}):\s*["“](.*)/);
+  if(named&&Object.prototype.hasOwnProperty.call(SPEAKER_SIDES,named[1])){flush();speaker=named[1];pending=[{type:'text',text:named[2].replace(/["”]$/,'')}];flush();continue;}
   if(/^(Alex types:|Alex then asks:|Alex asks the chatbot:|Alex asks:|Alex asks AI:)$/.test(t)){
    if(/^["“]/.test(blocks[i+1]?.text||'')){flush();speaker='Alex';pending=[{type:'text',text:blocks[++i].text.replace(/^["“]|["”]$/g,'')}];flush();}continue;
   }
@@ -265,7 +279,19 @@ function fullScene(blocks){
   if(b.heading&&t!=='Example R code'){flush();pending.push(b);continue;}
   pending.push(b);
  }
- flush();return `<div class="conversation" aria-label="Scenario conversation">${html}</div>`;
+ flush();
+ return items;
+}
+function fullScene(blocks){
+ const items=parseSceneItems(blocks);
+ const hasPatient=items.some(it=>it.kind==='turn'&&PATIENT_SPEAKERS.has(it.speaker));
+ const html=items.map(it=>{
+  if(it.kind==='reference')return `<p class="scene-reference">${referenceText(it.text)}</p>`;
+  if(it.kind==='narration')return `<div class="scene-narration">${textBlocks(it.blocks)}</div>`;
+  const body=it.speaker.startsWith('AI')?chatBody(it.blocks):textBlocks(it.blocks);
+  return chatTurnHtml(it.speaker,body,speakerSide(it.speaker,hasPatient));
+ }).join('');
+ return `<div class="conversation" aria-label="Scenario conversation">${html}</div>`;
 }
 function lesson(m,sceneIndex,qIndex){
  const s=m.scenes[sceneIndex],q=s.questions[qIndex];current={m,scene:s,sceneIndex,qIndex,q};
