@@ -1,5 +1,12 @@
 /* Adapted scripted scenarios from AI Modules, source revision retained offline. These are not recorded model outputs. */
 window.COURSE = {
+  "objectives": [
+    "Use generative AI to organize medical concepts, test active recall, and refine clinical reasoning.",
+    "Evaluate AI outputs against primary clinical guidelines, study data, and institutional rules.",
+    "Apply privacy, consent, and documentation-verification standards when using clinical AI tools.",
+    "Maintain human scientific oversight across literature searching, study design, analysis, and disclosure.",
+    "Assess AI health tools for diagnostic performance, algorithmic bias, and equitable patient access."
+  ],
   "modules": [
     {
       "id": "education",
@@ -12,7 +19,7 @@ window.COURSE = {
         "Use generative AI to organize complex medical information into useful learning frameworks.",
         "Ask targeted follow-up questions to develop a deeper understanding of physiology and pathophysiology.",
         "Identify potentially inaccurate or misleading AI-generated medical information and verify important claims.",
-        "Use AI to support active recall and clinical reasoning rather than passive memorization.",
+        "Use AI to support active recall and clinical reasoning alongside passive review.",
         "Recognize the limitations of AI in clinical decision-making and distinguish educational support from clinical authority."
       ],
       "scenes": [
@@ -1136,7 +1143,8 @@ window.COURSE = {
       ],
       "background": [
         "A chatbot generates a response to the instructions and context you provide. A useful learning request says what you already understand, where you are stuck and what you want to do next.",
-        "Here you will practise organizing information, asking about mechanisms, checking claims and testing your own understanding. The hypertension examples give you a concrete topic to work with; the skill is deciding how to direct and evaluate the conversation."
+        "Here you will practise organizing information, asking about mechanisms, checking claims and testing your own understanding.",
+        "The hypertension examples give you a concrete topic to work with; the skill is deciding how to direct and evaluate the conversation."
       ]
     },
     {
@@ -3889,7 +3897,8 @@ window.COURSE = {
         }
       ],
       "background": [
-        "A systematic review answers a defined research question using explicit methods for finding, selecting and evaluating studies. AI can help draft search terms, organize information and suggest code, but each output needs checking against the sources and the research plan.",
+        "A systematic review answers a defined research question using explicit methods for finding, selecting and evaluating studies.",
+        "AI can help draft search terms, organize information and suggest code, but each output needs checking against the sources and the research plan.",
         "Alex is studying SGLT2 inhibitors, a class of medicines, in heart failure with preserved ejection fraction (HFpEF). You do not need to know these trials beforehand: focus on how Alex checks the question, evidence, calculations and wording."
       ]
     },
@@ -5132,9 +5141,10 @@ window.COURSE = {
         }
       ],
       "background": [
-        "Screening looks for people who may need further assessment. In this story, a clinic takes retinal photographs and uses an AI system to help identify patients who need follow-up for diabetic eye disease. A screening result is one step in a care pathway.",
+        "Screening looks for people who may need further assessment.",
+        "In this story, a clinic takes retinal photographs and uses an AI system to help identify patients who need follow-up for diabetic eye disease. A screening result is one step in a care pathway.",
         "You will consider what results mean, what happens when images cannot be interpreted, how patient information is handled and whether people can obtain follow-up. The story connects technical performance with the patient’s actual experience."
       ]
     }
   ]
-};
+}

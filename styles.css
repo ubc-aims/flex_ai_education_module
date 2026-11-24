@@ -3,10 +3,10 @@
   color:var(--text);
   background:var(--bg);
   font-size:17px;
-  line-height:1.65;
+  line-height:1.75;
   color-scheme:light;
   --text:#20332e;
-  --text2:#3f5148;
+  --text2:#374940;
   --bg:#fafbf8;
   --surface:#ffffff;
   --tint:#edf2eb;
@@ -15,7 +15,7 @@
   --green-hover:#103d30;
   --on-green:#ffffff;
   --link:#185443;
-  --muted:#5a6861;
+  --muted:#4b5952;
   --line:#dce3dc;
   --border:#7f9387;
   --border-accent:#78966c;
@@ -28,7 +28,7 @@
 :root[data-theme="dark"] {
   color-scheme:dark;
   --text:#e4ece7;
-  --text2:#c4d0ca;
+  --text2:#cbd7d1;
   --bg:#111715;
   --surface:#19221f;
   --tint:#1f2a26;
@@ -37,7 +37,7 @@
   --green-hover:#24805f;
   --on-green:#ffffff;
   --link:#86d0ad;
-  --muted:#a9b7b0;
+  --muted:#b6c4bd;
   --line:#2f3b37;
   --border:#6f8479;
   --border-accent:#6f9a7e;
@@ -67,20 +67,24 @@ button:focus-visible,a:focus-visible,select:focus-visible,summary:focus-visible 
 h1,h2,h3,p {
   margin:0 0 1rem}
 h1 {
-  font-size:clamp(1.9rem,5vw,2.8rem);
-  line-height:1.18;
+  font-size:clamp(1.9rem,4.5vw,2.6rem);
+  line-height:1.2;
   letter-spacing:-.035em;
   font-weight:650;
-  margin-bottom:1.5rem}
+  margin-bottom:1.25rem}
 h2 {
-  font-size:1.28rem;
+  font-size:1.38rem;
   line-height:1.35;
-  letter-spacing:-.015em}
+  letter-spacing:-.015em;
+  margin:2rem 0 .85rem}
 h3 {
-  font-size:1.05rem;
-  line-height:1.4}
+  font-size:1.12rem;
+  line-height:1.4;
+  margin:1.4rem 0 .6rem}
 p:last-child {
   margin-bottom:0}
+main p,main li,main blockquote,.teaching,.scene-narration,.result,.policy,.objectives-box {
+  max-width:70ch}
 .module-header {
   max-width:1020px;
   margin:auto;
@@ -433,7 +437,7 @@ th,td {
 .module-tabs { max-width: 1020px; margin: 0 auto; padding: 18px 32px 0; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; }
 .module-tabs button { display: flex; align-items: center; gap: 9px; text-align: left; padding: 13px 12px; min-height: 68px; border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 7px; font-size: .85rem; line-height: 1.35; }
 .module-tabs button[aria-selected="true"] { background: var(--green); border-color: var(--green); color: var(--on-green); }
-.tab-number { font-size: .78rem; opacity: .8; }
+.tab-number { font-size: .78rem; }
 .scene-list { padding-left: 24px; margin: 28px 0; }
 .scene-list li { border-top: 1px solid var(--line); margin: 0; }
 .scene-list a { text-decoration: none; display: flex; justify-content: space-between; gap: 12px; padding: 14px 4px; }
@@ -569,3 +573,121 @@ main {
   color:var(--text)}
 .theme-toggle:hover {
   background:var(--tint)}
+
+.objectives-box {
+  margin: 24px 0;
+  padding: 20px 24px;
+  background: var(--tint);
+  border-radius: 8px;
+  border-left: 3px solid var(--green);
+}
+.objectives-box h2 {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+.objectives-box ul {
+  margin: 0;
+}
+.objectives-box li:last-child {
+  margin-bottom: 0;
+}
+.teaching h2,.result h2,.policy h2,.scenario-heading h2,.clinical-note h2,.continuation > h2:first-child,.featured-continuation > h2:first-child {
+  margin-top: 0;
+}
+.intro-modules {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0;
+  max-width: 70ch;
+}
+.intro-module-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  text-align: left;
+  color: var(--text);
+}
+.intro-module-card:hover {
+  border-color: var(--green);
+  background: var(--tint);
+}
+.intro-module-card strong {
+  color: var(--link);
+  font-size: 1rem;
+}
+.intro-module-card span {
+  font-size: .9rem;
+  color: var(--text2);
+}
+
+/* Bubble progression bar adapted from interactive-ophthalmology */
+.module-progress {
+  overflow-x: auto;
+  padding: 12px 2px 24px;
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.module-progress .case-track {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+  min-width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.module-progress .case-track li {
+  display: flex;
+  position: relative;
+  flex: 1 0 auto;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  background: none;
+  color: var(--text2);
+}
+.module-progress .case-track li:not(:last-child)::after {
+  content: "";
+  flex: 1 0 12px;
+  height: 2px;
+  background: var(--line);
+}
+.module-progress .case-track li[data-completed="true"]::after {
+  background: var(--green);
+}
+.module-progress .case-track .track-label {
+  display: grid;
+  min-height: 36px;
+  place-items: center;
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text2);
+  font-size: .82rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.module-progress .case-track .track-label:hover {
+  border-color: var(--green);
+  background: var(--tint);
+}
+.module-progress .case-track li[data-completed="true"] .track-label {
+  border-color: var(--green);
+  color: var(--link);
+}
+.module-progress .case-track li[aria-current="step"] .track-label {
+  border-color: var(--green);
+  background: var(--green);
+  color: var(--on-green);
+  font-weight: 600;
+}
+.module-progress .case-track li:last-child {
+  flex-grow: 0;
+}
