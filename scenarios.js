@@ -788,7 +788,7 @@ window.COURSE = {
           "reading": [],
           "teaching": {
             "title": "Ask for retrieval before explanation",
-            "explanation": "Reading an answer can feel familiar without showing that you can produce it yourself. To practise recall, ask for one question at a time, answer before seeing the explanation and request feedback on your attempt.",
+            "explanation": "Reading an answer can feel familiar without showing that you can produce it yourself. To practise recall, ask for one question at a time, answer before seeing the explanation and request feedback on your attempt. Choosing between a general chatbot and a source-grounded study tool such as NotebookLM depends on your learning goal [4]: use NotebookLM when you want study guides, summaries, or practice questions tied strictly to uploaded lecture slides with passage citations, and use a general chatbot for adaptive, back-and-forth questioning that probes physiological reasoning.",
             "application": "The next decisions move from choosing a quiz prompt to answering a case. Keep the answer hidden until you have tried."
           }
         },
@@ -1137,6 +1137,10 @@ window.COURSE = {
         {
           "title": "Carey et al.: Resistant Hypertension, AHA scientific statement (2018)",
           "url": "https://doi.org/10.1161/HYP.0000000000000084"
+        },
+        {
+          "title": "Google. NotebookLM Help: Create and manage notebooks and source citations.",
+          "url": "https://support.google.com/notebooklm/answer/14273541"
         }
       ],
       "background": [
@@ -1475,7 +1479,7 @@ window.COURSE = {
         {
           "id": "scribes-scene-3",
           "title": "The Patient Encounter",
-          "intro": "Compare the encounter with the draft below. Keep track of symptoms, missed medication doses, examinations and the plan that was actually discussed.",
+          "intro": "Read the AI-generated draft note above first, then compare it with the encounter below. Track symptoms, missed medication doses, examinations and the agreed plan.",
           "questions": [],
           "reading": [
             {
@@ -1797,7 +1801,7 @@ window.COURSE = {
           "teaching": {
             "title": "Look for additions, omissions and changed meaning",
             "explanation": "A documentation error can be a missing symptom, a softened description of missed doses, an examination that was not performed or a plan that was not agreed. An accurate statement should remain in the note.",
-            "application": "Use the encounter as your reference and evaluate each checkbox independently."
+            "application": "Click or tap the inaccurate sentences directly inside the AI-generated draft note, using the encounter below as your reference."
           }
         },
         {
@@ -2204,8 +2208,8 @@ window.COURSE = {
         "Draft initial search terms for unfamiliar topics while building reproducible database strategies with a librarian.",
         "Structure PICO protocols and eligibility criteria with supervisor input.",
         "Check extracted trial endpoints and effect sizes against published primary tables.",
-        "Match statistical models to outcome types and inspect analysis code for scale and formula mistakes.",
-        "Edit manuscript prose without altering verified results, and disclose tool usage under journal policies."
+        "Match statistical models to outcome types, prompt AI to use established statistical libraries, and verify outputs with a supervisor.",
+        "Edit manuscript prose without altering verified results, and disclose tool usage under journal and institutional policies."
       ],
       "scenes": [
         {
@@ -2426,7 +2430,7 @@ window.COURSE = {
           "reading": [],
           "teaching": {
             "title": "Use an overview as a starting point",
-            "explanation": "A chatbot’s summary can help you learn vocabulary and draft search concepts. A reproducible search records where and how studies were sought so another researcher can repeat it. A plausible list of papers is not that search record.",
+            "explanation": "A chatbot’s summary can help you learn vocabulary and draft search concepts. Under PRISMA 2020, a systematic review requires a transparent, reproducible search record across databases so another researcher can repeat it. A plausible list of papers is not that search record.",
             "application": "Decide how Alex should move from a general overview to finding the evidence systematically."
           }
         },
@@ -2640,7 +2644,7 @@ window.COURSE = {
           "reading": [],
           "teaching": {
             "title": "Define what question the review answers",
-            "explanation": "PICO means population, intervention, comparator and outcomes. Define those elements before deciding which studies belong together. Similar-sounding outcomes can measure different things.",
+            "explanation": "PICO means population, intervention, comparator and outcomes. PRISMA-P guides pre-specified review protocols before screening begins so eligibility and outcomes are locked in early. Similar-sounding outcomes can measure different things.",
             "application": "Look for where the proposed plan changes Alex’s population or combines outcomes that need separate consideration."
           }
         },
@@ -3053,24 +3057,24 @@ window.COURSE = {
         },
         {
           "id": "research-scene-5",
-          "title": "Using AI to Write R Code, SPSS Syntax, and Excel Formulas",
-          "intro": "Alex runs generated R code and obtains a professional-looking forest plot. A successful run does not establish that the inputs, assumptions or calculations are right.",
+          "title": "Prompting AI with Established Statistical Libraries",
+          "intro": "Most medical students are not trained to debug raw statistical formulas. Focus on prompting AI to use established, peer-reviewed libraries with documented inputs and supervisor review.",
           "questions": [
             {
               "id": "research-5-1",
-              "question": "What should Alex do before using the results in a manuscript?",
+              "question": "How should Alex prompt AI and verify the meta-analysis workflow?",
               "choices": [
                 {
-                  "text": "Check the pooled estimate against the chatbot’s worked example and confirm the plot uses the intended labels.",
-                  "feedback": "That checks consistency with another model output, not independently whether the data and methods are correct."
+                  "text": "Ask AI to write custom math functions from scratch so the calculations stay short and easy to read.",
+                  "feedback": "Custom formulas bypass peer-reviewed package defaults and increase the risk of silent scale or weighting errors."
                 },
                 {
-                  "text": "Verify inputs and assumptions, inspect the calculations independently and review the analysis with an experienced researcher.",
-                  "feedback": "This checks the scientific calculations as well as successful execution and presentation."
+                  "text": "Prompt AI to use an established package (such as R meta), specify the input scale and outcome measure, check package documentation, and review outputs with Dr. Lee.",
+                  "feedback": "Using a peer-reviewed library with explicit inputs, documentation checks, and supervisor review keeps the workflow reproducible and verifiable."
                 },
                 {
-                  "text": "Reproduce the plot using a second AI-written script and accept the result if both scripts give the same estimate.",
-                  "feedback": "Two scripts can share the same mistaken assumptions or inputs. Agreement alone does not validate the analysis."
+                  "text": "Run two different AI-generated scripts and accept the pooled estimate if both produce the same number.",
+                  "feedback": "Two scripts can share identical mistaken inputs or model assumptions. Agreement between two AI runs does not validate the analysis."
                 }
               ],
               "correct": 1,
@@ -3078,185 +3082,32 @@ window.COURSE = {
               "after": [
                 {
                   "type": "text",
-                  "text": "Additional example: A coding error",
+                  "text": "Prompting checklist for statistical libraries",
                   "heading": true
                 },
                 {
                   "type": "text",
-                  "text": "Alex asks AI to explain the following line:",
+                  "text": "1. Name the established, peer-reviewed library (for example, the meta package in R) and the exact function you want to run.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "SE <- (upper_CI - lower_CI) / (2 * 1.96)",
+                  "text": "2. State your exact input columns, scale (for example, hazard ratios and 95% confidence limits on the log scale), and random-effects model choice.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "The formula appears reasonable, but it is incorrect for confidence intervals around hazard ratios when the analysis is performed on the logarithmic scale.",
+                  "text": "3. Ask the AI to cite the package arguments it used, then verify those arguments in the official package documentation.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "The correct calculation, under the usual normal-approximation assumptions, is:",
+                  "text": "4. Review the data table, model assumptions, and forest plot with Dr. Lee or a biostatistician before reporting.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "SE <- (log(upper_CI) - log(lower_CI)) / (2 * 1.96)",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Using the incorrect formula changes the estimated standard errors and therefore the study weights and pooled confidence interval.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "AI beyond R: SPSS and Excel",
-                  "heading": true
-                },
-                {
-                  "type": "text",
-                  "text": "Alex asks whether AI can also help with simpler tasks.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Dr. Lee: \"Absolutely. Not every research project requires sophisticated statistical software. But the same principle applies: you must understand and check the calculations.\"",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Example 1: Excel",
-                  "heading": true
-                },
-                {
-                  "type": "text",
-                  "text": "Suppose Alex has a spreadsheet containing study hazard ratios and confidence intervals:",
-                  "heading": false
-                },
-                {
-                  "type": "table",
-                  "rows": [
-                    [
-                      "Column",
-                      "Content"
-                    ],
-                    [
-                      "A",
-                      "Study name"
-                    ],
-                    [
-                      "B",
-                      "Hazard ratio"
-                    ],
-                    [
-                      "C",
-                      "Lower 95% CI"
-                    ],
-                    [
-                      "D",
-                      "Upper 95% CI"
-                    ],
-                    [
-                      "E",
-                      "Log hazard ratio"
-                    ],
-                    [
-                      "F",
-                      "Standard error"
-                    ]
-                  ]
-                },
-                {
-                  "type": "text",
-                  "text": "AI can suggest:",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Cell E2:",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "=LN(B2)",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Cell F2:",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "=(LN(D2)-LN(C2))/(2*1.96)",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "These formulas can then be copied down the spreadsheet.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Alex should manually verify a sample calculation and confirm that all values are valid and correctly entered.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Example 2: SPSS",
-                  "heading": true
-                },
-                {
-                  "type": "text",
-                  "text": "For projects using patient-level datasets, AI can help explain SPSS syntax, variable transformations, missing-value handling, and statistical commands.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "However, SPSS is not necessarily the best tool for every meta-analysis.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "The choice of software should depend on the research question, available data, analytical requirements, and team expertise.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Example 3: Data cleaning",
-                  "heading": true
-                },
-                {
-                  "type": "text",
-                  "text": "AI can help draft code to identify missing values, duplicate records, inconsistent variable names, and implausible entries.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "But automated data cleaning can also introduce errors if the code incorrectly recodes or removes observations.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Always preserve the original dataset and document any changes.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Key takeaway",
-                  "heading": true
-                },
-                {
-                  "type": "text",
-                  "text": "AI can help you write code much faster than you could write it from scratch, but speed does not guarantee correctness.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "If you cannot explain what the code does, what assumptions it makes, or how to verify the output, you should not rely on it for your research conclusions.",
+                  "text": "Reference: Cochrane Handbook, Chapters 6, 9 and 10.",
                   "heading": false
                 }
               ],
@@ -3273,22 +3124,17 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Alex has never used R before.",
+                  "text": "Alex has never written statistical code before and does not want to rely on debugging custom formulas by hand.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Dr. Lee suggests learning basic statistical programming because it allows analyses to be reproduced and checked.",
+                  "text": "Dr. Lee suggests prompting the AI to use an established, peer-reviewed R package with documented inputs so the team can inspect the choices clearly.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "Alex opens an AI chatbot.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Alex: \"Can you write R code to perform a meta-analysis using hazard ratios and confidence intervals?\"",
+                  "text": "Alex: \"Use the established meta package in R (metagen) for a random-effects meta-analysis of hazard ratios (sm = 'HR'). Specify the log-transformed inputs clearly and explain each argument.\"",
                   "heading": false
                 },
                 {
@@ -3298,22 +3144,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Yes. You can use the meta package in R.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "For each study, enter the hazard ratio and its lower and upper 95% confidence interval.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Convert hazard ratios to the logarithmic scale and calculate their standard errors.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "Then use metagen() to perform the meta-analysis.",
+                  "text": "Use metagen() from the peer-reviewed meta package with log-transformed hazard ratios and standard errors, setting sm = \"HR\" and random = TRUE.",
                   "heading": false
                 },
                 {
@@ -3328,7 +3159,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "# Example values",
+                  "text": "# Documented study inputs",
                   "heading": false
                 },
                 {
@@ -3418,17 +3249,12 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Alex runs the code and gets a forest plot.",
+                  "text": "Alex gets a clean forest plot from the meta package.",
                   "heading": false
                 },
                 {
                   "type": "text",
-                  "text": "It looks professional.",
-                  "heading": false
-                },
-                {
-                  "type": "text",
-                  "text": "But Alex isn't sure what the code is actually doing.",
+                  "text": "Before placing the figure into the manuscript, Alex needs a reliable verification step.",
                   "heading": false
                 }
               ]
@@ -3436,9 +3262,9 @@ window.COURSE = {
           ],
           "reading": [],
           "teaching": {
-            "title": "Treat generated code as a draft",
-            "explanation": "Code that runs has passed an execution check, not a scientific check. Inspect what each input represents, the units or scale used and whether the calculation matches the intended analysis. Compare a worked result with the original data.",
-            "application": "Alex’s code produces a plot. Look for the check that is still needed before trusting it."
+            "title": "Prompt for established libraries and verify inputs",
+            "explanation": "Established statistical libraries such as R's meta package implement peer-reviewed methods and standard defaults. Prompt the AI to name the library, document every input and scale, and explain the arguments so you and your supervisor can verify them.",
+            "application": "Choose the workflow that pairs an established library with proper human verification."
           }
         },
         {
@@ -3742,7 +3568,7 @@ window.COURSE = {
                 },
                 {
                   "type": "text",
-                  "text": "Before submitting the work, Alex reviews the journal's author instructions and the ICMJE recommendations.",
+                  "text": "Before submitting the work, Alex reviews the journal's author instructions, the ICMJE recommendations, and institutional AI guidelines from MIT and Stanford.",
                   "heading": false
                 },
                 {
@@ -3756,7 +3582,7 @@ window.COURSE = {
           "reading": [],
           "teaching": {
             "title": "Keep a record of AI assistance",
-            "explanation": "Record which tasks used AI and what the researcher checked. Disclosure should describe the actual use and follow the relevant submission requirements. It does not replace responsibility for the work.",
+            "explanation": "Record which tasks used AI and what the researcher checked. Disclosure should describe the actual use and follow ICMJE recommendations as well as institutional AI review guidelines (such as MIT and Stanford guidance on transparency, data confidentiality, and human authorship).",
             "application": "Help Alex prepare an accurate account of the assistance used in this project."
           }
         }
@@ -3764,22 +3590,22 @@ window.COURSE = {
       "summary": [
         {
           "type": "text",
-          "text": "1. Use AI to explore, not replace, the literature.",
+          "text": "1. AI assists with brainstorming and exploration, while human scientific insight drives the research.",
           "heading": false
         },
         {
           "type": "text",
-          "text": "AI can help identify terminology and potential papers, but it cannot substitute for a reproducible search or independent critical appraisal.",
+          "text": "AI can surface terminology and draft ideas, while reproducible searching, critical appraisal, and study design require human judgment.",
           "heading": false
         },
         {
           "type": "text",
-          "text": "2. Use AI to brainstorm methodology, not make decisions for you.",
+          "text": "2. Keep human oversight at every methodological step.",
           "heading": false
         },
         {
           "type": "text",
-          "text": "Study design, eligibility criteria, outcome definitions, and statistical methods require informed human judgment.",
+          "text": "Eligibility criteria, outcome definitions, and statistical choices belong to the research team.",
           "heading": false
         },
         {
@@ -3889,6 +3715,14 @@ window.COURSE = {
         {
           "title": "International Committee of Medical Journal Editors. Recommendations: Use of Artificial Intelligence in Publishing.",
           "url": "https://www.icmje.org/recommendations/browse/artificial-intelligence/"
+        },
+        {
+          "title": "MIT Information Systems & Technology. Guidance for use of Generative AI tools.",
+          "url": "https://ist.mit.edu/ai-guidance"
+        },
+        {
+          "title": "Stanford University Office of Community Standards. Generative AI Policy Guidance.",
+          "url": "https://communitystandards.stanford.edu/generative-ai-policy-guidance"
         }
       ],
       "background": [
@@ -4207,7 +4041,7 @@ window.COURSE = {
           "reading": [],
           "teaching": {
             "title": "Interpret a screening result carefully",
-            "explanation": "A referral recommendation means further assessment is needed. Sensitivity describes the proportion of people with the target condition who test positive; it is not the probability that a particular positive result is correct.",
+            "explanation": "A referral recommendation means further assessment is needed. Sensitivity is the proportion of people with the condition who test positive; specificity is the proportion without the condition who test negative. Positive predictive value (PPV) and negative predictive value (NPV) depend on disease prevalence and give the probability that a positive or negative result is true. Number needed to treat (NNT) and number needed to harm (NNH) summarize how many patients must receive an intervention to achieve one benefit or cause one harm.",
             "application": "Apply that distinction to Mr. Singh’s result and the performance question that follows."
           }
         },
