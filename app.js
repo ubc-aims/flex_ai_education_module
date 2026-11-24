@@ -116,7 +116,7 @@ function flowchartFor(m,n){
 function videoFor(m,n){
  const vids={
   'education-0':{id:'rtPQHDWg-6M',title:'Armando Hasudungan: Hypertension — Overview'},
-  'education-1':{id:'kgawuPx3Brs',title:'SimpleNursing: Hyperaldosteronism'},
+  'education-1':{id:'kgawuPx3Brs',title:'Ninja Nerd: Hyperaldosteronism | Clinical Medicine'},
   'scribes-0':{id:'0jCVSTZGnjE',title:'AMA: AI Scribes for Clinicians — How Ambient Listening Works'},
   'research-0':{id:'KeKpVgydlAQ',title:'PRISMA Literature Review — Flow Chart & Example'},
   'ethics-3':{id:'KU8r-YaGChw',title:'TEDMED Clearly: What Is Algorithmic Bias?'}
