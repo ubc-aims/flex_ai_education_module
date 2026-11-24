@@ -285,11 +285,25 @@ function parseSceneItems(blocks){
 function fullScene(blocks){
  const items=parseSceneItems(blocks);
  const hasPatient=items.some(it=>it.kind==='turn'&&PATIENT_SPEAKERS.has(it.speaker));
- const html=items.map(it=>{
-  if(it.kind==='reference')return `<p class="scene-reference">${referenceText(it.text)}</p>`;
-  if(it.kind==='narration')return `<div class="scene-narration">${textBlocks(it.blocks)}</div>`;
-  const body=it.speaker.startsWith('AI')?chatBody(it.blocks):textBlocks(it.blocks);
-  return chatTurnHtml(it.speaker,body,speakerSide(it.speaker,hasPatient));
+ const rows=[];
+ let narr=[];
+ for(const it of items){
+  if(it.kind==='narration'){narr.push(...it.blocks);continue;}
+  if(it.kind==='turn'){rows.push({kind:'row',narration:narr,turn:it});narr=[];continue;}
+  if(narr.length){rows.push({kind:'narration',blocks:narr});narr=[];}
+  rows.push(it);
+ }
+ if(narr.length)rows.push({kind:'narration',blocks:narr});
+ const html=rows.map(r=>{
+  if(r.kind==='reference')return `<p class="scene-reference">${referenceText(r.text)}</p>`;
+  if(r.kind==='narration')return `<div class="scene-narration">${textBlocks(r.blocks)}</div>`;
+  const side=speakerSide(r.turn.speaker,hasPatient);
+  const body=r.turn.speaker.startsWith('AI')?chatBody(r.turn.blocks):textBlocks(r.turn.blocks);
+  const bubbleHtml=chatTurnHtml(r.turn.speaker,body,side);
+  const narrHtml=r.narration.length?`<div class="scene-narration">${textBlocks(r.narration)}</div>`:'';
+  const leftCell=side==='left'?bubbleHtml:narrHtml;
+  const rightCell=side==='right'?bubbleHtml:narrHtml;
+  return `<div class="conversation-row"><div class="conversation-cell">${leftCell}</div><div class="conversation-cell">${rightCell}</div></div>`;
  }).join('');
  return `<div class="conversation" aria-label="Scenario conversation">${html}</div>`;
 }
