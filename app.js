@@ -65,7 +65,7 @@ function sourceLinks(m){
 function introduction(m){
  const courseObj=(window.COURSE.objectives||[]).map(v=>`<li>${esc(v)}</li>`).join('');
  const modObj=m.objectives.map(v=>`<li>${esc(v)}</li>`).join('');
- return `<h1>${esc(m.title)}</h1><p class="lead">${esc(m.description)}</p>${m.background.map(p=>`<p>${esc(p)}</p>`).join('')}<section class="objectives-box" aria-label="Module learning objectives"><h2>Module learning objectives</h2><ul>${modObj}</ul></section><section class="objectives-box" aria-label="Course learning objectives"><h2>Course learning objectives</h2><ul>${courseObj}</ul></section><p class="learning-route">Read the principle, apply it in Alex’s story, then use the feedback to check your reasoning.</p>${m.id==='scribes'?policy():''}<div class="actions">${button(completed.size&&m.scenes.some(s=>completed.has(s.id))?'Resume this module':'Start this module','go',resume(m))}</div>${sourceLinks(m)}`;
+ return `<h1>${esc(m.title)}</h1><p class="lead">${esc(m.description)}</p>${m.background.map(p=>`<p>${esc(p)}</p>`).join('')}<section class="objectives-box" aria-label="General learning objectives"><h2>General learning objectives</h2><ul>${courseObj}</ul></section><section class="objectives-box" aria-label="Module learning objectives"><h2>Module learning objectives</h2><ul>${modObj}</ul></section><p class="learning-route">Read the principle, apply it in Alex’s story, then use the feedback to check your reasoning.</p>${m.id==='scribes'?policy():''}<div class="actions">${button(completed.size&&m.scenes.some(s=>completed.has(s.id))?'Resume this module':'Start this module','go',resume(m))}</div>${sourceLinks(m)}`;
 }
 const noteTargets=[
  ['Denies chest pain, dyspnea, dizziness, or syncope.',0],
@@ -115,7 +115,7 @@ function flowchartFor(m,n){
 }
 function videoFor(m,n){
  const vids={
-  'education-0':{id:'FqS7vG1V8g8',title:'Ninja Nerd: Hypertension — Secondary Causes & Pathophysiology'},
+  'education-0':{id:'rtPQHDWg-6M',title:'Armando Hasudungan: Hypertension — Overview'},
   'education-1':{id:'kgawuPx3Brs',title:'Ninja Nerd: Hyperaldosteronism | Clinical Medicine'},
   'scribes-0':{id:'0jCVSTZGnjE',title:'AMA: AI Scribes for Clinicians — How Ambient Listening Works'},
   'research-0':{id:'KeKpVgydlAQ',title:'PRISMA Literature Review — Flow Chart & Example'},
