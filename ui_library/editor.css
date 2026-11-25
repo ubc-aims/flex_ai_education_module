@@ -18,6 +18,25 @@
   background: var(--tint);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+}
+
+.encounter .chat-history-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: 10px;
+}
+
+.encounter .chat-history {
+  flex: 1 1 auto;
+  max-height: 460px;
+}
+
+@media (min-width: 1000px) {
+  .note-review > .encounter .chat-history {
+    max-height: 720px;
+  }
 }
 
 .encounter p {

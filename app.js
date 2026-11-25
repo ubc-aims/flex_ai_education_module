@@ -282,30 +282,36 @@ function parseSceneItems(blocks){
  flush();
  return items;
 }
+function isChatAtBottom(box){
+ if(!box)return true;
+ return (box.scrollHeight-box.clientHeight-box.scrollTop)<=8;
+}
+function updateChatScrollButton(box){
+ if(!box)return;
+ const wrap=box.closest('.chat-history-wrap');
+ const btn=wrap&&wrap.querySelector('.chat-scroll-bottom');
+ if(!btn)return;
+ const scrollable=box.scrollHeight>box.clientHeight+8;
+ btn.classList.toggle('hidden',!scrollable||isChatAtBottom(box));
+}
+function scrollChatToBottom(box){
+ if(!box)return;
+ box.scrollTop=box.scrollHeight;
+ updateChatScrollButton(box);
+}
 function fullScene(blocks){
  const items=parseSceneItems(blocks);
  const hasPatient=items.some(it=>it.kind==='turn'&&PATIENT_SPEAKERS.has(it.speaker));
- const rows=[];
- let narr=[];
+ const convParts=[],refParts=[];
  for(const it of items){
-  if(it.kind==='narration'){narr.push(...it.blocks);continue;}
-  if(it.kind==='turn'){rows.push({kind:'row',narration:narr,turn:it});narr=[];continue;}
-  if(narr.length){rows.push({kind:'narration',blocks:narr});narr=[];}
-  rows.push(it);
+  if(it.kind==='reference'){refParts.push(`<p class="scene-reference">${referenceText(it.text)}</p>`);continue;}
+  if(it.kind==='narration'){convParts.push(`<div class="scene-narration">${textBlocks(it.blocks)}</div>`);continue;}
+  const side=speakerSide(it.speaker,hasPatient);
+  const body=it.speaker.startsWith('AI')?chatBody(it.blocks):textBlocks(it.blocks);
+  convParts.push(chatTurnHtml(it.speaker,body,side));
  }
- if(narr.length)rows.push({kind:'narration',blocks:narr});
- const html=rows.map(r=>{
-  if(r.kind==='reference')return `<p class="scene-reference">${referenceText(r.text)}</p>`;
-  if(r.kind==='narration')return `<div class="scene-narration">${textBlocks(r.blocks)}</div>`;
-  const side=speakerSide(r.turn.speaker,hasPatient);
-  const body=r.turn.speaker.startsWith('AI')?chatBody(r.turn.blocks):textBlocks(r.turn.blocks);
-  const bubbleHtml=chatTurnHtml(r.turn.speaker,body,side);
-  const narrHtml=r.narration.length?`<div class="scene-narration">${textBlocks(r.narration)}</div>`:'';
-  const leftCell=side==='left'?bubbleHtml:narrHtml;
-  const rightCell=side==='right'?bubbleHtml:narrHtml;
-  return `<div class="conversation-row"><div class="conversation-cell">${leftCell}</div><div class="conversation-cell">${rightCell}</div></div>`;
- }).join('');
- return `<div class="conversation" aria-label="Scenario conversation">${html}</div>`;
+ const conv=convParts.length?`<div class="chat-history-wrap"><div class="conversation chat-history" tabindex="0" role="log" aria-label="Scenario conversation">${convParts.join('')}</div><button type="button" class="chat-scroll-bottom hidden" aria-label="Scroll to newest message" title="Scroll to bottom"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></button></div>`:'';
+ return conv+refParts.join('');
 }
 function lesson(m,sceneIndex,qIndex){
  const s=m.scenes[sceneIndex],q=s.questions[qIndex];current={m,scene:s,sceneIndex,qIndex,q};
@@ -331,6 +337,7 @@ function render(focusFeedback=false){
  else{sceneTabs.hidden=false;const sn=/^\d+$/.test(step)?Number(step):-1;const entries=[{label:'Overview',route:m.id,done:sn>=0||step==='finish'||step==='sources'||m.scenes.some(s=>completed.has(s.id)),cur:step===undefined},...m.scenes.map((sc,i)=>({label:`${i+1}. ${shortTitles[m.id]?.[i]||sc.title}`,route:`${m.id}/${i}`,done:completed.has(sc.id),cur:i===sn})),{label:'Summary',route:`${m.id}/finish`,done:m.scenes.every(s=>completed.has(s.id)),cur:step==='finish'},{label:'Sources',route:`${m.id}/sources`,done:false,cur:step==='sources'}];sceneTabs.innerHTML=`<ol class="case-track">${entries.map(e=>`<li class="station-stop"${e.done?' data-completed="true"':''}${e.cur?' aria-current="step"':''}><button type="button" class="track-label" data-action="go" data-value="${esc(e.route)}"${e.cur?' aria-current="page"':''}>${esc(e.label)}</button></li>`).join('')}</ol>`;const active=sceneTabs.querySelector('li[aria-current="step"]');if(active&&sceneTabs.scrollWidth>sceneTabs.clientWidth)sceneTabs.scrollLeft=active.offsetLeft-(sceneTabs.clientWidth-active.offsetWidth)/2;}
  if(isIntro)main.setAttribute('aria-labelledby','tab-intro');else main.setAttribute('aria-labelledby','tab-'+m.id);
  main.innerHTML=html;
+ main.querySelectorAll('.chat-history').forEach(updateChatScrollButton);
  document.title=(isIntro?'Introduction':m.label)+' | Learning with AI';const target=pendingTabFocus?document.querySelector('#tab-'+pendingTabFocus):focusFeedback?document.querySelector('#feedback'):main;pendingTabFocus=null;target.focus({preventScroll:true});if(focusFeedback)target.scrollIntoView({block:'center'});else window.scrollTo(0,0);
 }
 function toggleNoteIndices(idxs){
@@ -348,6 +355,8 @@ function toggleNoteIndices(idxs){
  if(sc){const c=cur.length;sc.textContent=`${c} ${c===1?'selection':'selections'} highlighted`;}
 }
 document.addEventListener('click',e=>{
+ const scrollBtn=e.target.closest('.chat-scroll-bottom');
+ if(scrollBtn){const box=scrollBtn.closest('.chat-history-wrap')?.querySelector('.chat-history');if(box)scrollChatToBottom(box);return;}
  const refBtn=e.target.closest('[data-action="open-ref"]');
  if(refBtn){e.preventDefault();openRefPanel(refBtn.dataset.mod,refBtn.dataset.ref);return;}
  if(e.target.closest('[data-action="close-ref"]')){closeRefPanel();return;}
@@ -391,4 +400,8 @@ document.querySelector('#theme-toggle').addEventListener('click',()=>{const t=do
 syncTheme();
 document.querySelector('#about').addEventListener('click',()=>go(activeModule.id+'/sources'));
 document.querySelector('.skip').addEventListener('click',e=>{e.preventDefault();main.focus();});
+document.addEventListener('scroll',e=>{
+ if(e.target&&e.target.classList&&e.target.classList.contains('chat-history'))updateChatScrollButton(e.target);
+},true);
+window.addEventListener('resize',()=>main.querySelectorAll('.chat-history').forEach(updateChatScrollButton));
 window.addEventListener('hashchange',()=>render());render();

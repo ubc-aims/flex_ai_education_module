@@ -20,7 +20,9 @@
   --text2: #374940;
   --bg: #fafbf8;
   --surface: #ffffff;
+  --surface-2: #edf2eb;
   --tint: #edf2eb;
+  --shadow: 0 1px 3px rgba(32, 51, 46, 0.14);
   --warm: #f1eee0;
   --green: #185443;
   --green-hover: #103d30;
@@ -46,7 +48,9 @@
   --text2: #cbd7d1;
   --bg: #111715;
   --surface: #19221f;
+  --surface-2: #1f2a26;
   --tint: #1f2a26;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   --warm: #2a2620;
   --green: #1d6b53;
   --green-hover: #24805f;
